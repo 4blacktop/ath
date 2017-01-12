@@ -30,6 +30,15 @@ var view5 = myApp.addView('#view-5', {
 var calendarDefault = myApp.calendar({
     input: '#calendar-default',
 	firstDay: 7,
+	onDayClick: function (picker, dayContainer, dateYear, dateMonth, dateDay) {
+   //try to console log these values dateYear, dateMonth, dateDay
+	console.log(picker);
+	console.log(dayContainer);
+	console.log(dateYear);
+	console.log(dateMonth);
+	console.log(dateDay);
+	
+},
 	onChange: function (values) {
 	console.log(values.value[0]);
    }
