@@ -34,6 +34,26 @@ var calendarDefault = myApp.calendar({
 	console.log(values.value[0]);
    }
 });   
+
+
+
+var dailyVerse = { 
+"2017-01-13": ["Your eyes saw my unformed body; all the days ordained for me were written in your book before one of them came to be.","Psalms 139:16"],
+"2017-04-14": ["For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.","Jeremiah 29:11"]
+};
+console.log(dailyVerse);
+
+// var date = new Date();
+// var dateForVerse = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+// console.log(date);
+// console.log(dateForVerse);
+var datesof = new Date().toISOString().split('T')[0];
+console.log(datesof);
+console.log(dailyVerse[datesof][0]);
+console.log(dailyVerse[datesof][1]);
+
+// console.dir(dailyVerse);
+
       // console.dir(values.value); // values will be an array with selected dates in ms format
 	// onDayClick: function (p) {
 		// console.dir(p);
