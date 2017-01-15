@@ -1,3 +1,8 @@
+<!-- 
+add "store-data" class to form
+add "id" attribute to from. It will not work if form doesn't have "id" attribute
+make sure that all you inputs have "name" attributes, otherwise they will be ignored 
+-->
 
 <div class="navbar">
 	<div class="navbar-inner bg-lightblue color-white">
@@ -7,18 +12,99 @@
 			<i class="f7-icons color-white">left</i>
 			</a>
 		</div> -->
-		<div class="center sliding">Settingsabout</div>
+		<div class="center sliding">Settings Reminders</div>
 	</div>
 </div> 
 
 <div class="pages">
-  <div data-page="settingsabout" class="page">
+  <div data-page="settings-reminders" class="page">
     <div class="page-content">
       <div class="content-block">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel commodo massa, eu adipiscing mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus ultricies dictum neque, non varius tortor fermentum at. Curabitur auctor cursus imperdiet. Nam molestie nisi nec est lacinia volutpat in a purus. Maecenas consectetur condimentum viverra. Donec ultricies nec sem vel condimentum. Phasellus eu tincidunt enim, sit amet convallis orci. Vestibulum quis fringilla dolor.    </p>
-        <p>Mauris commodo lacus at nisl lacinia, nec facilisis erat rhoncus. Sed eget pharetra nunc. Aenean vitae vehicula massa, sed sagittis ante. Quisque luctus nec velit dictum convallis. Nulla facilisi. Ut sed erat nisi. Donec non dolor massa. Mauris malesuada dolor velit, in suscipit leo consectetur vitae. Duis tempus ligula non eros pretium condimentum. Cras sed dolor odio.</p>
-        <p>Suspendisse commodo adipiscing urna, a aliquet sem egestas in. Sed tincidunt dui a magna facilisis bibendum. Nunc euismod consectetur lorem vitae molestie. Proin mattis tellus libero, non hendrerit neque eleifend ac. Pellentesque interdum velit at lacus consectetur scelerisque et id dui. Praesent non fringilla dui, a elementum purus. Proin vitae lacus libero. Nunc eget lectus non mi iaculis interdum vel a velit. Nullam tincidunt purus id lacus ornare, at elementum turpis euismod. Cras mauris enim, congue eu nisl sit amet, pulvinar semper erat. Suspendisse sed mauris diam.</p>
-        <p>Nam eu mauris leo. Pellentesque aliquam vehicula est, sed lobortis tellus malesuada facilisis. Fusce at hendrerit ligula. Donec eu nibh convallis, pulvinar enim quis, lacinia diam. Ut semper ac magna nec ornare. Integer placerat justo sed nunc suscipit facilisis. Vestibulum ac tincidunt augue. Duis eu aliquet mauris, vel luctus mauris. Nulla non augue nec diam pharetra posuere at in mauris.</p>
+
+	  <form id="reminders-form" class="list-block store-data">
+	<div class="content-block-title">Journal Entry</div>
+
+  <ul>
+
+	
+	<li>
+      <div class="item-content">
+        <div class="item-media"><i class="icon f7-icons">alarm</i></div>
+        <div class="item-inner">
+          <div class="item-title label">Morning:
+		  <input type="text" name="morning-reminder-time"  placeholder="00:00" readonly id="picker-morning"></div>
+          <div class="item-input">
+            <label class="label-switch">
+			
+              <input name="morning-reminder-checkbox" type="checkbox">
+              <div class="checkbox"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </li>
+	
+	<li>
+      <div class="item-content">
+        <div class="item-media"><i class="icon f7-icons">alarm</i></div>
+        <div class="item-inner">
+          <div class="item-title label">Evening: 22:00 
+		  
+		  </div>
+		  
+          <div class="item-input">
+            <label class="label-switch">
+              <input name="evening-reminder" type="checkbox">
+              <div class="checkbox"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </li>
+	</ul>
+		<div class="content-block-title">Daily Verse</div>
+	<ul>
+	<li>
+      <div class="item-content">
+        <div class="item-media"><i class="icon f7-icons">alarm</i></div>
+        <div class="item-inner">
+          <div class="item-title label">Daily Verse: 09:00</div>
+          <div class="item-input">
+            <label class="label-switch">
+              <input name="verse-reminder" type="checkbox">
+              <div class="checkbox"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </li>
+	
+	
+  </ul>
+</form>
+
+
+
+
+
+
+
+
+<div class="content-block-title">2 values and 3d-rotate effect</div>
+<div class="list-block">
+  <ul>
+    <li>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-input">
+            <input type="text" placeholder="Describe yourself" readonly id="picker-morning">
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>  
+	  
       </div>
     </div>
   </div>
