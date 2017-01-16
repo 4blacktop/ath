@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>Javascript</title>
+
+    </head>
+
+
+<body>
+<!-- k2083472@mvrht.com
+Vlad
+v125414 -->
+    <h1 id="bigOne"></h1>
+	
+	<div class="container">
+	
+	<input id="txtEmail" type="email" placeholder="Email">
+	<input id="txtPassword" type="password" placeholder="Password">
+	
+	<button id="btnLogin">Log in</button>
+	<button id="btnSignUp">Sign Up</button>
+	<button id="btnLogout" style="dislpay:none">Log Out</button>
+	
+	</div>
+	
+	<script src="js/firebase.js"></script>
+	<script>
+		  // Initialize Firebase
+		  var config = {
+			apiKey: "AIzaSyDN6REIe6FjLtIkWMrMW2C2v0RiqQ5lwmE",
+			authDomain: "awakening-to-hope.firebaseapp.com",
+			databaseURL: "https://awakening-to-hope.firebaseio.com",
+			storageBucket: "awakening-to-hope.appspot.com",
+			messagingSenderId: "623933765391"
+		  };
+		  firebase.initializeApp(config);
+
+		const txtEmail = document.getElementById('txtEmail');
+		const txtPassword = document.getElementById('txtPassword');
+		const btnLogin = document.getElementById('btnLogin');
+		const btnSignUp = document.getElementById('btnSignUp');
+		const btnLogout = document.getElementById('btnLogout');
+		
+		// add login event
+		btnLogin.addEventListener('click', function (e) {
+			// get email and pass
+			const email = txtEmail.value;
+			const pass = txtPassword.value;
+			const auth = firebase.auth();
+			//sign in
+			const promise = auth.signInWithEmailAndPassword(email, pass);
+			promise.catch(function (f) {
+			console.log(f.message);
+			});
+		});
+		
+		// add signup event
+		btnSignUp.addEventListener('click', function (e) {
+			// get email and pass
+			const email = txtEmail.value;
+			const pass = txtPassword.value;
+			const auth = firebase.auth();
+			//sign up
+			const promise = auth.createUserWithEmailAndPassword(email, pass);
+			promise.catch(function (f) {
+			console.log(f.message);
+			});
+		});
+		
+		// add log out event
+		btnLogout.addEventListener('click', function (e) {
+			firebase.auth().signOut();
+		});
+		
+		// add a realtime listener
+		firebase.auth().onAuthStateChanged( function(firebaseUser) {
+			if(firebaseUser) {
+				console.log(firebaseUser);
+				document.getElementById( 'btnLogout' ).style.display = 'block';
+				document.getElementById( 'btnSignUp' ).style.display = 'none';
+			} else {
+				console.log('not logged in');
+				document.getElementById( 'btnLogout' ).style.display = 'none';
+				document.getElementById( 'btnSignUp' ).style.display = 'block';
+				
+			}
+		
+		});
+		
+		
+// dbRef.on('value', snap => bigOne.innerText) = snap.val()
+
+// dbRef.on('value', function(snapshot) {
+    // bigOne.innerText = snapshot.val();
+// });
+	</script>
+	
+	
+</body>
+
+</html>
+
