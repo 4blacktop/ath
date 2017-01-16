@@ -43,6 +43,17 @@ i.icon.icon-calendar-white {
 	filter: invert(100%);
 }
 
+i.icon.icon-night {
+	width: 24px;
+	height: 24px; 
+	background-image: url("../img/icons/night_icon.svg"); 
+}
+
+i.icon.icon-day {
+	width: 24px;
+	height: 24px; 
+	background-image: url("../img/icons/day_icon.svg"); 
+}
 
 i.icon.icon-day-white {
 	width: 24px;

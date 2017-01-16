@@ -7,12 +7,19 @@ var myApp = new Framework7({
     template7Pages: true,
     // Specify Template7 data for pages
 	
+	
+	
+
+	
+	
+	
 
     template7Data: {
 		
 		// Will be applied for page with "projects.html" url
         // Just plain data object that we can pass for other pages using data-contextName attribute
-        'url:timeline.html': {cars: [
+
+		        cars: [
             {
                 vendor: 'Volkswagen',
                 model: 'Passat',
@@ -43,21 +50,23 @@ var myApp = new Framework7({
                 year: 2014,
                 description: ''
             },
-        ],
-		}
+				]	
     }
 });
 	
+
+
+console.log(myApp.template7Data);	
 	
 // Compile car template to HTML, its template is already compiled and accessible as Template7.templates.carTemplate
-var carHTML = Template7.templates.carTemplate({
-    vendor: 'Ford',
-    model: 'Mustang',
-    power: 300,
-    speed: 280
-});
+var carHTML = Template7.templates.carTemplate(myApp.template7Data.cars);
 
+document.getElementById('timeline-list').innerHTML = carHTML;
 console.log(carHTML);	
+
+
+
+
 	
 	
 	
@@ -91,6 +100,16 @@ var view5 = myApp.addView('#view-5', {
 var mainView = myApp.addView('.view-main');
 
 var dateAth = new Date().toISOString().split('T')[0];
+
+
+
+
+
+
+
+
+
+
 
 
 var calendarDefault = myApp.calendar({
