@@ -6,14 +6,6 @@ var myApp = new Framework7({
     // Enabled pages rendering using Template7
     template7Pages: true,
     // Specify Template7 data for pages
-	
-	
-	
-
-	
-	
-	
-
     template7Data: {
 		
 		// Will be applied for page with "projects.html" url
@@ -53,16 +45,29 @@ var myApp = new Framework7({
 				]	
     }
 });
+
 	
+	
+// Initialize Firebase
+var config = {
+	apiKey: "AIzaSyDN6REIe6FjLtIkWMrMW2C2v0RiqQ5lwmE",
+	authDomain: "awakening-to-hope.firebaseapp.com",
+	databaseURL: "https://awakening-to-hope.firebaseio.com",
+	storageBucket: "awakening-to-hope.appspot.com",
+	messagingSenderId: "623933765391"
+};
+firebase.initializeApp(config);	
 
 
-console.log(myApp.template7Data);	
+
+
 	
 // Compile car template to HTML, its template is already compiled and accessible as Template7.templates.carTemplate
 var carHTML = Template7.templates.carTemplate(myApp.template7Data.cars);
+// console.log(myApp.template7Data);	
 
 document.getElementById('timeline-list').innerHTML = carHTML;
-console.log(carHTML);	
+// console.log(carHTML);	
 
 
 
@@ -502,6 +507,77 @@ document.getElementById('dayly-verse-share').innerHTML = "<i class=\"f7-icons co
 myApp.onPageInit('index-1', function (page) {
 });  
 
+// login screen
+
+
+
+// open in JS
+// myApp.loginScreen();
+
+// console.log('login opened');
+	
+
+	
+		const txtEmail = document.getElementById('txtEmail');
+		const txtPassword = document.getElementById('txtPassword');
+		const btnLogin = document.getElementById('btnLogin');
+		const btnSignUp = document.getElementById('btnSignUp');
+		const btnLogout = document.getElementById('btnLogout');
+		
+		// add login event
+		btnLogin.addEventListener('click', function (e) {
+			// get email and pass
+			const email = txtEmail.value;
+			const pass = txtPassword.value;
+			const auth = firebase.auth();
+			//sign in
+			const promise = auth.signInWithEmailAndPassword(email, pass);
+			promise.catch(function (f) {
+			console.log(f.message);
+			});
+		});
+		
+		// add signup event
+		btnSignUp.addEventListener('click', function (e) {
+			// get email and pass
+			const email = txtEmail.value;
+			const pass = txtPassword.value;
+			const auth = firebase.auth();
+			//sign up
+			const promise = auth.createUserWithEmailAndPassword(email, pass);
+			promise.catch(function (f) {
+			console.log(f.message);
+			});
+		});
+		
+		// add log out event
+		btnLogout.addEventListener('click', function (e) {
+			firebase.auth().signOut();
+			// myApp.loginScreen();
+		});
+		
+		// add a realtime listener
+		firebase.auth().onAuthStateChanged( function(firebaseUser) {
+			if(firebaseUser) {
+				console.log(firebaseUser);
+				// document.getElementById( 'btnLogout' ).style.display = 'block';
+				// document.getElementById( 'btnSignUp' ).style.display = 'none';
+				myApp.closeModal();
+			} else {
+				console.log('not logged in');
+				// document.getElementById( 'btnLogout' ).style.display = 'none';
+				// document.getElementById( 'btnSignUp' ).style.display = 'block';
+				myApp.loginScreen();
+			}
+		
+		});	
+	
+	
+	
+	
+	
+	
+	
 // action sheet from plus icon in navbar - One group, three buttons
 $$('.ac-1').on('click', function () {
     var buttons = [
@@ -510,10 +586,10 @@ $$('.ac-1').on('click', function () {
             bold: true
         },
         {
-            text: 'Button2',
+            text: 'Add Entry',
 			            onClick: function () {
-                myApp.alert('Button1 clicked');
-				mainView.router.loadPage("settings-about.html");
+                // myApp.alert('Button1 clicked');
+				mainView.router.loadPage("add-entry.html#tab2");
             }
         },
         {
@@ -613,3 +689,40 @@ var calendarInline = myApp.calendar({
 myApp.onPageInit('timeline',function(page){
 	console.log("onPageInit" + page);
 }); 
+
+
+
+
+myApp.onPageInit('add-entry',function(page){
+	console.log("add-entry");
+	$$('.form-from-data').on('click', function(){
+	  // myApp.alert('thanks for add entry');
+	}); 
+	
+	
+	$$('.form-to-data').on('click', function(){
+	  var formData = myApp.formToData('#add-entry-form');
+	  // alert(JSON.stringify(formData));
+	  console.log(formData);
+	  
+	  var sFormData = JSON.stringify(formData);
+	  
+	  
+	  localStorage.setItem("object", sFormData)
+	  
+	}); 
+}); 
+
+
+
+
+
+
+
+
+
+// dbRef.on('value', snap => bigOne.innerText) = snap.val()
+
+// dbRef.on('value', function(snapshot) {
+    // bigOne.innerText = snapshot.val();
+// });
