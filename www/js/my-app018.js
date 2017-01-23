@@ -699,16 +699,22 @@ var calendarInline = myApp.calendar({
 	
 	onDayClick: function (p, dayContainer, year, month, day) {
 		// console.log(p, dayContainer, year, month, day);
+		// console.log(p);
+		// console.log(dayContainer);
+		// console.log(year+month+day);
+		// console.log(year+"-"+month+"-"+day);
 		month = month+1;
 		var tmpDate = year+"-"+month+"-"+day;
+		// console.log(tmpDate);
 		addEntryDateInput = new Date(tmpDate).toISOString().split('T')[0];
+		// console.log(addEntryDateInput);
+
+		// addEntryDateInput = new Date(year+"-"+month+1"-"+day);
 		view4.router.load({url:"add-entry.html"});
     }
 });       
 
-$$('.form-to-data').on('click', function(){
-	
-});
+
 
 
 
@@ -745,7 +751,6 @@ myApp.onPageInit('add-entry',function(page){
 	
 	var calendarDefault = myApp.calendar({
 		input: '#calendar-default',
-		closeOnSelect: true,
 		firstDay: 7,
 		onChange: function (values) {
 																												// console.log(values.value[0]);
