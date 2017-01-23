@@ -2,8 +2,6 @@
 // обновлять календарь
 // по кнопке выход после подтверждения удалять локалсторейдж localStorage.clear()
 // сохранять локалсторейдж на сервере (при каких услоиях?)
-// локальные уведомления
-// сделать фото и журнал фоток
 
 // Initialize your app
 var myApp = new Framework7({
@@ -22,8 +20,7 @@ var myApp = new Framework7({
     }  
 });
 
-// дата при открытии add-entry
-var addEntryDateInput = "";
+	
 	
 // Initialize Firebase
 var config = {
@@ -53,9 +50,9 @@ for (var i = 0; i < localStorage.length; i++){
 		console.log(itemNow);
 		myApp.template7Data.entryList.push(itemNow);
 		var eventDate = itemNow.date.split("-");
-		// console.log('eventDate' + eventDate);
+		console.log('eventDate' + eventDate);
 		var f = new Date(eventDate);
-		// console.log('f' + f);
+		console.log('f' + f);
 		calendarEvents.push(f);
 	}
 }
@@ -691,21 +688,6 @@ var calendarInline = myApp.calendar({
     },
     onMonthYearChangeStart: function (p) {
         $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-    },
-	
-	onMonthYearChangeStart: function (p) {
-        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-    },
-	
-	onDayClick: function (p, dayContainer, year, month, day) {
-		// console.log(p, dayContainer, year, month, day);
-		// console.log(p);
-		// console.log(dayContainer);
-		console.log(year+month+day);
-		// addEntryDateInput = new Date(year, month, day+1).toISOString().split('T')[0];
-		addEntryDateInput = new Date(year, month, day+1);
-		console.log(addEntryDateInput);
-		view4.router.load({url:"add-entry.html"});
     }
 });       
 
@@ -722,11 +704,6 @@ myApp.onPageInit('timeline',function(page){
 
 myApp.onPageInit('add-entry',function(page){
 	// console.log("onPageInit: add-entry");
-	
-	console.log(addEntryDateInput);
-	// document.getElementById('calendar-default').value = "asdfgdf";	
-	document.getElementById('calendar-default').value = addEntryDateInput;	
-	
 	$$('.form-from-data').on('click', function(){
 	  // myApp.alert('thanks for add entry');
 	}); 
@@ -771,12 +748,12 @@ myApp.onPageInit('add-entry',function(page){
 		for (var i = 0; i < localStorage.length; i++){
 			var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
 			if (itemNow.date) {
-				// console.log(itemNow);
+				console.log(itemNow);
 				myApp.template7Data.entryList.push(itemNow);
 				var eventDate = itemNow.date.split("-");
-				// console.log('eventDate' + eventDate);
+				console.log('eventDate' + eventDate);
 				var f = new Date(eventDate);
-				// console.log('f' + f);
+				console.log('f' + f);
 				calendarEvents.push(f);
 			}
 		}

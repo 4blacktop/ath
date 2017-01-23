@@ -1,10 +1,3 @@
-// 2do
-// обновлять календарь
-// по кнопке выход после подтверждения удалять локалсторейдж localStorage.clear()
-// сохранять локалсторейдж на сервере (при каких услоиях?)
-// локальные уведомления
-// сделать фото и журнал фоток
-
 // Initialize your app
 var myApp = new Framework7({
     // animateNavBackIcon: true,
@@ -13,17 +6,47 @@ var myApp = new Framework7({
     // Enabled pages rendering using Template7
     template7Pages: true,
     // Specify Template7 data for pages
-     template7Data: {
+    template7Data: {
 		
 		// Will be applied for page with "projects.html" url
         // Just plain data object that we can pass for other pages using data-contextName attribute
 
-		        entryList: []	
-    }  
+		        cars: [
+            {
+                vendor: 'Volkswagen',
+                model: 'Passat',
+                power: 152,
+                speed: 280,
+                weight: 1400,
+                color: 'black',
+                year: 2012,
+                description: ''
+            },
+            {
+                vendor: 'Skoda',
+                model: 'Superb',
+                power: 152,
+                speed: 260,
+                weight: 1600,
+                color: 'white',
+                year: 2013,
+                description: ''
+            },
+            {
+                vendor: 'Ford',
+                model: 'Mustang',
+                power: 480,
+                speed: 320,
+                weight: 1200,
+                color: 'red',
+                year: 2014,
+                description: ''
+            },
+				]	
+    }
 });
 
-// дата при открытии add-entry
-var addEntryDateInput = "";
+	
 	
 // Initialize Firebase
 var config = {
@@ -35,39 +58,22 @@ var config = {
 };
 firebase.initializeApp(config);	
 
-console.log(myApp.template7Data);	
 
-// myApp.template7Data
 
-/* for (var a in localStorage) {
-   // console.log(a, ' = ', localStorage[a]);
-	console.log(localStorage.getItem(localStorage.key(a)));
-   
-} */
 
-// поиск дней с событиями
-var calendarEvents = [];
-for (var i = 0; i < localStorage.length; i++){
-	var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
-	if (itemNow.date) {
-		console.log(itemNow);
-		myApp.template7Data.entryList.push(itemNow);
-		var eventDate = itemNow.date.split("-");
-		// console.log('eventDate' + eventDate);
-		var f = new Date(eventDate);
-		// console.log('f' + f);
-		calendarEvents.push(f);
-	}
-}
-
+	
 // Compile car template to HTML, its template is already compiled and accessible as Template7.templates.carTemplate
-var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
+var carHTML = Template7.templates.carTemplate(myApp.template7Data.cars);
 // console.log(myApp.template7Data);	
 
-document.getElementById('timeline-list').innerHTML = timelineHTML;
-// console.log(carHTML);
+document.getElementById('timeline-list').innerHTML = carHTML;
+// console.log(carHTML);	
+
+
+
+
 	
-console.log(myApp.template7Data);	
+	
 	
 	
 
@@ -635,39 +641,26 @@ var pickerMorning = myApp.picker({
   
 
   
-		
+
+
 
 
 
 // journal
 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
 
-// var calendarEvents: [
-	// new Date(2017, 9, 1),
-	// new Date(2017, 9, 5)
-	// ];
-	
-	
-// console.log(calendarEvents);	
-// var calendarEvents = [
-	// new Date(2017, 0, 1),
-	// new Date(2017, 0, 9),
-	// new Date(2017, 0, 10)
-	// ];
-	
-// var calendarEvents = myApp.template7Data.entryList;	
-console.log(calendarEvents);	
-// var today = new Date();
-// var weekLater = new Date().setDate(today.getDate() + 7);
+var today = new Date();
+var weekLater = new Date().setDate(today.getDate() + 7);
  
 // disabled: [new Date(2017, 01, 10), new Date(2017, 01, 11)],
-// closeOnSelect: true,
 var calendarInline = myApp.calendar({
     container: '#calendar-inline-container',
     value: [new Date()],
     weekHeader: true,
-	
-	    events: calendarEvents,
+	    events: {
+      from: today,
+      to: weekLater
+    },
     toolbarTemplate: 
         '<div class="toolbar calendar-custom-toolbar">' +
             '<div class="toolbar-inner">' +
@@ -691,27 +684,8 @@ var calendarInline = myApp.calendar({
     },
     onMonthYearChangeStart: function (p) {
         $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-    },
-	
-	onMonthYearChangeStart: function (p) {
-        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-    },
-	
-	onDayClick: function (p, dayContainer, year, month, day) {
-		// console.log(p, dayContainer, year, month, day);
-		// console.log(p);
-		// console.log(dayContainer);
-		console.log(year+month+day);
-		// addEntryDateInput = new Date(year, month, day+1).toISOString().split('T')[0];
-		addEntryDateInput = new Date(year, month, day+1);
-		console.log(addEntryDateInput);
-		view4.router.load({url:"add-entry.html"});
     }
 });       
-
-
-
-
 
 myApp.onPageInit('timeline',function(page){
 	console.log("onPageInit" + page);
@@ -722,11 +696,6 @@ myApp.onPageInit('timeline',function(page){
 
 myApp.onPageInit('add-entry',function(page){
 	// console.log("onPageInit: add-entry");
-	
-	console.log(addEntryDateInput);
-	// document.getElementById('calendar-default').value = "asdfgdf";	
-	document.getElementById('calendar-default').value = addEntryDateInput;	
-	
 	$$('.form-from-data').on('click', function(){
 	  // myApp.alert('thanks for add entry');
 	}); 
@@ -740,75 +709,78 @@ myApp.onPageInit('add-entry',function(page){
 	   }
 	});   
 
+	
+
 	$$('.get-data').on('click', function(){	
+		var results = [];
+		// var objects = localStorage.getItem("entryList");
+		var objects = [JSON.parse(localStorage.getItem("entryList"))];
+		// var objects = localStorage.getItem("entryList");
+		console.dir('objects: ' + objects);
 
-		var formData = myApp.formToData('#add-entry-form');
-		var getDate = formData.date; 
-	   console.log("getDate: " + getDate);
+		
+		var toSearch = "2017-01-03";
 
-		for (var a in localStorage) {
-		   // console.log(a, ' = ', localStorage[a]);
-		   
-			if (a == getDate) {
-				console.log(localStorage.getItem(localStorage.key(a)));
-				// console.log("found: " + a);
-				
+		for(var i=0; i<objects.length; i++) {
+			for(key in objects[i]) {
+				if(objects[i][key].indexOf(toSearch)!=-1) {
+				results.push(objects[i]);
+				}
 			}
 		}
-	
+		
+		console.dir('results: ' + results);
 	}); 
 	
 	
-	$$('.form-to-data').on('click', function(){
-		var formData = myApp.formToData('#add-entry-form');
-		console.log(formData.date);
-		console.log(formData);
-		localStorage.setItem(formData.date, JSON.stringify(formData));
-		
-		myApp.template7Data.entryList = [];
-		// поиск дней с событиями
-		var calendarEvents = [];
-		for (var i = 0; i < localStorage.length; i++){
-			var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
-			if (itemNow.date) {
-				// console.log(itemNow);
-				myApp.template7Data.entryList.push(itemNow);
-				var eventDate = itemNow.date.split("-");
-				// console.log('eventDate' + eventDate);
-				var f = new Date(eventDate);
-				// console.log('f' + f);
-				calendarEvents.push(f);
-			}
-		}
-
-		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
-		document.getElementById('timeline-list').innerHTML = timelineHTML;	
-	});
 	
-
-/* 	$$('.get-data-multi').on('click', function(){	
-		var results = [];
-		var objects = [JSON.parse(localStorage.getItem("entryList"))][0];
-		for (var i = 0; i < objects.length; i++) {
-			if(objects[i][0].date.indexOf("2017-01-03")!=-1) {
-				console.log(objects[i][0]);
-				}
-		}
-		var toSearch = "2017-01-03";
+/* 	$$('.form-to-data').on('click', function(){
+		var txtDateEntry = document.getElementById('calendar-default');
+		// console.log('txtDateEntry' + txtDateEntry);
+		var dateEntry = txtDateEntry.value;
+		// console.log('dateEntry: ' + dateEntry);
+		// var formData = {dateEntry:{myApp.formToData('#add-entry-form')};
+		// var formData = {test:myApp.formToData('#add-entry-form')};
+		// alert(JSON.stringify(formData));
+		// console.log(formData);
+		// console.dir(formData);
+		
+		// var formData = {dateEntry:dateEntry, data:myApp.formToData('#add-entry-form')};
+		var formData = myApp.formToData('#add-entry-form');
+		var sFormData = JSON.stringify(formData);
+		// console.log('sFormData' + sFormData);
+		
+		
+		var entryList = localStorage.getItem("entryList");
+		
+		localStorage.setItem("entryList", entryList + sFormData);
+		// console.log('entryList: ' + entryList);
+		console.log(localStorage.getItem('entryList'));
+		
+		// localStorage.setItem('date' + dateEntry, sFormData)
+		
+		// Obj = { 'pizza' : { 'name' : 'bob' }, 'sushi' : { 'name' : 'john' } };
+		// console.log(Obj);
+		
+		
+		// sFormData = sFormData + '\n' + localStorage.getItem("object"); // работает
+		// localStorage.setItem('date' + dateEntry, sFormData)
+		// console.log('date' + dateEntry);
+		// tmpFormData = localStorage.getItem('date' + dateEntry);
+		// console.log(tmpFormData);
 	});  */
 	
-
-
-/* 	$$('.form-to-data-multi').on('click', function(){
-		var formData = [myApp.formToData('#add-entry-form')];
+	$$('.form-to-data').on('click', function(){
+		var formData = myApp.formToData('#add-entry-form');
+		// alert(JSON.stringify(formData));
 		console.log(formData);
-		var oldItems = JSON.parse(localStorage.getItem('entryList')) || [];
-		console.log(oldItems);
-		oldItems.push(formData);
-		localStorage.setItem("entryList", JSON.stringify(oldItems));
-	}); */
-
-
+		var sFormData = JSON.stringify(formData);
+		// localStorage.setItem("entryList", sFormData);
+		// var entryList = localStorage.getItem("entryList");
+		// localStorage.setItem("entryList", entryList + "," + sFormData);
+		localStorage.setItem("entryList", sFormData);
+		console.log("form-to-data entryList: " + localStorage.getItem("entryList"));
+	});
 }); 
 
 

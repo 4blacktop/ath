@@ -1,6 +1,6 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.atgm.awakeningtohope" version="0.0.1" android-versionCode="001" >
-<name>Awakening to Hope</name>
-<description>Awakening to Hope</description>
+<name>Awakening to God Today</name>
+<description>Awakening to God Today</description>
 <author href="http://vladimirklochkov.ru" email="4blogga@gmail.com">Vladimir Klochkov</author>
 <content src="index.html"/>
 <preference name="permissions" value="none"/>
