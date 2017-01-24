@@ -858,14 +858,32 @@ window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
  */
 
  function shareImage() {
-      myApp.alert("shared!");
+      // myApp.alert("shared!");
 	  window.plugins.socialsharing.share(null, null, 'img/daily-verses-images/' + dailyVerse[dateAth][2]  + '.png', null)
     }
 
+	
+/**  * Take picture with camera  */
+function takePicture() {
+	navigator.camera.getPicture(
+		function(uri) {
+			var img = document.getElementById('camera_image');
+			img.style.visibility = "visible";
+			img.style.display = "block";
+			img.src = uri;
+			// document.getElementById('camera_status').innerHTML = "Success";
+		},
+		function(e) {
+			myApp.alert("Error getting picture: " + e);
+			// console.log("Error getting picture: " + e);
+			// document.getElementById('camera_status').innerHTML = "Error getting picture.";
+		},
+		{ quality: 50, destinationType: navigator.camera.DestinationType.FILE_URI});
+};	
 
 
-// dbRef.on('value', snap => bigOne.innerText) = snap.val()
-
-// dbRef.on('value', function(snapshot) {
-    // bigOne.innerText = snapshot.val();
-// });
+document.addEventListener("offline", onOffline, false);
+ 
+function onOffline() {
+    myApp.alert("Please check Internet connection");
+}
