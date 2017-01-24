@@ -859,8 +859,9 @@ window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
 
  function shareImage() {
       // myApp.alert("shared!");
-	  // window.plugins.socialsharing.share(null, null, 'img/daily-verses-images/' + dailyVerse[dateAth][2]  + '.png', null);
-	  window.plugins.socialsharing.share('Message, subject, image and link', 'The subject', 'https://www.google.nl/images/srpr/logo4w.png', 'http://www.x-services.nl');
+	  // window.plugins.socialsharing.share(null, null, 'www/img/daily-verses-images/' + dailyVerse[dateAth][2]  + '.png', null);
+	  // window.plugins.socialsharing.share('Message, subject, image and link', 'The subject', 'https://www.google.nl/images/srpr/logo4w.png', 'http://www.x-services.nl');
+	  window.plugins.socialsharing.share('Awakening to God Today', null, 'www/img/daily-verses-images/' + dailyVerse[dateAth][2]  + '.png', null);
     }
 
 	
