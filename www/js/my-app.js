@@ -498,7 +498,11 @@ var dailyVerse = {
 // display Daily Verse
 document.getElementById('dayly-verse-text').innerHTML = dailyVerse[dateAth][0];
 document.getElementById('dayly-verse-from').innerHTML = dailyVerse[dateAth][1];
+
 // document.getElementById('dayly-verse-share').innerHTML = "<i class=\"f7-icons color-white\">share</i><br />dateAth: " + dateAth + "<br />img URL: " + dailyVerse[dateAth][2];
+
+// document.getElementById('dayly-verse-share').innerHTML = '<img src="img/daily-verses-images/' + dailyVerse[dateAth][2]  + '.png">';
+
 
 
 myApp.onPageInit('index-1', function (page) {
@@ -828,6 +832,8 @@ myApp.onPageInit('add-entry',function(page){
 
 // social sharing
 // this is the complete list of currently supported params you can pass to the plugin (all optional) 
+
+/* 
 var options = {
   message: 'share this', // not supported on some apps (Facebook, Instagram) 
   subject: 'the subject', // fi. for email 
@@ -837,18 +843,24 @@ var options = {
 }
  
 var onSuccess = function(result) {
-  console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true 
-  console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false) 
+  // console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true 
+  myApp.alert("Share completed? " + result.completed); // On Android apps mostly return false even while it's true 
+  // console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false) 
+  myApp.alert("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false) 
 }
  
 var onError = function(msg) {
-  console.log("Sharing failed with message: " + msg);
+  // console.log("Sharing failed with message: " + msg);
+  myApp.alert("Sharing failed with message: " + msg);
 }
  
 window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+ */
 
-
-
+ function shareImage() {
+      myApp.alert("shared!");
+	  window.plugins.socialsharing.share(null, null, 'img/daily-verses-images/' + dailyVerse[dateAth][2]  + '.png', null)
+    }
 
 
 
