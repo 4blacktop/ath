@@ -101,8 +101,10 @@
 <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
 
 <!-- social sharing plugin installed -->
-<feature name="SocialSharing">
+<!-- <feature name="SocialSharing">
 	<param name="android-package" value="nl.xservices.plugins.SocialSharing" />
-</feature>
+</feature> -->
+
+<plugin name="cordova-plugin-x-socialsharing" source="npm" />
 
 </widget>
