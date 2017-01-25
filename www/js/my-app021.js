@@ -812,13 +812,7 @@ function onOffline() {
 
 
 
-  var storedData = myApp.formGetData('reminders-form');
-  if(storedData) {
-    myApp.alert(JSON.stringify(storedData));
-  }
-  else {
-    myApp.alert('There is no stored data for this form yet. Try to change any field')
-  }
+
 
 
 
@@ -826,28 +820,21 @@ function onOffline() {
 document.addEventListener('deviceready', function () {
 // local notifications
 
-
-
 cordova.plugins.notification.local.schedule([{
 	id: 1,
     text: "What is saying to you today?",
     sound: "file://sounds/not.caf",
-    every: "day"
+    every: day
 },{
 	id: 2,
     text: "What do you want to thank God for today?",
     sound: "file://sounds/not.caf",
-    every: "day"
-},{
-	id: 4,
-    text: "What do you want to thank God for today?",
-    sound: "file://sounds/not.caf",
-    every: 1
+    every: day
 },{
 	id: 3,
     text: "Tap to read today's verse",
     sound: "file://sounds/not.caf",
-    every: "day"
+    every: day
 }]);
 
 
