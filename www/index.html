@@ -63,7 +63,7 @@
                 </ul>
 				
                 <div class="list-block-label">
-				 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+				 <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->
                 <p><a href="#" class="close-login-screen">Close Login Screen</a></p>
 				
 				</div>
@@ -73,29 +73,6 @@
         </div>
       </div>
   </div>  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
     <!-- Status bar overlay for fullscreen mode-->
     <div class="statusbar-overlay"></div>
@@ -144,7 +121,8 @@
               <div id="dayly-verse-from" class="content-block color-white" style="font-family: 'Times New Roman', Times, serif; text-align: center; vertical-align: middle; font-style: italic"> </div>
 			  
 			  <!-- <button onclick="shareImage()">share image</button> -->
-			  <center><a href="#" class="color-white" onclick="takePicture();"><i class="icon icon-share"> </i>Share</a></`center>
+			  <!-- <center><a href="#" class="color-white" onclick="takePicture();"><i class="icon icon-share"> </i>Share</a></`center> -->
+			  <center><a href="#" class="color-white" onclick="shareImage();"><i class="icon icon-share"> </i>Share</a></`center>
 			  <!-- <a href="#" onclick="takePicture();" class="button button-big button-fill button-raised color-blue">make photo</a> -->
 			  
               <div id="dayly-verse-share" class="content-block color-white" style="text-align: center; vertical-align: middle;"></div>
@@ -189,7 +167,8 @@
 	{{#each this}}
     <li>
       <a href="#" class="item-link item-content">
-        <div class="item-media"><img src="http://lorempixel.com/80/80/" width="80"></div>
+        <!-- <div class="item-media"><img src="http://lorempixel.com/80/80/" width="80"></div> -->
+        <div class="item-media"><img src="{{img}}" width="80"></div>
         <div class="item-inner">
           <div class="item-title-row">
             <div class="item-title">Date: {{date}} </div>
@@ -256,9 +235,9 @@
 				</div>
 				<div class="center">Journal</div>
 				<div class="right">
-					<a href="#" class="link icon-only">
+					<!-- <a href="#" class="link icon-only">
 					<i class="f7-icons color-white">add</i>
-					</a>
+					</a> -->
 				</div>
 			</div>
 		</div>  
