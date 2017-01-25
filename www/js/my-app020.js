@@ -1,11 +1,11 @@
+// 2do
 // по кнопке выход после подтверждения удалять локалсторейдж localStorage.clear()
 // сохранять локалсторейдж на сервере (при каких услоиях?) - собирать весь(?) локалсторейдж и делать его в JSON
 // загружать локалсторейдж с сервера при логине
 // локальные уведомления
 // сделать фото и журнал фоток
+// шеринг имиджа
 // проверить сплэшскрин
-// смена пароля
-// после сохранения редирект?
 
 
 // Initialize your app
@@ -17,7 +17,11 @@ var myApp = new Framework7({
     template7Pages: true,
     // Specify Template7 data for pages
      template7Data: {
-		entryList: []	
+		
+		// Will be applied for page with "projects.html" url
+        // Just plain data object that we can pass for other pages using data-contextName attribute
+
+		        entryList: []	
     }  
 });
 
@@ -34,25 +38,9 @@ var config = {
 };
 firebase.initializeApp(config);	
 
-// add a realtime listener
-firebase.auth().onAuthStateChanged( function(firebaseUser) {
-	if(firebaseUser) {
-		// console.log(firebaseUser);
-		console.log('logged in');
-		myApp.alert('Logged in');
-		// document.getElementById( 'btnLogout' ).style.display = 'block';
-		// document.getElementById( 'btnSignUp' ).style.display = 'none';
-		myApp.closeModal();
-	} else {
-		myApp.alert('Logged out');
-		console.log('not logged in');
-		// document.getElementById( 'btnLogout' ).style.display = 'none';
-		// document.getElementById( 'btnSignUp' ).style.display = 'block';
-		myApp.loginScreen();
-	}
-});	
+// console.log(myApp.template7Data);	
 
-
+// myApp.template7Data
 
 /* for (var a in localStorage) {
    // console.log(a, ' = ', localStorage[a]);
@@ -77,8 +65,14 @@ for (var i = 0; i < localStorage.length; i++){
 
 // Compile car template to HTML, its template is already compiled and accessible as Template7.templates.carTemplate
 var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
-document.getElementById('timeline-list').innerHTML = timelineHTML;
+// console.log(myApp.template7Data);	
 
+document.getElementById('timeline-list').innerHTML = timelineHTML;
+// console.log(carHTML);
+	
+// console.log(myApp.template7Data);	
+	
+	
 
 // Export selectors engine
 var $$ = Dom7;
@@ -105,14 +99,26 @@ var view5 = myApp.addView('#view-5', {
     dynamicNavbar: true
 });
 
-// var mainView = myApp.addView('.view-main');
+var mainView = myApp.addView('.view-main');
 
 var dateAth = new Date().toISOString().split('T')[0];
+
+
+
+
+
+
+
+
+
+
+
 
 var calendarDefault = myApp.calendar({
     input: '#calendar-default',
 	firstDay: 7,
 	onChange: function (values) {
+																																// console.log(values.value[0]);
    }
 });   
 
@@ -487,56 +493,98 @@ var dailyVerse = {
 };
 
 
+																															// console.log(dateAth);
+
 // display Daily Verse
 document.getElementById('dayly-verse-text').innerHTML = dailyVerse[dateAth][0];
 document.getElementById('dayly-verse-from').innerHTML = dailyVerse[dateAth][1];
 
+// document.getElementById('dayly-verse-share').innerHTML = "<i class=\"f7-icons color-white\">share</i><br />dateAth: " + dateAth + "<br />img URL: " + dailyVerse[dateAth][2];
+
+// document.getElementById('dayly-verse-share').innerHTML = '<img src="img/daily-verses-images/' + dailyVerse[dateAth][2]  + '.png">';
+
+
+
 myApp.onPageInit('index-1', function (page) {
 });  
 
+// login screen
+
+
+
+// open in JS
+// myApp.loginScreen();
+
+// console.log('login opened');
+	
 
 	
-const txtEmail = document.getElementById('txtEmail');
-const txtPassword = document.getElementById('txtPassword');
-const btnLogin = document.getElementById('btnLogin');
-const btnSignUp = document.getElementById('btnSignUp');
-const btnLogout = document.getElementById('btnLogout');
-
-// add login event
-btnLogin.addEventListener('click', function (e) {
-	myApp.alert('btnLogin');
-	// get email and pass
-	const email = txtEmail.value;
-	const pass = txtPassword.value;
-	const auth = firebase.auth();
-	//sign in
-	const promise = auth.signInWithEmailAndPassword(email, pass);
-	promise.catch(function (f) {
-	myApp.alert(f.message);
-	console.log(f.message);
-	});
-});
+		const txtEmail = document.getElementById('txtEmail');
+		const txtPassword = document.getElementById('txtPassword');
+		const btnLogin = document.getElementById('btnLogin');
+		const btnSignUp = document.getElementById('btnSignUp');
+		const btnLogout = document.getElementById('btnLogout');
 		
-// add signup event
-btnSignUp.addEventListener('click', function (e) {
-	myApp.alert('signup');
-	// get email and pass
-	const email = txtEmail.value;
-	const pass = txtPassword.value;
-	const auth = firebase.auth();
-	//sign up
-	const promise = auth.createUserWithEmailAndPassword(email, pass);
-	promise.catch(function (f) {
-	console.log(f.message);
-	});
-});
-
-// add log out event
-btnLogout.addEventListener('click', function (e) {
-	firebase.auth().signOut();
-	// myApp.loginScreen();
-});
-
+		// add login event
+		btnLogin.addEventListener('click', function (e) {
+			myApp.alert('btnLogin');
+			// get email and pass
+			const email = txtEmail.value;
+			const pass = txtPassword.value;
+			const auth = firebase.auth();
+			//sign in
+			const promise = auth.signInWithEmailAndPassword(email, pass);
+			promise.catch(function (f) {
+			myApp.alert(f.message);
+			console.log(f.message);
+			});
+		});
+		
+		// add signup event
+		btnSignUp.addEventListener('click', function (e) {
+			myApp.alert('signup');
+			// get email and pass
+			const email = txtEmail.value;
+			const pass = txtPassword.value;
+			const auth = firebase.auth();
+			//sign up
+			const promise = auth.createUserWithEmailAndPassword(email, pass);
+			promise.catch(function (f) {
+			console.log(f.message);
+			});
+		});
+		
+		// add log out event
+		btnLogout.addEventListener('click', function (e) {
+			firebase.auth().signOut();
+			// myApp.loginScreen();
+		});
+		
+		// add a realtime listener
+		firebase.auth().onAuthStateChanged( function(firebaseUser) {
+			if(firebaseUser) {
+				// console.log(firebaseUser);
+				console.log('logged in');
+				myApp.alert('Logged in');
+				// document.getElementById( 'btnLogout' ).style.display = 'block';
+				// document.getElementById( 'btnSignUp' ).style.display = 'none';
+				myApp.closeModal();
+			} else {
+				myApp.alert('Logged out');
+				console.log('not logged in');
+				// document.getElementById( 'btnLogout' ).style.display = 'none';
+				// document.getElementById( 'btnSignUp' ).style.display = 'block';
+				myApp.loginScreen();
+			}
+		
+		});	
+	
+	
+	
+	
+	
+	
+	
 // action sheet from plus icon in navbar - One group, three buttons
 $$('.ac-1').on('click', function () {
     var buttons = [
@@ -560,7 +608,7 @@ $$('.ac-1').on('click', function () {
 });
 
 
-// stored data debug reminders
+// stored data debug
   var storedData = myApp.formGetData('reminders-form');
   if(storedData) {
 																									// console.log("reminders-form stored data string: " + JSON.stringify(storedData));
@@ -597,9 +645,35 @@ var pickerMorning = myApp.picker({
 	
 });  
   
+
+  
+		
+
+
+
 // journal
 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
 
+// var calendarEvents: [
+	// new Date(2017, 9, 1),
+	// new Date(2017, 9, 5)
+	// ];
+	
+	
+// console.log(calendarEvents);	
+// var calendarEvents = [
+	// new Date(2017, 0, 1),
+	// new Date(2017, 0, 9),
+	// new Date(2017, 0, 10)
+	// ];
+	
+// var calendarEvents = myApp.template7Data.entryList;	
+// console.log(calendarEvents);	
+// var today = new Date();
+// var weekLater = new Date().setDate(today.getDate() + 7);
+ 
+// disabled: [new Date(2017, 01, 10), new Date(2017, 01, 11)],
+// closeOnSelect: true,
 var calendarInline = myApp.calendar({
     container: '#calendar-inline-container',
     value: [new Date()],
@@ -644,8 +718,9 @@ var calendarInline = myApp.calendar({
     }
 });       
 
-// $$('.form-to-data').on('click', function(){
-// });
+$$('.form-to-data').on('click', function(){
+	
+});
 
 
 
@@ -655,7 +730,7 @@ myApp.onPageInit('timeline',function(page){
 
 
 
-// форма добавления/редактирования записи
+
 myApp.onPageInit('add-entry',function(page){
 	// console.log("onPageInit: add-entry");
 	
@@ -679,6 +754,7 @@ myApp.onPageInit('add-entry',function(page){
 	  // myApp.alert('thanks for add entry');
 	}); 
 	
+	
 	var calendarDefault = myApp.calendar({
 		input: '#calendar-default',
 		closeOnSelect: true,
@@ -688,24 +764,26 @@ myApp.onPageInit('add-entry',function(page){
 	   }
 	});   
 
-	$$('.get-data').on('click', function(){
+	$$('.get-data').on('click', function(){	
+
 		var formData = myApp.formToData('#add-entry-form');
 		var getDate = formData.date; 
-		console.log("getDate: " + getDate);
+	   console.log("getDate: " + getDate);
 
-		// обновим 
 		for (var a in localStorage) {
 		   // console.log(a, ' = ', localStorage[a]);
+		   
 			if (a == getDate) {
 				console.log(localStorage.getItem(localStorage.key(a)));
 				// console.log("found: " + a);
+				
 			}
 		}
+	
 	}); 
 	
+	
 	$$('.form-to-data').on('click', function(){
-		document.getElementById("img").setAttribute("value", savedImage);
-		myApp.alert('savedImage: ' + savedImage);
 		var formData = myApp.formToData('#add-entry-form');
 		console.log(formData.date);
 		console.log(formData);
@@ -726,19 +804,24 @@ myApp.onPageInit('add-entry',function(page){
 				calendarEvents.push(f);
 			}
 		}
+
 		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
-		document.getElementById('timeline-list').innerHTML = timelineHTML;
-		myApp.alert('Entry saved');
-		// view2.router.back();
+		document.getElementById('timeline-list').innerHTML = timelineHTML;	
 	});
+	
 }); 
 
 // social sharing
  function shareImage() {
-	window.plugins.socialsharing.share('Awakening to God Today', null, 'www/img/daily-verses-images/' + dailyVerse[dateAth][2]  + '.png', null);
+      // myApp.alert("shared!");
+	  // window.plugins.socialsharing.share(null, null, 'www/img/daily-verses-images/' + dailyVerse[dateAth][2]  + '.png', null);
+	  // window.plugins.socialsharing.share('Message, subject, image and link', 'The subject', 'https://www.google.nl/images/srpr/logo4w.png', 'http://www.x-services.nl');
+	  window.plugins.socialsharing.share('Awakening to God Today', null, 'www/img/daily-verses-images/' + dailyVerse[dateAth][2]  + '.png', null);
     }
 
-// Take picture with camera
+	
+/**  * Take picture with camera  */
+
 function takePicture() {
 navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
     destinationType: Camera.DestinationType.FILE_URI });
@@ -752,11 +835,35 @@ function onSuccess(imageURI) {
 
 function onFail(message) {
     myApp.alert('Failed because: ' + message);
-	}
+}
 };	
 
-// если сейчас в оффлайне
+/* function takePicture() {
+	navigator.camera.getPicture(
+		function(uri) {
+			var img = document.getElementById('camera_image');
+			img.style.visibility = "visible";
+			img.style.display = "block";
+			img.src = uri;
+			myApp.alert("Error getting picture: " + e);
+			// document.getElementById('camera_status').innerHTML = "Success";
+		},
+		function(e) {
+			myApp.alert("Error getting picture: " + e);
+			// console.log("Error getting picture: " + e);
+			// document.getElementById('camera_status').innerHTML = "Error getting picture.";
+		},
+		{ quality: 50, destinationType: navigator.camera.DestinationType.FILE_URI});
+};	
+
+function onSuccess(imageURI) {
+    var image = document.getElementById('myImage');
+    myApp.alert("imageURI: " + imageURI);
+}
+ */
+
 document.addEventListener("offline", onOffline, false);
+ 
 function onOffline() {
     myApp.alert("Please check Internet connection");
 }

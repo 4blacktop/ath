@@ -127,9 +127,10 @@
 				</div>
 				<div class="center">Daily Verse</div>
 				<div class="right">
-					<a href="add-entry.html" class="link icon-only">
-					<i class="f7-icons color-white">add</i>
-					</a>
+					<!-- <a href="add-entry.html" class="ac-1 link icon-only" data-view="#view-4"> -->
+					<!-- <a href="#" class="ac-1 link icon-only" data-view=".view-4">
+					<i class="f7-icons color-red">add</i>
+					</a> -->
 				</div>
 			</div>
 		</div>  
@@ -172,7 +173,7 @@
 				</div>
 				<div class="center">Timeline</div>
 				<div class="right">
-					<a href="add-entry.html" class="link icon-only">
+					<a href="#" class="link icon-only">
 					<i class="f7-icons color-white">add</i>
 					</a>
 				</div>
@@ -181,6 +182,57 @@
         <div class="pages navbar-through">
           <div data-page="index-2" class="page">
             <div class="page-content">
+			
+<!-- 
+{{#each cinema.all.posts}}
+	<li>
+		<a href="post.html" class="item-content item-link no-ripple" data-context-name="cinema.all.posts.{{@index}}">
+			<div class="item-media"><img src="{{imgurl}}" width="60"></div>
+			<div class="item-inner">
+				<div class="item-title-row">
+					<div class="itempic-text">{{title}}</div>
+					<div class="itempic-subtitle">{{description}}</div>
+				</div>
+			</div>
+		</a>
+	</li>
+{{/each}} 
+-->
+
+<!-- работает -->
+<!-- 
+<script type="text/template7" id="carTemplate">
+{{#each this}}
+
+    <p>I have a great car, it is {{vendor}} {{model}}, made in {{year}} year.</p>
+    <p>It has {{power}} hp engine with {{speed}} km/h maximum speed.</p>
+{{/each}} 
+</script> 
+ --> 
+ 
+<!--  <script type="text/template7" id="timelineTemplate">
+<div class="content-block-title">Songs</div>
+<div class="list-block media-list">
+  <ul>
+	{{#each this}}
+    <li>
+      <a href="#" class="item-link item-content">
+        <div class="item-media"><img src="http://lorempixel.com/80/80/" width="80"></div>
+        <div class="item-inner">
+          <div class="item-title-row">
+            <div class="item-title">it is {{vendor}} {{model}}</div>
+            <div class="item-after"><i class="icon icon-day"></i>{{model}}</div>
+          </div>
+          <div class="item-subtitle"><i class="icon icon-day"></i>made in {{year}} year.</div>
+          <div class="item-subtitle"><i class="icon icon-night"></i>made in {{year}} year.</div>
+          <div class="item-text">It has {{power}} hp engine with {{speed}} km/h maximum speed.</div>
+        </div>
+      </a>
+    </li>
+    {{/each}} 
+  </ul>
+</div>
+</script>  -->
 
 <script type="text/template7" id="timelineTemplate">
 <div class="content-block-title">Timeline</div>
@@ -212,6 +264,36 @@
 
 <div id="timeline-list"></div>
 
+			
+			
+			
+			
+              <!-- <div class="content-block">
+                <p>This is a second view. Lets, for example, have here some internal pages with navbar navigation</p>
+              </div>
+              <div class="list-block">
+                <ul>
+                  <li><a href="about.html" class="item-link">
+                      <div class="item-content">
+                        <div class="item-inner"> 
+                          <div class="item-title">About Us</div>
+                        </div>
+                      </div></a></li>
+                  <li><a href="timeline.html" class="item-link">
+                      <div class="item-content"> 
+                        <div class="item-inner">
+                          <div class="item-title">timeline</div>
+                        </div>
+                      </div></a></li>
+					  
+				  <li><a href="#" class="item-link open-login-screen">
+                      <div class="item-content"> 
+                        <div class="item-inner">
+                          <div class="item-title">login screen</div>
+                        </div>
+				  </div></a></li>	  
+                </ul>
+              </div> -->
             </div>
           </div>
         </div>
@@ -227,7 +309,7 @@
 				</div>
 				<div class="center">Photos</div>
 				<div class="right">
-					<a href="add-entry.html" class="link icon-only">
+					<a href="#" class="link icon-only">
 					<i class="f7-icons color-white">add</i>
 					</a>
 				</div>
@@ -321,7 +403,16 @@
           <div data-page="index-5" class="page">
             <div class="page-content">
 			 <div class="content-block-title">Account</div>
+			 
+			 
+			 
+			 
 
+			 
+			 
+			 
+			 
+			 
               <div class="list-block">
                 <ul>
                   <li><a href="settings-about.html" class="item-link">

@@ -126,16 +126,11 @@ i.icon.icon-timeline-white {
 	filter: invert(100%);
 }
 
-
-
-
-
-
-
-
-
-
-
+i.icon.icon-share {
+  width: 24px;
+  height: 24px;
+ 	background-image: url("../img/icons/ic_share_white_24px.svg"); 
+}
 
 
 i.icon.icon-settings-white {
