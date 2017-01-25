@@ -785,7 +785,8 @@ navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
 
 function onSuccess(imageURI) {
     myApp.alert('imageURI: ' + imageURI);
-    var image = document.getElementById('camera_image');
+    // var image = document.getElementById('camera_image');
+    var image = document.getElementById('myImage');
     image.src = imageURI;
 	var savedImage = imageURI;
 }
@@ -811,14 +812,15 @@ function onOffline() {
 
 
 
-
-  var storedData = myApp.formGetData('reminders-form');
-  if(storedData) {
-    myApp.alert(JSON.stringify(storedData));
-  }
-  else {
-    myApp.alert('There is no stored data for this form yet. Try to change any field')
-  }
+// данные для reminders
+// {"morning-reminder-time":"10 00","morning-reminder-checkbox":["on"],"evening-reminder-time":"02 02","evening-reminder-checkbox":["on"],"verse-reminder-time":"00 04","verse-reminder-checkbox":["on"]}
+var storedData = myApp.formGetData('reminders-form');
+if(storedData) {
+	myApp.alert(JSON.stringify(storedData));
+}
+else {
+	myApp.alert('There is no stored data for this form yet. Try to change any field')
+}
 
 
 
