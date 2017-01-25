@@ -877,9 +877,9 @@ navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
     destinationType: Camera.DestinationType.FILE_URI });
 
 function onSuccess(imageURI) {
-    myApp.alert('imageURI: ' + imageURI);
     // var image = document.getElementById('myImage');
-    // image.src = imageURI;
+    image.src = imageURI;
+    myApp.alert('imageURI: ' + imageURI);
 }
 
 function onFail(message) {
