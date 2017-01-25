@@ -745,7 +745,7 @@ navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
 
 function onSuccess(imageURI) {
     myApp.alert('imageURI: ' + imageURI);
-    var image = document.getElementById('myImage');
+    var image = document.getElementById('camera_image');
     image.src = imageURI;
 	var savedImage = imageURI;
 }
