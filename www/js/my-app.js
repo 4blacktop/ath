@@ -878,8 +878,8 @@ navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
 
 function onSuccess(imageURI) {
     myApp.alert('imageURI: ' + imageURI);
-    // var image = document.getElementById('myImage');
-    // image.src = imageURI;
+    var image = document.getElementById('myImage');
+    image.src = imageURI;
 }
 
 function onFail(message) {
