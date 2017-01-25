@@ -527,6 +527,7 @@ myApp.onPageInit('index-1', function (page) {
 		
 		// add login event
 		btnLogin.addEventListener('click', function (e) {
+			myApp.alert('btnLogin');
 			// get email and pass
 			const email = txtEmail.value;
 			const pass = txtPassword.value;
@@ -534,12 +535,14 @@ myApp.onPageInit('index-1', function (page) {
 			//sign in
 			const promise = auth.signInWithEmailAndPassword(email, pass);
 			promise.catch(function (f) {
+			myApp.alert(f.message);
 			console.log(f.message);
 			});
 		});
 		
 		// add signup event
 		btnSignUp.addEventListener('click', function (e) {
+			myApp.alert('signup');
 			// get email and pass
 			const email = txtEmail.value;
 			const pass = txtPassword.value;
@@ -562,10 +565,12 @@ myApp.onPageInit('index-1', function (page) {
 			if(firebaseUser) {
 				// console.log(firebaseUser);
 				console.log('logged in');
+				myApp.alert('Logged in');
 				// document.getElementById( 'btnLogout' ).style.display = 'block';
 				// document.getElementById( 'btnSignUp' ).style.display = 'none';
 				myApp.closeModal();
 			} else {
+				myApp.alert('Logged out');
 				console.log('not logged in');
 				// document.getElementById( 'btnLogout' ).style.display = 'none';
 				// document.getElementById( 'btnSignUp' ).style.display = 'block';
@@ -882,6 +887,11 @@ function takePicture() {
 		},
 		{ quality: 50, destinationType: navigator.camera.DestinationType.FILE_URI});
 };	
+
+function onSuccess(imageURI) {
+    var image = document.getElementById('myImage');
+    myApp.alert("imageURI: " + imageURI);
+}
 
 
 document.addEventListener("offline", onOffline, false);
