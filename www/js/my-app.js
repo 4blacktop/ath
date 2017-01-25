@@ -872,7 +872,7 @@ window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
 	
 /**  * Take picture with camera  */
 
-
+function takePicture() {
 navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
     destinationType: Camera.DestinationType.FILE_URI });
 
@@ -885,6 +885,7 @@ function onSuccess(imageURI) {
 function onFail(message) {
     myApp.alert('Failed because: ' + message);
 }
+};	
 
 /* function takePicture() {
 	navigator.camera.getPicture(
