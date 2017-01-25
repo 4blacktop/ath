@@ -704,7 +704,7 @@ myApp.onPageInit('add-entry',function(page){
 	}); 
 	
 	$$('.form-to-data').on('click', function(){
-		document.getElementById("img").setAttribute("value", savedImage);
+		// document.getElementById("img").setAttribute("value", savedImage);
 		myApp.alert('savedImage: ' + savedImage);
 		var formData = myApp.formToData('#add-entry-form');
 		console.log(formData.date);
