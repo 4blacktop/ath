@@ -871,13 +871,29 @@ window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
 
 	
 /**  * Take picture with camera  */
-function takePicture() {
+
+
+navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+    destinationType: Camera.DestinationType.FILE_URI });
+
+function onSuccess(imageURI) {
+    // var image = document.getElementById('myImage');
+    image.src = imageURI;
+    myApp.alert('imageURI: ' + imageURI);
+}
+
+function onFail(message) {
+    myApp.alert('Failed because: ' + message);
+}
+
+/* function takePicture() {
 	navigator.camera.getPicture(
 		function(uri) {
 			var img = document.getElementById('camera_image');
 			img.style.visibility = "visible";
 			img.style.display = "block";
 			img.src = uri;
+			myApp.alert("Error getting picture: " + e);
 			// document.getElementById('camera_status').innerHTML = "Success";
 		},
 		function(e) {
@@ -892,7 +908,7 @@ function onSuccess(imageURI) {
     var image = document.getElementById('myImage');
     myApp.alert("imageURI: " + imageURI);
 }
-
+ */
 
 document.addEventListener("offline", onOffline, false);
  
