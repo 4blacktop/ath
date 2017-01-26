@@ -5,8 +5,9 @@
 // сделать фото и журнал фоток
 // проверить сплэшскрин
 // смена пароля
-// после сохранения редирект?
+// после сохранения записи редирект на таймлайн
 // крутилка при логине
+// джорнал календарь не дает выбрать сегодня
 
 
 // Initialize your app
@@ -18,7 +19,8 @@ var myApp = new Framework7({
     template7Pages: true,
     // Specify Template7 data for pages
      template7Data: {
-		entryList: []	
+		entryList: [],
+		photoEntryList: []	
     }  
 });
 
@@ -68,8 +70,8 @@ for (var i = 0; i < localStorage.length; i++){
 	if (itemNow.date) {
 		// console.log(itemNow);
 		myApp.template7Data.entryList.push(itemNow);
+		myApp.template7Data.photoEntryList.push(itemNow);
 		var eventDate = itemNow.date.split("-");
-		// console.log('eventDate' + eventDate);
 		var f = new Date(eventDate);
 		// console.log('f' + f);
 		calendarEvents.push(f);
@@ -80,6 +82,9 @@ for (var i = 0; i < localStorage.length; i++){
 var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
 document.getElementById('timeline-list').innerHTML = timelineHTML;
 
+var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
+document.getElementById('photo-list').innerHTML = photoHTML;
+		// console.log('photoHTML' + photoHTML);
 
 // Export selectors engine
 var $$ = Dom7;
@@ -634,10 +639,10 @@ var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July'
 
 var calendarInline = myApp.calendar({
     container: '#calendar-inline-container',
-    value: [new Date()],
+    /* value: [new Date()], */
     weekHeader: true,
 	
-	    events: calendarEvents,
+	events: calendarEvents,
     toolbarTemplate: 
         '<div class="toolbar calendar-custom-toolbar">' +
             '<div class="toolbar-inner">' +
@@ -666,14 +671,34 @@ var calendarInline = myApp.calendar({
 	onMonthYearChangeStart: function (p) {
         $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
     },
-	
+
+
 	onDayClick: function (p, dayContainer, year, month, day) {
 		// console.log(p, dayContainer, year, month, day);
 		month = month+1;
 		var tmpDate = year+"-"+month+"-"+day;
 		addEntryDateInput = new Date(tmpDate).toISOString().split('T')[0];
+		
+		
+		
 		view4.router.load({url:"add-entry.html"});
     }
+
+
+ /* 
+	onChange: function (values) {
+
+
+	console.log("values.value: " + values.value[0]);
+	// addEntryDateInput = new Date(values.value[0]);
+	date = new Date(values.value[0]);
+	addEntryDateInput = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+	console.log("addEntryDateInput: " + addEntryDateInput);
+	view4.router.load({url:"add-entry.html"});
+																												// console.log(values);
+	   }
+	  */  
+	   
 });       
 
 // $$('.form-to-data').on('click', function(){
@@ -681,15 +706,27 @@ var calendarInline = myApp.calendar({
 
 
 
-myApp.onPageInit('timeline',function(page){
-	console.log("onPageInit" + page);
+myApp.onPageInit('timeLinePage',function(page){
+	console.log("timeLinePage" + page);
 }); 
 
 
 
 // форма добавления/редактирования записи
 myApp.onPageInit('add-entry',function(page){
-	// console.log("onPageInit: add-entry");
+	// console.log(page.query.date);
+	if(page.query.date) {
+		addEntryDateInput = page.query.date;
+	}
+	
+	// https://muut.com/framework7#!/framework7/getting-started:how-to-i-get-query-string-f
+	
+	var saveEnableDate = document.getElementById("saveBtn") ;
+	if (addEntryDateInput) {
+		
+	saveEnableDate.style.visibility = "visible" ;
+	}
+	
 	
 	console.log(addEntryDateInput);
 	// document.getElementById('calendar-default').value = "asdfgdf";	
@@ -711,12 +748,38 @@ myApp.onPageInit('add-entry',function(page){
 	  // myApp.alert('thanks for add entry');
 	}); 
 	
+	
+	
 	var calendarDefault = myApp.calendar({
 		input: '#calendar-default',
+		events: calendarEvents,
 		closeOnSelect: true,
 		firstDay: 7,
+		toolbarTemplate: 
+        '<div class="toolbar calendar-custom-toolbar">' +
+            '<div class="toolbar-inner">' +
+                '<div class="left">' +
+                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                '</div>' +
+                '<div class="center"></div>' +
+                '<div class="right">' +
+                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                '</div>' +
+            '</div>' +
+        '</div>',
 		onChange: function (values) {
-																												// console.log(values.value[0]);
+			var saveEnable = document.getElementById("saveBtn") ;
+			saveEnable.style.visibility = "visible" ;
+			// console.log(values.value[0]);
+			date = new Date(values.value[0]);
+			addEntryDateInput = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+			// myApp.formFromData(form, formData);
+			entryData = JSON.parse(localStorage.getItem(addEntryDateInput));
+			console.log(entryData);
+			if(entryData) {
+				myApp.formFromData("#add-entry-form", entryData);
+			}
+			
 	   }
 	});   
 
@@ -745,6 +808,7 @@ myApp.onPageInit('add-entry',function(page){
 		localStorage.setItem(formData.date, JSON.stringify(formData));
 		
 		myApp.template7Data.entryList = [];
+		myApp.template7Data.photoEntryList = [];
 		// поиск дней с событиями
 		var calendarEvents = [];
 		for (var i = 0; i < localStorage.length; i++){
@@ -752,6 +816,7 @@ myApp.onPageInit('add-entry',function(page){
 			if (itemNow.date) {
 				// console.log(itemNow);
 				myApp.template7Data.entryList.push(itemNow);
+				myApp.template7Data.photoEntryList.push(itemNow);
 				var eventDate = itemNow.date.split("-");
 				// console.log('eventDate' + eventDate);
 				var f = new Date(eventDate);
@@ -761,6 +826,10 @@ myApp.onPageInit('add-entry',function(page){
 		}
 		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
 		document.getElementById('timeline-list').innerHTML = timelineHTML;
+		
+		var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
+		document.getElementById('photo-list').innerHTML = photoHTML;
+		
 		myApp.alert('Entry saved');
 		// myApp.alert('calendarEvents' + calendarEvents);
 		// myApp.alert('myApp.template7Data.entryList' + JSON.stringify(myApp.template7Data.entryList));
@@ -877,5 +946,5 @@ if(storedData) {
 	// }, scope);
 }
 else {
-	myApp.alert('There is no stored data for this form yet. Try to change any field')
+	myApp.alert('Please set reminders')
 }
