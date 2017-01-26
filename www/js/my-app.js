@@ -745,8 +745,9 @@ myApp.onPageInit('add-entry',function(page){
 	}); 
 	
 	$$('.form-to-data').on('click', function(){
-		// document.getElementById("img").setAttribute("value", savedImage);
-		// myApp.alert('savedImage: ' + savedImage);
+																	// document.getElementById("img_url").setAttribute("value", savedImage);
+																	// myApp.alert('savedImage: ' + savedImage);
+		
 		var formData = myApp.formToData('#add-entry-form');
 		console.log(formData.date);
 		console.log(formData);
@@ -795,7 +796,7 @@ function onSuccess(imageURI) {
 	// var inputImage = document.getElementById('img');
     // inputImage.value = imageURI;
     // inputImage.value = "imageURItest";
-	// document.getElementById("img").setAttribute("value", "testimageURI");
+	// document.getElementById("img_url").setAttribute("value", "testimageURI");
 	
 
 	
@@ -805,7 +806,7 @@ function onSuccess(imageURI) {
 	// var savedImage = imageURI;
 	// myApp.alert('savedImage: ' + savedImage);
 	
-	// document.getElementById("img").setAttribute("value", imageURI);
+	// document.getElementById("img_url").setAttribute("value", imageURI);
 	
 };
 
