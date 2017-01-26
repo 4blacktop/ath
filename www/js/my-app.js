@@ -849,8 +849,8 @@ cordova.plugins.notification.local.schedule([{
 },{
 	id: 4,
     text: "What do you want to thank God for today?",
-    sound: "file://sounds/not.caf",
-    every: "day"
+    sound: "www/sounds/not.caf",
+    every: 5
 },{
 	id: 3,
     text: "Tap to read today's verse",
