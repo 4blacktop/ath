@@ -5,7 +5,7 @@
 		<div class="left"><a href="#" class="back link"> <i class="f7-icons color-white">left</i></a></div>
         <div class="center">Edit Entry</div>
 		<!-- <div class="right"><a href="#" class="form-to-data">Save</a></div> -->
-		<div class="right"><a class="form-to-data color-white" href="#">Save</a></div>
+		<div class="right" id="saveBtn" style="visibility:hidden"><a class="form-to-data color-white" href="#">Save</a></div>
         <!-- <div class="subnavbar">
           <div class="buttons-row">
             <a href="#tab1" class="button active tab-link">Morning</a>
@@ -35,26 +35,25 @@
 				
 		<!-- <img style="width:120px;visibility:hidden;display:none;" id="camera_image" src="" /> -->
 		<center>
-		<a href="#" onclick="takePicture();"><img style="width:120px;" id="myImage" src="img/picture_placeholder.png" /></a>
+		<!-- <a href="#" onclick="takePicture();"><img style="width:120px;" id="myImage" src="img/picture_placeholder.png" /></a> -->
+		<a href="#" onclick="takePicture();"><img style="height:120px;" id="myImage" src="img/picture_placeholder.png" /></a>
 		</center>
 				
 
 					  
+		<input type="hidden" name="img" id="img_url">
 					  
 
 			  <ul>
-				<!-- Textarea -->
+				<!-- Textarea 
 				<li class="align-top">
 				  <div class="item-content">
 					<div class="item-inner">
-					  <!-- <div class="label">Lord, I thank you today for...</div> -->
 					  <div class="item-input"><i style="color:#666">name: img, id: img_url </i>
-		<input type="text" name="img" id="img_url">
-						<!-- <textarea id="morning1" name="morning1" placeholder="..." class="resizable"></textarea> -->
 					  </div>
 					</div>
 				  </div>
-				</li>
+				</li>-->
 				
 				<!-- Textarea -->
 				<li class="align-top">
