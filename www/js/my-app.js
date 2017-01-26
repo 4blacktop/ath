@@ -784,15 +784,10 @@ navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
     destinationType: Camera.DestinationType.FILE_URI });
 
 function onSuccess(imageURI) {
-	// var inputImage = document.getElementById('img');
-    // inputImage.value = imageURI;
-    // inputImage.value = "imageURItest";
-	// document.getElementById("img_url").setAttribute("value", "testimageURI");
-	
-
 	
     myApp.alert('onSuccess imageURI: ' + imageURI);
-    var image = document.getElementById('camera_image');
+    // var image = document.getElementById('camera_image');
+    var image = document.getElementById('myImage');
     image.src = imageURI;
 	
 	var inputImage = document.getElementById('img_url');
@@ -800,11 +795,6 @@ function onSuccess(imageURI) {
 	inputImage.value = imageURI;
     myApp.alert('onSuccess inputImage.value: ' + inputImage.value);
     myApp.alert('onSuccess imageURI: ' + imageURI);
-	// var savedImage = imageURI;
-	// myApp.alert('savedImage: ' + savedImage);
-	
-	// document.getElementById("img_url").setAttribute("value", imageURI);
-	
 };
 
 function onFail(message) {
@@ -833,6 +823,8 @@ function onOffline() {
 document.addEventListener('deviceready', function () {
 // local notifications
 
+/* 
+// работает
 cordova.plugins.notification.local.schedule([{
 	id: 1,
     text: "What is saying to you today?",
@@ -854,6 +846,8 @@ cordova.plugins.notification.local.schedule([{
     sound: "file://sounds/not.mp3",
     every: "day"
 }]);
+ */
+
 
 
 });
