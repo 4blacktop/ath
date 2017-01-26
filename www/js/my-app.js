@@ -796,7 +796,10 @@ function onSuccess(imageURI) {
     image.src = imageURI;
 	
 	var inputImage = document.getElementById('img_url');
+    myApp.alert('onSuccess inputImage: ' + inputImage);
 	inputImage.value = imageURI;
+    myApp.alert('onSuccess inputImage.value: ' + inputImage.value);
+    myApp.alert('onSuccess imageURI: ' + imageURI);
 	// var savedImage = imageURI;
 	// myApp.alert('savedImage: ' + savedImage);
 	
