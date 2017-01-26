@@ -561,15 +561,6 @@ $$('.ac-1').on('click', function () {
 });
 
 
-// stored data debug reminders
-  var storedData = myApp.formGetData('reminders-form');
-  if(storedData) {
-																									// console.log("reminders-form stored data string: " + JSON.stringify(storedData));
-																									// console.dir(storedData);
-  }
-  else {
-																				// console.log("reminders-form strod data string: There is no stored data for this form yet. Try to change any field");
-  }
 
 
 // reminder settings
@@ -596,7 +587,7 @@ myApp.onPageInit('settings-reminders',function(page){
 		]
 	});   
 	
-		// picker morning  
+		// picker evening  
 	var pickerMorning = myApp.picker({
 		input: '#picker-evening',
 		rotateEffect: true,
@@ -616,7 +607,7 @@ myApp.onPageInit('settings-reminders',function(page){
 		]
 	});  
 	
-		// picker morning  
+		// picker verse  
 	var pickerMorning = myApp.picker({
 		input: '#picker-verse',
 		rotateEffect: true,
