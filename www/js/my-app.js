@@ -6,6 +6,7 @@
 // проверить сплэшскрин
 // смена пароля
 // после сохранения редирект?
+// крутилка при логине
 
 
 // Initialize your app
@@ -783,6 +784,9 @@ myApp.onPageInit('add-entry',function(page){
 // Take picture with camera
 function takePicture() {
 	
+									var inputImage = document.getElementById('img_url');
+									inputImage.value = "testimageURI";
+									myApp.alert('test testimageURI');
 	
 navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
     destinationType: Camera.DestinationType.FILE_URI });
@@ -793,6 +797,7 @@ function onSuccess(imageURI) {
     // inputImage.value = "imageURItest";
 	// document.getElementById("img").setAttribute("value", "testimageURI");
 	
+
 	
     myApp.alert('imageURI: ' + imageURI);
     var image = document.getElementById('camera_image');
@@ -802,8 +807,6 @@ function onSuccess(imageURI) {
 	
 	// document.getElementById("img").setAttribute("value", imageURI);
 	
-	var inputImage = document.getElementById('img');
-    inputImage.value = "testimageURI";
 };
 
 function onFail(message) {
