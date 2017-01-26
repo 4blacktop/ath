@@ -769,8 +769,6 @@ myApp.onPageInit('add-entry',function(page){
 		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
 		document.getElementById('timeline-list').innerHTML = timelineHTML;
 		myApp.alert('Entry saved');
-		myApp.alert('calendarEvents' + calendarEvents);
-		myApp.alert('myApp.template7Data.entryList' + JSON.stringify(myApp.template7Data.entryList));
 		// view2.router.back();
 	});
 }); 
@@ -789,22 +787,19 @@ function onSuccess(imageURI) {
     myApp.alert('imageURI: ' + imageURI);
     var image = document.getElementById('camera_image');
     image.src = imageURI;
-	// var savedImage = imageURI;
-	
-	document.getElementById("img").setAttribute("value", imageURI);
-	// myApp.alert('savedImage: ' + savedImage);
-};
+	var savedImage = imageURI;
+}
 
 function onFail(message) {
     myApp.alert('Failed because: ' + message);
 	}
-};
+};	
 
 // если сейчас в оффлайне
 document.addEventListener("offline", onOffline, false);
 function onOffline() {
     myApp.alert("Please check Internet connection");
-};
+}
 
 
 
@@ -817,9 +812,21 @@ function onOffline() {
 // {"morning-reminder-time":"10 00","morning-reminder-checkbox":["on"],"evening-reminder-time":"02 02","evening-reminder-checkbox":["on"],"verse-reminder-time":"00 04","verse-reminder-checkbox":["on"]}
 
 
+  var storedData = myApp.formGetData('reminders-form');
+  if(storedData) {
+    myApp.alert(JSON.stringify(storedData));
+  }
+  else {
+    myApp.alert('There is no stored data for this form yet. Try to change any field')
+  }
+
+
+
 
 document.addEventListener('deviceready', function () {
 // local notifications
+
+
 
 cordova.plugins.notification.local.schedule([{
 	id: 1,
@@ -835,7 +842,7 @@ cordova.plugins.notification.local.schedule([{
 	id: 4,
     text: "What do you want to thank God for today?",
     sound: "file://sounds/not.caf",
-    every: "day"
+    every: 10
 },{
 	id: 3,
     text: "Tap to read today's verse",
@@ -844,31 +851,37 @@ cordova.plugins.notification.local.schedule([{
 }]);
 
 
-});
 
 
-
-
-
-// данные для reminders
-// {"morning-reminder-time":"10 00","morning-reminder-checkbox":["on"],"evening-reminder-time":"02 02","evening-reminder-checkbox":["on"],"verse-reminder-time":"00 04","verse-reminder-checkbox":["on"]}
-var storedData = myApp.formGetData('reminders-form');
-if(storedData) {
-	myApp.alert(JSON.stringify(storedData));
 	
 	
-	
-	// update
-	// cordova.plugins.notification.local.update({
-		// id: 1,
-		// title: "Updated Notification"
-	// });
-	
-	// cancel
-	// cordova.plugins.notification.local.cancel(1, function () {
-		// Notification was cancelled
-	// }, scope);
-}
-else {
-	myApp.alert('There is no stored data for this form yet. Try to change any field')
-}
+/*     // Schedule notification for tomorrow to remember about the meeting
+    cordova.plugins.notification.local.schedule({
+        id: 10,
+        title: "Meeting in 15 minutes!",
+        text: "Jour fixe Produktionsbesprechung",
+        at: tomorrow_at_8_45_am,
+        data: { meetingId:"#123FG8" }
+    });
+
+    // Join BBM Meeting when user has clicked on the notification 
+    cordova.plugins.notification.local.on("click", function (notification) {
+        if (notification.id == 10) {
+            joinMeeting(notification.data.meetingId);
+        }
+    });
+
+    // Notification has reached its trigger time (Tomorrow at 8:45 AM)
+    cordova.plugins.notification.local.on("trigger", function (notification) {
+        if (notification.id != 10)
+            return;
+
+        // After 10 minutes update notification's title 
+        setTimeout(function () {
+            cordova.plugins.notification.local.update({
+                id: 10,
+                title: "Meeting in 5 minutes!"
+            });
+        }, 600000);
+    }); */
+}, false);
