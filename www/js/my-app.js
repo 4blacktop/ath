@@ -783,18 +783,27 @@ myApp.onPageInit('add-entry',function(page){
 // Take picture with camera
 function takePicture() {
 	
+	
 navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
     destinationType: Camera.DestinationType.FILE_URI });
 
 function onSuccess(imageURI) {
+	// var inputImage = document.getElementById('img');
+    // inputImage.value = imageURI;
+    // inputImage.value = "imageURItest";
+	// document.getElementById("img").setAttribute("value", "testimageURI");
+	
+	
     myApp.alert('imageURI: ' + imageURI);
     var image = document.getElementById('camera_image');
     image.src = imageURI;
-	// document.getElementById("img").setAttribute("value", "testimageURI");
 	// var savedImage = imageURI;
 	// myApp.alert('savedImage: ' + savedImage);
 	
-	document.getElementById("img").setAttribute("value", imageURI);
+	// document.getElementById("img").setAttribute("value", imageURI);
+	
+	var inputImage = document.getElementById('img');
+    inputImage.value = "testimageURI";
 };
 
 function onFail(message) {
