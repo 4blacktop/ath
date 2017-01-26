@@ -140,3 +140,8 @@ i.icon.icon-settings-white {
 	-webkit-filter: invert(100%);
 	filter: invert(100%);
 }
+
+
+.list-block .item-subtitle {
+    white-space: normal;
+}

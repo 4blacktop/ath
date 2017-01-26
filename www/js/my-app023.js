@@ -761,7 +761,7 @@ myApp.onPageInit('add-entry',function(page){
 		}
 		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
 		document.getElementById('timeline-list').innerHTML = timelineHTML;
-		myApp.alert('Entry saved');
+		// myApp.alert('Entry saved');
 		// myApp.alert('calendarEvents' + calendarEvents);
 		// myApp.alert('myApp.template7Data.entryList' + JSON.stringify(myApp.template7Data.entryList));
 		// view2.router.back();
