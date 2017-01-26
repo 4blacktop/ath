@@ -776,9 +776,9 @@ myApp.onPageInit('add-entry',function(page){
 // Take picture with camera
 function takePicture() {
 	
-									var inputImage = document.getElementById('img_url');
-									inputImage.value = "testimageURI";
-									myApp.alert('test testimageURI');
+									// var inputImage = document.getElementById('img_url');
+									// inputImage.value = "testimageURI";
+									// myApp.alert('test testimageURI');
 	
 navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
     destinationType: Camera.DestinationType.FILE_URI });
@@ -794,6 +794,9 @@ function onSuccess(imageURI) {
     myApp.alert('onSuccess imageURI: ' + imageURI);
     var image = document.getElementById('camera_image');
     image.src = imageURI;
+	
+	var inputImage = document.getElementById('img_url');
+	inputImage.value = imageURI;
 	// var savedImage = imageURI;
 	// myApp.alert('savedImage: ' + savedImage);
 	
@@ -830,22 +833,22 @@ document.addEventListener('deviceready', function () {
 cordova.plugins.notification.local.schedule([{
 	id: 1,
     text: "What is saying to you today?",
-    sound: "file://sounds/not.caf",
+    sound: "file://sounds/not.mp3",
     every: "day"
 },{
 	id: 2,
     text: "What do you want to thank God for today?",
-    sound: "file://sounds/not.caf",
+    sound: "file://sounds/not.mp3",
     every: "day"
 },{
 	id: 4,
-    text: "What do you want to thank God for today?",
-    sound: "www/sounds/not.caf",
+    text: "test id=4 every=5",
+    sound: "www/sounds/not.mp3",
     every: 5
 },{
 	id: 3,
     text: "Tap to read today's verse",
-    sound: "file://sounds/not.caf",
+    sound: "file://sounds/not.mp3",
     every: "day"
 }]);
 
