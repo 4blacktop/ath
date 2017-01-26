@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged( function(firebaseUser) {
 	if(firebaseUser) {
 		// console.log(firebaseUser);
 		console.log('logged in');
-		myApp.alert('Logged in');
+		// myApp.alert('Logged in');
 		// document.getElementById( 'btnLogout' ).style.display = 'block';
 		// document.getElementById( 'btnSignUp' ).style.display = 'none';
 		myApp.closeModal();
@@ -768,9 +768,9 @@ myApp.onPageInit('add-entry',function(page){
 		}
 		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
 		document.getElementById('timeline-list').innerHTML = timelineHTML;
-		myApp.alert('Entry saved');
-		myApp.alert('calendarEvents' + calendarEvents);
-		myApp.alert('myApp.template7Data.entryList' + JSON.stringify(myApp.template7Data.entryList));
+		// myApp.alert('Entry saved');
+		// myApp.alert('calendarEvents' + calendarEvents);
+		// myApp.alert('myApp.template7Data.entryList' + JSON.stringify(myApp.template7Data.entryList));
 		// view2.router.back();
 	});
 }); 
@@ -782,6 +782,7 @@ myApp.onPageInit('add-entry',function(page){
 
 // Take picture with camera
 function takePicture() {
+	
 navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
     destinationType: Camera.DestinationType.FILE_URI });
 
@@ -789,10 +790,11 @@ function onSuccess(imageURI) {
     myApp.alert('imageURI: ' + imageURI);
     var image = document.getElementById('camera_image');
     image.src = imageURI;
+	// document.getElementById("img").setAttribute("value", "testimageURI");
 	// var savedImage = imageURI;
+	// myApp.alert('savedImage: ' + savedImage);
 	
 	document.getElementById("img").setAttribute("value", imageURI);
-	// myApp.alert('savedImage: ' + savedImage);
 };
 
 function onFail(message) {
@@ -854,7 +856,8 @@ cordova.plugins.notification.local.schedule([{
 // {"morning-reminder-time":"10 00","morning-reminder-checkbox":["on"],"evening-reminder-time":"02 02","evening-reminder-checkbox":["on"],"verse-reminder-time":"00 04","verse-reminder-checkbox":["on"]}
 var storedData = myApp.formGetData('reminders-form');
 if(storedData) {
-	myApp.alert(JSON.stringify(storedData));
+																											// myApp.alert(JSON.stringify(storedData));
+																												console.log(JSON.stringify(storedData));
 	
 	
 	
