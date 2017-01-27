@@ -1,32 +1,15 @@
-
-// сохранять имя в переменной name
-// сохранять url фото пользователя в переменной avatar
-
-// сохранять локалсторейдж на сервере (при каких услоиях?) - собирать весь(?) локалсторейдж и делать его в JSON
-// выгружать на сервер:
-// все даты
-// имя
-// фото пользователя
-
+// отдельный массив для фото, где есть запись в свойстве имж
 // локальные уведомления - настроить
+// смена пароля
+// после сохранения записи редирект на таймлайн
 // крутилка при логине и других (?) действиях
 
+// сохранять локалсторейдж на сервере (при каких услоиях?) - собирать весь(?) локалсторейдж и делать его в JSON
 // загружать локалсторейдж с сервера при логине
 // по кнопке выход после подтверждения удалять локалсторейдж localStorage.clear()
+
 // проверить сплэшскрин
 
-// заполнить страницы сеттингс
-
-// ==============================
-// готово
-// отдельный массив для фото, где есть запись в свойстве имж
-// после сохранения записи редирект на таймлайн
-
-// сделать календарь с выбором диапазона
-// сделать выборку по диапазону дат в локалсторейдж, где условие добавление в массив - наличие в объекте свойства date
-
-// смена пароля
-// сделать логаут
 
 // Initialize your app
 var myApp = new Framework7({
@@ -39,12 +22,8 @@ var myApp = new Framework7({
      template7Data: {
 		entryList: [],
 		photoEntryList: []	
-    } ,
-	modalTitle: "Awakening to God Today"
+    }  
 });
-
-myApp.showIndicator();
-myApp.hideIndicator();
 
 // дата при открытии add-entry
 var addEntryDateInput = "";
@@ -58,7 +37,6 @@ var config = {
 	messagingSenderId: "623933765391"
 };
 firebase.initializeApp(config);	
-
 
 // add a realtime listener
 firebase.auth().onAuthStateChanged( function(firebaseUser) {
@@ -86,14 +64,17 @@ firebase.auth().onAuthStateChanged( function(firebaseUser) {
    
 } */
 
-// поиск дней с событиями при старте приложения
+// поиск дней с событиями
 var calendarEvents = [];
 for (var i = 0; i < localStorage.length; i++){
 	var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
 	if (itemNow.date) {
 		// console.log(itemNow);
+		
 		var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+
 		var d = new Date(itemNow.date);
+		
 		
 		// itemNow.dateLocale = monthNames[d.getMonth()] + " " + getDate(d) + ", " + getFullYear(d);
 		itemNow.dateLocale = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
@@ -101,11 +82,7 @@ for (var i = 0; i < localStorage.length; i++){
 		
 		console.log(itemNow);
 		myApp.template7Data.entryList.push(itemNow);
-		
-		if (itemNow.img) {
-			myApp.template7Data.photoEntryList.push(itemNow);
-		}
-		
+		myApp.template7Data.photoEntryList.push(itemNow);
 		var eventDate = itemNow.date.split("-");
 		var f = new Date(eventDate);
 		// console.log('f' + f);
@@ -150,12 +127,12 @@ var view5 = myApp.addView('#view-5', {
 
 var dateAth = new Date().toISOString().split('T')[0];
 
-/* var calendarDefault = myApp.calendar({
+var calendarDefault = myApp.calendar({
     input: '#calendar-default',
 	firstDay: 7,
 	onChange: function (values) {
    }
-});    */
+});   
 
 
 
@@ -545,7 +522,7 @@ const btnLogout = document.getElementById('btnLogout');
 
 // add login event
 btnLogin.addEventListener('click', function (e) {
-	// myApp.alert('btnLogin');
+	myApp.alert('btnLogin');
 	// get email and pass
 	const email = txtEmail.value;
 	const pass = txtPassword.value;
@@ -574,14 +551,7 @@ btnSignUp.addEventListener('click', function (e) {
 
 // add log out event
 btnLogout.addEventListener('click', function (e) {
-	
-	
-    myApp.confirm('Confirm Log Out', function () {
-		firebase.auth().signOut();
-        // myApp.alert('You clicked Ok button');
-    });
-	
-	
+	firebase.auth().signOut();
 	// myApp.loginScreen();
 });
 
@@ -685,18 +655,18 @@ var calendarInline = myApp.calendar({
     weekHeader: true,
 	
 	events: calendarEvents,
-    // toolbarTemplate: 
-        // '<div class="toolbar calendar-custom-toolbar">' +
-            // '<div class="toolbar-inner">' +
-                // '<div class="left">' +
-                    // '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
-                // '</div>' +
-                // '<div class="center"></div>' +
-                // '<div class="right">' +
-                    // '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
-                // '</div>' +
-            // '</div>' +
-        // '</div>',
+    toolbarTemplate: 
+        '<div class="toolbar calendar-custom-toolbar">' +
+            '<div class="toolbar-inner">' +
+                '<div class="left">' +
+                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                '</div>' +
+                '<div class="center"></div>' +
+                '<div class="right">' +
+                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                '</div>' +
+            '</div>' +
+        '</div>',
     onOpen: function (p) {
         $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
         $$('.calendar-custom-toolbar .left .link').on('click', function () {
@@ -720,193 +690,38 @@ var calendarInline = myApp.calendar({
 		month = month+1;
 		var tmpDate = year+"-"+month+"-"+day;
 		addEntryDateInput = new Date(tmpDate).toISOString().split('T')[0];
+		
+		
+		
 		view4.router.load({url:"add-entry.html"});
     }
 
-});     
 
-	
-// информация об аккаунте
-// function changeAccount() { };
-myApp.onPageInit('settingsabout',function(page){
-	// console.log(user);
-	
-	var user = firebase.auth().currentUser;
-	document.getElementById('accountName').value = user.displayName;
-	document.getElementById('accountEmail').value = user.email;
-	document.getElementById('img_url').value = user.photoURL;
-	
-	
-	changeAccountButton.onclick = function() {
-		myApp.showIndicator();
-		
-		var imageAccount = document.getElementById('img_url').value;
-		console.log("imageAccount: " + imageAccount);
-		
-		// var user = firebase.auth().currentUser;
-		// var accountName = $$('#accountName');
-		console.log("displayName: " + user.displayName);
-		console.log("email: " + user.email);
-		console.log("photoURL: " + user.photoURL);
-		console.log("uid: " + user.uid);
-		console.log('accountName: ' + accountName.value);
-		// myApp.alert('accountName: ' + document.getElementById('accountName').value);
-
-		user.updateProfile({
-		  displayName: accountName.value,
-		  photoURL: imageAccount
-		}).then(function() {
-		myApp.alert('Update successful');
-		  // Update successful.
-		}, function(error) {
-		myApp.alert('Update error: ' + error);
-		  // An error happened.
-		});
-
-		
-		myApp.hideIndicator();
-	};
-	
-
-	
-	/* 
-	document.getElementById('changePasswordButton').disabled = 'disabled';
-	
-	$$('input[name="confpassnew"]').on('keyup keydown change', function (e) { 
-		var txtpassVal = $$('#txtpassnew').val();
-		var confpassVal = $$('#confpassnew').val();
-		if (txtpassVal == confpassVal ) {
-			document.getElementById('signupResult').innerHTML = 'Passwords are the same';
-			document.getElementById('changePasswordButton').disabled = false;
-			
-		}
-		else {
-			document.getElementById('changePasswordButton').disabled = 'disabled';
-			document.getElementById('signupResult').innerHTML = 'Passwords are NOT the same';
-		}
-	});
-	
-	const changePasswordButton = document.getElementById('changePasswordButton');
-	
-	changePasswordButton.addEventListener('click', function (e) {
-		var user = firebase.auth().currentUser;
-		// var newPassword = getASecureRandomPassword();
-		var newPassword = $$('#txtpassnew').val();
-
-		user.updatePassword(newPassword).then(function() {
-		  // Update successful.
-			myApp.alert('Your new password is: ' + newPassword);
-		}, function(error) {
-		  // An error happened.
-			myApp.alert('Error: ' + error);
-		});
-	}); */
-});	
+ /* 
+	onChange: function (values) {
 
 
-
-// смена пароля
-myApp.onPageInit('settings-changepassword',function(page){
-	var user = firebase.auth().currentUser;
-	console.log(user);
-	
-	document.getElementById('changePasswordButton').disabled = 'disabled';
-	
-	$$('input[name="confpassnew"]').on('keyup keydown change', function (e) { 
-		var txtpassVal = $$('#txtpassnew').val();
-		var confpassVal = $$('#confpassnew').val();
-		if (txtpassVal == confpassVal ) {
-			document.getElementById('signupResult').innerHTML = 'Passwords are the same';
-			document.getElementById('changePasswordButton').disabled = false;
-			
-		}
-		else {
-			document.getElementById('changePasswordButton').disabled = 'disabled';
-			document.getElementById('signupResult').innerHTML = 'Passwords are NOT the same';
-		}
-	});
-	
-	const changePasswordButton = document.getElementById('changePasswordButton');
-	changePasswordButton.addEventListener('click', function (e) {
-		var user = firebase.auth().currentUser;
-		// var newPassword = getASecureRandomPassword();
-		var newPassword = $$('#txtpassnew').val();
-
-		user.updatePassword(newPassword).then(function() {
-		  // Update successful.
-			myApp.alert('Your new password is: ' + newPassword);
-		}, function(error) {
-		  // An error happened.
-			myApp.alert('Error: ' + error);
-		});
-	});
-});	
-	
-// календарь для экспорта pdf
-myApp.onPageInit('settingsexport',function(page){
-
-	console.log('opened settingsexport');
-	var calendarRange = myApp.calendar({
-		input: '#calendar-range',
-		dateFormat: 'M dd yyyy',
-		rangePicker: true,
-		onChange: function (values) {
-			var exportEnable = document.getElementById("exportBtn") ;
-			if(values.value[1]) {
-				exportEnable.classList.remove("disabled");
-			} else {
-				exportEnable.classList.add("disabled");
-			}
-			// console.log(values.value[1]);
-			
-			// date = new Date(values.value[0]);
-			// addEntryDateInput = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-			// entryData = JSON.parse(localStorage.getItem(addEntryDateInput));
-			// console.log(entryData);
-			// if(entryData) {
-				// myApp.formFromData("#add-entry-form", entryData);
-			// }
+	console.log("values.value: " + values.value[0]);
+	// addEntryDateInput = new Date(values.value[0]);
+	date = new Date(values.value[0]);
+	addEntryDateInput = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+	console.log("addEntryDateInput: " + addEntryDateInput);
+	view4.router.load({url:"add-entry.html"});
+																												// console.log(values);
 	   }
-	}); 
-	
-	const exportBtn = document.getElementById('exportBtn');
-	// add login event
-	exportBtn.addEventListener('click', function (e) {
-		myApp.alert('export started!');
-		
-		
-		
-		var arrayExport	= [];
-		for (var i = 0; i < localStorage.length; i++){
-			var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
-			if (itemNow.date) {
-				console.log(itemNow);
-				arrayExport.push(itemNow);
-				
-				// console.log(itemNow);
-				// var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-				// var d = new Date(arrayExport.date);
-				
-				// itemNow.dateLocale = monthNames[d.getMonth()] + " " + getDate(d) + ", " + getFullYear(d);
-				// arrayExport.dateLocale = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
-				// console.log("arrayExport.dateLocale " + arrayExport.dateLocale);
-				
-				
-				// if (arrayExport.img) {
-					// myApp.template7Data.photoEntryList.push(itemNow);
-				// }
-				
-				// var eventDate = arrayExport.date.split("-");
-				// var f = new Date(eventDate);
-				// console.log('f' + f);
-				// calendarEvents.push(f);
-			}
-		};
-		
-	console.log(arrayExport);
-	});	
-	
+	  */  
+	   
+});       
+
+// $$('.form-to-data').on('click', function(){
+// });
+
+
+
+myApp.onPageInit('timeLinePage',function(page){
+	console.log("timeLinePage" + page);
 }); 
+
 
 
 // форма добавления/редактирования записи
@@ -952,7 +767,18 @@ myApp.onPageInit('add-entry',function(page){
 		events: calendarEvents,
 		closeOnSelect: true,
 		firstDay: 7,
-		// yearPicker: false,
+		toolbarTemplate: 
+        '<div class="toolbar calendar-custom-toolbar">' +
+            '<div class="toolbar-inner">' +
+                '<div class="left">' +
+                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                '</div>' +
+                '<div class="center"></div>' +
+                '<div class="right">' +
+                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                '</div>' +
+            '</div>' +
+        '</div>',
 		onChange: function (values) {
 			var saveEnable = document.getElementById("saveBtn") ;
 			saveEnable.style.visibility = "visible" ;
@@ -988,9 +814,6 @@ myApp.onPageInit('add-entry',function(page){
 																	// document.getElementById("img_url").setAttribute("value", savedImage);
 																	// myApp.alert('savedImage: ' + savedImage);
 		
-		
-		
-		/* 
 		var formData = myApp.formToData('#add-entry-form');
 		console.log(formData.date);
 		console.log(formData);
@@ -1005,9 +828,7 @@ myApp.onPageInit('add-entry',function(page){
 			if (itemNow.date) {
 				// console.log(itemNow);
 				myApp.template7Data.entryList.push(itemNow);
-				if (itemNow.img) {
-					myApp.template7Data.photoEntryList.push(itemNow);
-				}
+				myApp.template7Data.photoEntryList.push(itemNow);
 				var eventDate = itemNow.date.split("-");
 				// console.log('eventDate' + eventDate);
 				var f = new Date(eventDate);
@@ -1020,20 +841,11 @@ myApp.onPageInit('add-entry',function(page){
 		
 		var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
 		document.getElementById('photo-list').innerHTML = photoHTML;
- */
 		
-		// console.log(myApp.getCurrentView().selector);
-		// view2.router.back();
-		
-		
-		page.view.router.back({
-            // url: 'index.html#view-2',
-            url: 'index.html',
-            // force: true,
-            // ignoreCache: true
-        });
-		myApp.showTab('#view-2');
 		myApp.alert('Entry saved');
+		// myApp.alert('calendarEvents' + calendarEvents);
+		// myApp.alert('myApp.template7Data.entryList' + JSON.stringify(myApp.template7Data.entryList));
+		// view2.router.back();
 	});
 }); 
 
@@ -1151,4 +963,3 @@ if(storedData) {
 else {
 	myApp.alert('Please set reminders')
 }
-
