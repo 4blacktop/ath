@@ -1,3 +1,4 @@
+// при смене изображения или текста не меняется ничего в таймлайне и фотос
 
 // сохранять имя в переменной name
 // сохранять url фото пользователя в переменной avatar
@@ -736,6 +737,9 @@ myApp.onPageInit('settingsabout',function(page){
 	document.getElementById('accountEmail').value = user.email;
 	document.getElementById('img_url').value = user.photoURL;
 	
+	var image = document.getElementById('myImage');
+    image.src = user.photoURL;
+	
 	
 	changeAccountButton.onclick = function() {
 		myApp.showIndicator();
@@ -990,7 +994,7 @@ myApp.onPageInit('add-entry',function(page){
 		
 		
 		
-		/* 
+		
 		var formData = myApp.formToData('#add-entry-form');
 		console.log(formData.date);
 		console.log(formData);
@@ -1020,7 +1024,7 @@ myApp.onPageInit('add-entry',function(page){
 		
 		var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
 		document.getElementById('photo-list').innerHTML = photoHTML;
- */
+
 		
 		// console.log(myApp.getCurrentView().selector);
 		// view2.router.back();
