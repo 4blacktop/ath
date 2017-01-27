@@ -147,6 +147,18 @@ i.icon.icon-settings-white {
 }
 
 
-.img-circle {
+.img-timeline-circle {
 	border-radius: 50%;
+	object-fit: none; /* Do not scale the image */
+	object-position: center; /* Center the image within the element */
+	height: 80px;
+	width: 80;
+}
+
+.img-account-circle {
+	border-radius: 50%;
+	object-fit: none; /* Do not scale the image */
+	object-position: center; /* Center the image within the element */
+	height: 160px;
+	width: 160;
 }
