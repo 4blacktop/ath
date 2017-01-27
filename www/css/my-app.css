@@ -145,3 +145,8 @@ i.icon.icon-settings-white {
 .list-block .item-subtitle {
     white-space: normal;
 }
+
+
+.img-circle {
+	border-radius: 50%;
+}

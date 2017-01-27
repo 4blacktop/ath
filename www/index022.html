@@ -176,7 +176,7 @@
 					
 					<div class="item-inner">
 					  <div class="item-title-row">
-						<div class="item-title">{{dateLocale}}</div>
+						<div class="item-title">{{date}}</div>
 						<!-- <div class="item-after"><i class="icon icon-day"></i>morning1 {{morning1}} </div> -->
 					  </div>
 					  <div class="item-subtitle"><br /><i class="icon icon-day"></i><i>Lord, I thank you today for...</i><br />{{morning1}}</div>
@@ -223,25 +223,25 @@
 
 			
 			<script type="text/template7" id="photoTemplate">
-			<!-- <ul>
-			</ul> -->	
 			<!-- <div class="content-block-title">Timeline</div> -->
 					<!-- <div class="item-media">Date: {{date}}<br /><img src="http://lorempixel.com/800/600/" height="320"></div>  -->
+					<div class="item-media">Date: {{date}}<br /><img src="http://lorempixel.com/800/600/" width="100%"></div> 
+			<div class="list-block media-list">
+			  <ul>
 				{{#each this}}
-				<!-- <li>
-				</li> -->
-				<div class="content-block-title">{{dateLocale}}</div>
+				<li>
 				  <a href="add-entry.html?date={{date}}" class="item-link item-content">
-				  
-					<img src="http://lorempixel.com/800/600/" width="100%"></a> 
 					<!-- <div class="item-media"><img src="http://lorempixel.com/80/80/" width="80"></div> -->
 					<!-- <div class="item-media"><img src="{{img}}" width="80"></div>-->
 					
 					
 					<!-- <div class="item-media">Date: {{date}}<br /><img src="{{img}}" height="120"></div>  -->
 					
+				  </a>
+				</li>
 				{{/each}} 
-			
+			  </ul>
+			</div>
 			</script> 
 
 

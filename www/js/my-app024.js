@@ -1,5 +1,3 @@
-// отдельный массив для фото, где есть запись в свойстве имж
-
 // по кнопке выход после подтверждения удалять локалсторейдж localStorage.clear()
 // сохранять локалсторейдж на сервере (при каких услоиях?) - собирать весь(?) локалсторейдж и делать его в JSON
 // загружать локалсторейдж с сервера при логине
@@ -71,17 +69,6 @@ for (var i = 0; i < localStorage.length; i++){
 	var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
 	if (itemNow.date) {
 		// console.log(itemNow);
-		
-		var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-
-		var d = new Date(itemNow.date);
-		
-		
-		// itemNow.dateLocale = monthNames[d.getMonth()] + " " + getDate(d) + ", " + getFullYear(d);
-		itemNow.dateLocale = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
-		console.log("itemNow.dateLocale " + itemNow.dateLocale);
-		
-		console.log(itemNow);
 		myApp.template7Data.entryList.push(itemNow);
 		myApp.template7Data.photoEntryList.push(itemNow);
 		var eventDate = itemNow.date.split("-");
@@ -91,7 +78,7 @@ for (var i = 0; i < localStorage.length; i++){
 	}
 }
 
-// Compile templates to HTML, its template is already compiled and accessible as Template7.templates.carTemplate
+// Compile car template to HTML, its template is already compiled and accessible as Template7.templates.carTemplate
 var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
 document.getElementById('timeline-list').innerHTML = timelineHTML;
 
