@@ -1151,12 +1151,12 @@ function setReminders() {
 // myApp.alert(JSON.stringify(storedData));
 	console.log(JSON.stringify(storedData));
 	// console.log(storedData["morning-reminder-checkbox"][0]);
-																				/* 
+																				
 																					// отключаем все уведомления
 																					cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {
 																						// Notifications were cancelled
 																					}, scope);
-																					 */
+																					 
 	// переменные - включен ли ремайндер
 	var morningSet = storedData["morning-reminder-checkbox"][0];
 	var eveningSet = storedData["evening-reminder-checkbox"][0];
@@ -1195,7 +1195,7 @@ function setReminders() {
 	
 	if (morningSet == "on") {
 		// console.log("morningSet on");
-		myApp.alert("morningSet on: " + morningTime);
+		myApp.alert(morningTime,"morningTime on: ");
 		cordova.plugins.notification.local.schedule({
 			id: 1,
 			firstAt: morningTime,
@@ -1209,7 +1209,8 @@ function setReminders() {
 	
 	if (eveningSet == "on") {
 		// console.log("eveningSet on");
-		myApp.alert("eveningSet on: " + eveningTime);
+		myApp.alert(eveningTime,"eveningTime on: ");
+		// myApp.alert("eveningSet on: " + eveningTime);
 		cordova.plugins.notification.local.schedule({
 			id: 2,
 			firstAt: eveningTime,
@@ -1223,7 +1224,7 @@ function setReminders() {
 	
 	if (verseSet == "on") {
 		// console.log("verseSet on");
-		myApp.alert("verseSet on: " + verseTime);
+		myApp.alert(verseTime,"verseTime on: ");
 		cordova.plugins.notification.local.schedule({
 			id: 3,
 			firstAt: verseTime,
