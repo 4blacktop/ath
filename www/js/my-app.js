@@ -63,6 +63,35 @@ var config = {
 };
 firebase.initializeApp(config);	
 
+// local notifications
+document.addEventListener('deviceready', function () {
+console.log();
+/* 
+// работает
+cordova.plugins.notification.local.schedule([{
+	id: 1,
+    text: "What is saying to you today?",
+    sound: "file://sounds/not.mp3",
+    every: "day"
+},{
+	id: 2,
+    text: "What do you want to thank God for today?",
+    sound: "file://sounds/not.mp3",
+    every: "day"
+},{
+	id: 4,
+    text: "test id=4 every=5",
+    sound: "www/sounds/not.mp3",
+    every: 5
+},{
+	id: 3,
+    text: "Tap to read today's verse",
+    sound: "file://sounds/not.mp3",
+    every: "day"
+}]);
+ */
+});
+
 
 // add a realtime listener
 firebase.auth().onAuthStateChanged( function(firebaseUser) {
@@ -101,9 +130,9 @@ for (var i = 0; i < localStorage.length; i++){
 		
 		// itemNow.dateLocale = monthNames[d.getMonth()] + " " + getDate(d) + ", " + getFullYear(d);
 		itemNow.dateLocale = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
-		console.log("itemNow.dateLocale " + itemNow.dateLocale);
+		// console.log("itemNow.dateLocale " + itemNow.dateLocale);
 		
-		console.log(itemNow);
+		// console.log(itemNow);
 		myApp.template7Data.entryList.push(itemNow);
 		
 		if (itemNow.img) {
@@ -623,6 +652,11 @@ myApp.onPageInit('settings-reminders',function(page){
 		input: '#picker-morning',
 		rotateEffect: true,
 
+		formatValue: function (p, values, displayValues) {
+			// return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
+			return values[0] + ':' + values[1];
+		},		
+
 		cols: [
 			{
 				textAlign: 'left',
@@ -642,6 +676,11 @@ myApp.onPageInit('settings-reminders',function(page){
 	var pickerMorning = myApp.picker({
 		input: '#picker-evening',
 		rotateEffect: true,
+		
+		formatValue: function (p, values, displayValues) {
+			// return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
+			return values[0] + ':' + values[1];
+		},
 
 		cols: [
 			{
@@ -662,6 +701,11 @@ myApp.onPageInit('settings-reminders',function(page){
 	var pickerMorning = myApp.picker({
 		input: '#picker-verse',
 		rotateEffect: true,
+		
+		formatValue: function (p, values, displayValues) {
+			// return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
+			return values[0] + ':' + values[1];
+		},		
 
 		cols: [
 			{
@@ -677,6 +721,17 @@ myApp.onPageInit('settings-reminders',function(page){
 			},
 		]
 	});  
+	
+	
+	$$('input[type="text"]').on('change', function (e) { 
+	  console.log('input text changed keyup keydown change'); 
+	  setReminders();
+	});	
+	
+	$$('input[type="checkbox"]').on('change', function (e) { 
+	  console.log('checkbox changed keyup keydown change'); 
+	  setReminders();
+	});	
 	
 });  
   
@@ -1091,56 +1146,95 @@ function onOffline() {
 
 
 
+function setReminders() {
+    
+// myApp.alert(JSON.stringify(storedData));
+	console.log(JSON.stringify(storedData));
+	// console.log(storedData["morning-reminder-checkbox"][0]);
+																				/* 
+																					// отключаем все уведомления
+																					cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {
+																						// Notifications were cancelled
+																					}, scope);
+																					 */
+	// переменные - включен ли ремайндер
+	var morningSet = storedData["morning-reminder-checkbox"][0];
+	var eveningSet = storedData["evening-reminder-checkbox"][0];
+	var verseSet = storedData["verse-reminder-checkbox"][0];
+	
+	var morningTime = new Date();
+	// morningTime.setUTCHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
+	morningTime.setHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
+	var morningTime = new Date(morningTime);
+	
+	var eveningTime = new Date();
+	// eveningTime.setUTCHours(storedData["evening-reminder-time"].split(':')[0],storedData["evening-reminder-time"].split(':')[1],0,0);
+	eveningTime.setHours(storedData["evening-reminder-time"].split(':')[0],storedData["evening-reminder-time"].split(':')[1],0,0);
+	var eveningTime = new Date(eveningTime);
+	
+	var verseTime = new Date();
+	// verseTime.setUTCHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
+	verseTime.setHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
+	var verseTime = new Date(verseTime);
 
+	// var myToday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+	
+	
+	
+	
+	// var morningTime = Date.parse(storedData["morning-reminder-time"]);
+	// var eveningTime = storedData["evening-reminder-time"];
+	// var verseTime = storedData["verse-reminder-time"];
+	
+	console.log(morningTime);
+	console.log(eveningTime);
+	console.log(verseTime);
+	
+	
 
+	
+	if (morningSet == "on") {
+		// console.log("morningSet on");
+		myApp.alert("morningSet on: " + morningTime);
+		cordova.plugins.notification.local.schedule({
+			id: 1,
+			firstAt: morningTime,
+			text: "What is saying to you today?",
+			sound: "file://sounds/not.mp3",
+			every: "day"
+		});
+	} else { // Notification was cancelled
+		cordova.plugins.notification.local.cancel(1, function () {	}, scope);
+	}
+	
+	if (eveningSet == "on") {
+		// console.log("eveningSet on");
+		myApp.alert("eveningSet on: " + eveningTime);
+		cordova.plugins.notification.local.schedule({
+			id: 2,
+			firstAt: eveningTime,
+			text: "What do you want to thank God for today?",
+			sound: "file://sounds/not.mp3",
+			every: "day"
+		});		
+	} else { // Notification was cancelled
+		cordova.plugins.notification.local.cancel(2, function () {	}, scope);
+	}
+	
+	if (verseSet == "on") {
+		// console.log("verseSet on");
+		myApp.alert("verseSet on: " + verseTime);
+		cordova.plugins.notification.local.schedule({
+			id: 3,
+			firstAt: verseTime,
+			text: "Tap to read today's verse",
+			sound: "file://sounds/not.mp3",
+			every: "day"
+		});		
+	} else { // Notification was cancelled
+		cordova.plugins.notification.local.cancel(3, function () {	}, scope);
+	}
 
-
-// {"morning-reminder-time":"10 00","morning-reminder-checkbox":["on"],"evening-reminder-time":"02 02","evening-reminder-checkbox":["on"],"verse-reminder-time":"00 04","verse-reminder-checkbox":["on"]}
-
-
-
-document.addEventListener('deviceready', function () {
-// local notifications
-
-/* 
-// работает
-cordova.plugins.notification.local.schedule([{
-	id: 1,
-    text: "What is saying to you today?",
-    sound: "file://sounds/not.mp3",
-    every: "day"
-},{
-	id: 2,
-    text: "What do you want to thank God for today?",
-    sound: "file://sounds/not.mp3",
-    every: "day"
-},{
-	id: 4,
-    text: "test id=4 every=5",
-    sound: "www/sounds/not.mp3",
-    every: 5
-},{
-	id: 3,
-    text: "Tap to read today's verse",
-    sound: "file://sounds/not.mp3",
-    every: "day"
-}]);
- */
-
-
-
-});
-
-
-
-
-
-// данные для reminders
-// {"morning-reminder-time":"10 00","morning-reminder-checkbox":["on"],"evening-reminder-time":"02 02","evening-reminder-checkbox":["on"],"verse-reminder-time":"00 04","verse-reminder-checkbox":["on"]}
-var storedData = myApp.formGetData('reminders-form');
-if(storedData) {
-																											// myApp.alert(JSON.stringify(storedData));
-																												console.log(JSON.stringify(storedData));
 	
 	
 	
@@ -1151,11 +1245,35 @@ if(storedData) {
 	// });
 	
 	// cancel
-	// cordova.plugins.notification.local.cancel(1, function () {
-		// Notification was cancelled
-	// }, scope);
+	// cordova.plugins.notification.local.cancel(1, function () {// Notification was cancelled	// }, scope);
+	// cordova.plugins.notification.local.cancel(4, function () {// Notification was cancelled	// }, scope);	
+	
+	
+};
+
+
+
+
+// данные для reminders
+// {"morning-reminder-time":"10 00","morning-reminder-checkbox":["on"],"evening-reminder-time":"02 02","evening-reminder-checkbox":["on"],"verse-reminder-time":"00 04","verse-reminder-checkbox":["on"]}
+var storedData = myApp.formGetData('reminders-form');
+
+
+// если записаны будильники, установим их
+if(storedData) {
+	// setReminders();
+	// myApp.alert("reminders set");
 }
 else {
 	myApp.alert('Please set reminders')
 }
+
+
+
+
+
+
+
+
+
 
