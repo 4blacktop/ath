@@ -1151,12 +1151,12 @@ function setReminders() {
 // myApp.alert(JSON.stringify(storedData));
 	console.log(JSON.stringify(storedData));
 	// console.log(storedData["morning-reminder-checkbox"][0]);
-																				
+																				/* 
 																					// отключаем все уведомления
 																					cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {
 																						// Notifications were cancelled
 																					}, scope);
-																					 
+																					  */
 	// переменные - включен ли ремайндер
 	var morningSet = storedData["morning-reminder-checkbox"][0];
 	var eveningSet = storedData["evening-reminder-checkbox"][0];
@@ -1164,17 +1164,17 @@ function setReminders() {
 	
 	var morningTime = new Date();
 	// morningTime.setUTCHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
-	morningTime.setHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
+	// morningTime.setHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
 	var morningTime = new Date(morningTime);
 	
 	var eveningTime = new Date();
 	// eveningTime.setUTCHours(storedData["evening-reminder-time"].split(':')[0],storedData["evening-reminder-time"].split(':')[1],0,0);
-	eveningTime.setHours(storedData["evening-reminder-time"].split(':')[0],storedData["evening-reminder-time"].split(':')[1],0,0);
+	// eveningTime.setHours(storedData["evening-reminder-time"].split(':')[0],storedData["evening-reminder-time"].split(':')[1],0,0);
 	var eveningTime = new Date(eveningTime);
 	
 	var verseTime = new Date();
 	// verseTime.setUTCHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
-	verseTime.setHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
+	// verseTime.setHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
 	var verseTime = new Date(verseTime);
 
 	// var myToday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
@@ -1186,9 +1186,9 @@ function setReminders() {
 	// var eveningTime = storedData["evening-reminder-time"];
 	// var verseTime = storedData["verse-reminder-time"];
 	
-	console.log(morningTime);
-	console.log(eveningTime);
-	console.log(verseTime);
+	// console.log(morningTime);
+	// console.log(eveningTime);
+	// console.log(verseTime);
 	
 	
 
