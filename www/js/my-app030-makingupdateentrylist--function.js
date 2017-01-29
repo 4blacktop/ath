@@ -1,7 +1,16 @@
-// локальные уведомления - настроить
-// экспорт в пдф - настроить
-// searchbar
 
+
+// сохранять локалсторейдж на сервере (при каких услоиях?) - собирать весь(?) локалсторейдж и делать его в JSON
+// выгружать на сервер:
+// все даты
+// имя
+// фото пользователя
+
+// локальные уведомления - настроить
+// крутилка при логине и других (?) действиях
+
+// загружать локалсторейдж с сервера при логине
+// по кнопке выход после подтверждения удалять локалсторейдж localStorage.clear()
 // проверить сплэшскрин
 
 // заполнить страницы сеттингс
@@ -9,15 +18,6 @@
 // ==============================
 // готово
 
-// сохранять локалсторейдж на сервере (при каких услоиях?) - собирать весь(?) локалсторейдж и делать его в JSON
-// выгружать на сервер:
-// все даты
-// имя
-// фото пользователя
-// загружать локалсторейдж с сервера при логине
-// по кнопке выход после подтверждения удалять локалсторейдж localStorage.clear()
-
-// крутилка при логине и других (?) действиях
 // сохранять имя firebase
 // сохранять url фото пользователя в переменной firebase
 // делать фото
@@ -52,9 +52,6 @@ var myApp = new Framework7({
 
 // дата при открытии add-entry
 var addEntryDateInput = "";
-
-// загрузим будильники
-var storedData = myApp.formGetData('reminders-form');
 	
 // Initialize Firebase
 var config = {
@@ -131,14 +128,11 @@ else {
 firebase.auth().onAuthStateChanged( function(firebaseUser) {
 	if(firebaseUser) {
 		// console.log(firebaseUser);
-		console.log('logged in uid: ' + firebase.auth().currentUser.uid);
+		console.log('logged in');
 		// myApp.alert('Logged in');
 		// document.getElementById( 'btnLogout' ).style.display = 'block';
 		// document.getElementById( 'btnSignUp' ).style.display = 'none';
 		myApp.closeModal();
-		myApp.showIndicator();
-		downloadList();
-		myApp.hideIndicator();
 	} else {
 		myApp.alert('Logged out');
 		console.log('not logged in');
@@ -167,7 +161,7 @@ for (var i = 0; i < localStorage.length; i++){
 		
 		// itemNow.dateLocale = monthNames[d.getMonth()] + " " + getDate(d) + ", " + getFullYear(d);
 		itemNow.dateLocale = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
-		console.log("itemNow.dateLocale " + itemNow.dateLocale);
+		// console.log("itemNow.dateLocale " + itemNow.dateLocale);
 		
 		// console.log(itemNow);
 		myApp.template7Data.entryList.push(itemNow);
@@ -617,7 +611,6 @@ const btnLogout = document.getElementById('btnLogout');
 btnLogin.addEventListener('click', function (e) {
 	// myApp.alert('btnLogin');
 	// get email and pass
-	// myApp.showIndicator();
 	const email = txtEmail.value;
 	const pass = txtPassword.value;
 	const auth = firebase.auth();
@@ -626,10 +619,6 @@ btnLogin.addEventListener('click', function (e) {
 	promise.catch(function (f) {
 	myApp.alert(f.message);
 	console.log(f.message);
-	
-	downloadList();
-	
-	// myApp.hideIndicator();
 	});
 });
 		
@@ -653,21 +642,6 @@ btnLogout.addEventListener('click', function (e) {
 	
     myApp.confirm('Confirm Log Out', function () {
 		firebase.auth().signOut();
-		localStorage.clear();
-		
-		
-		
-		
-		// var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
-		// var timelineHTML = [];
-		// document.getElementById('timeline-list').innerHTML = timelineHTML;
-		document.getElementById('timeline-list').innerHTML = '';
-		
-		// var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
-		// var photoHTML = [];
-		// document.getElementById('photo-list').innerHTML = photoHTML;
-		document.getElementById('photo-list').innerHTML = '';
-		
         // myApp.alert('You clicked Ok button');
     });
 	
@@ -1109,7 +1083,7 @@ myApp.onPageInit('add-entry',function(page){
 		
 		
 		
-		myApp.showIndicator();
+		
 		var formData = myApp.formToData('#add-entry-form');
 		console.log(formData.date);
 		console.log(formData);
@@ -1117,26 +1091,16 @@ myApp.onPageInit('add-entry',function(page){
 		
 		myApp.template7Data.entryList = [];
 		myApp.template7Data.photoEntryList = [];
-		
 		// поиск дней с событиями
 		var calendarEvents = [];
 		for (var i = 0; i < localStorage.length; i++){
 			var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
 			if (itemNow.date) {
-				
-						var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-		var d = new Date(itemNow.date);
-		
-		// itemNow.dateLocale = monthNames[d.getMonth()] + " " + getDate(d) + ", " + getFullYear(d);
-		itemNow.dateLocale = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
-		console.log("itemNow.dateLocale " + itemNow.dateLocale);
-				
-				
+				// console.log(itemNow);
 				myApp.template7Data.entryList.push(itemNow);
 				if (itemNow.img) {
 					myApp.template7Data.photoEntryList.push(itemNow);
 				}
-				console.log(itemNow);
 				var eventDate = itemNow.date.split("-");
 				// console.log('eventDate' + eventDate);
 				var f = new Date(eventDate);
@@ -1144,7 +1108,6 @@ myApp.onPageInit('add-entry',function(page){
 				calendarEvents.push(f);
 			}
 		}
-		
 		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
 		document.getElementById('timeline-list').innerHTML = timelineHTML;
 		
@@ -1156,8 +1119,6 @@ myApp.onPageInit('add-entry',function(page){
 		// view2.router.back();
 		
 		
-		uploadList();
-		
 		page.view.router.back({
             // url: 'index.html#view-2',
             url: 'index.html',
@@ -1165,7 +1126,6 @@ myApp.onPageInit('add-entry',function(page){
             // ignoreCache: true
         });
 		myApp.showTab('#view-2');
-		myApp.hideIndicator();
 		myApp.alert('Entry saved');
 	});
 }); 
@@ -1417,7 +1377,7 @@ function setReminders() {
 
 // данные для reminders
 // {"morning-reminder-time":"10 00","morning-reminder-checkbox":["on"],"evening-reminder-time":"02 02","evening-reminder-checkbox":["on"],"verse-reminder-time":"00 04","verse-reminder-checkbox":["on"]}
-
+var storedData = myApp.formGetData('reminders-form');
 
 
 // если записаны будильники, установим их (перенес в deviceready
@@ -1475,7 +1435,7 @@ function downloadList() {
 	// return firebase.database().ref('/users/list/' + userId).once('value').then(function(snapshot) {
 	// return firebase.database().ref('/users/list/' + userId).once('value').then(function(snapshot) {
 	return firebase.database().ref('/users/list/').once('value').then(function(snapshot) {
-	// console.log(snapshot.val());
+	console.log(snapshot.val());
 	var userList = snapshot.val();
 	// console.log(snapshot.val().userId);
 	// console.log(userList);
@@ -1498,40 +1458,28 @@ function downloadList() {
 	for (var i = 0; i < userListJson.length; i++){
 		// var itemNow = listEntryFromFirebase[i];
 		// console.log(itemNow.date);
-		// console.log(userListJson[i].date);
-		// console.log(userListJson[i]);
+		console.log(userListJson[i].date);
+		console.log(userListJson[i]);
 		// localStorage.setItem(userListJson[i].date, JSON.stringify(listEntryFromFirebase[i]));
 		localStorage.setItem(userListJson[i].date, JSON.stringify(userListJson[i]));
-		}	
+	}	
 	
 	
-		myApp.template7Data.entryList = [];
-		myApp.template7Data.photoEntryList = [];
-		
-		// поиск дней с событиями
-		var calendarEvents = [];
-		for (var i = 0; i < localStorage.length; i++){
-			var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
-			if (itemNow.date) {
-				// console.log(itemNow);
-				myApp.template7Data.entryList.push(itemNow);
-				if (itemNow.img) {
-					myApp.template7Data.photoEntryList.push(itemNow);
-				}
-				var eventDate = itemNow.date.split("-");
-				// console.log('eventDate' + eventDate);
-				var f = new Date(eventDate);
-				// console.log('f' + f);
-				calendarEvents.push(f);
-			}
-		}
-		
-		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
-		document.getElementById('timeline-list').innerHTML = timelineHTML;
-		
-		var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
-		document.getElementById('photo-list').innerHTML = photoHTML;
+	
 	myApp.hideIndicator();
 	});
+	
+	
+
+	
+
+	
+	
+	// console.log(JSON.stringify(myApp.template7Data.entryList));
+
+	
+	
+	
+	
 }
 
