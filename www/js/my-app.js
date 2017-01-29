@@ -1193,12 +1193,12 @@ function setReminders() {
 	// myApp.alert(JSON.stringify(storedData));
 	console.log(JSON.stringify(storedData));
 	// console.log(storedData["morning-reminder-checkbox"][0]);
-																				/* 
+																				
 																					// отключаем все уведомления
 																					cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {
 																						// Notifications were cancelled
 																					}, scope);
-																					  */
+																					  
 	// переменные - включен ли ремайндер
 	var morningSet = storedData["morning-reminder-checkbox"][0];
 	var eveningSet = storedData["evening-reminder-checkbox"][0];
