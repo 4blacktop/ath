@@ -53,7 +53,8 @@ var myApp = new Framework7({
 // дата при открытии add-entry
 var addEntryDateInput = "";
 
-
+// загрузим будильники
+var storedData = myApp.formGetData('reminders-form');
 	
 // Initialize Firebase
 var config = {
@@ -1182,15 +1183,8 @@ function onOffline() {
 
 
 function setReminders() {
-    // загрузим будильники
-	var storedData = myApp.formGetData('reminders-form');
-	// console.log(storedData);
-	
-	if(storedData) {
-	// setReminders();
-	// myApp.alert("reminders set");
-
-	// myApp.alert(JSON.stringify(storedData));
+    
+// myApp.alert(JSON.stringify(storedData));
 	console.log(JSON.stringify(storedData));
 	// console.log(storedData["morning-reminder-checkbox"][0]);
 																				/* 
@@ -1207,7 +1201,6 @@ function setReminders() {
 	var morningTime = new Date();
 	// morningTime.setUTCHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
 	morningTime.setHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
-	console.log(morningTime);
 	var morningTime = new Date(morningTime);
 	
 	var eveningTime = new Date();
@@ -1220,66 +1213,155 @@ function setReminders() {
 	verseTime.setHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
 	var verseTime = new Date(verseTime);
 
+	// var myToday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
 	
+	
+	
+	
+	// var morningTime = Date.parse(storedData["morning-reminder-time"]);
+	// var eveningTime = storedData["evening-reminder-time"];
+	// var verseTime = storedData["verse-reminder-time"];
+	
+	// console.log(morningTime);
+	// console.log(eveningTime);
+	// console.log(verseTime);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/* 
 	if (morningSet == "on") {
 		// console.log("morningSet on");
-		// myApp.alert(morningTime,"morningTime on: ");
-		var morningSetting = {
+		myApp.alert(morningTime,"morningTime on: ");
+		cordova.plugins.notification.local.schedule({
 			id: 1,
+			firstAt: morningTime,
 			text: "What is saying to you today?",
 			sound: "file://sounds/not.mp3",
-			every: "day",
-			firstAt: morningTime
-		};
-		
-		
+			every: "day"
+		});
 	} else { // Notification was cancelled
-		// cordova.plugins.notification.local.cancel(1, function () {	}, scope);
+		cordova.plugins.notification.local.cancel(1, function () {	}, scope);
 	}
 	
 	if (eveningSet == "on") {
 		// console.log("eveningSet on");
-		// myApp.alert(eveningTime,"eveningTime on: ");
-		var eveningSetting =  {
+		myApp.alert(eveningTime,"eveningTime on: ");
+		// myApp.alert("eveningSet on: " + eveningTime);
+		cordova.plugins.notification.local.schedule({
 			id: 2,
+			firstAt: eveningTime,
 			text: "What do you want to thank God for today?",
 			sound: "file://sounds/not.mp3",
-			every: "day",
-			firstAt: eveningTime
-		};
-
+			every: "day"
+		});		
 	} else { // Notification was cancelled
-		// cordova.plugins.notification.local.cancel(2, function () {	}, scope);
+		cordova.plugins.notification.local.cancel(2, function () {	}, scope);
 	}
 	
 	if (verseSet == "on") {
 		// console.log("verseSet on");
-		// myApp.alert(verseTime,"verseTime on: ");
-		// myApp.alert(verseTime,"verseTime on: ");
-		var verseSetting =   {
+		myApp.alert(verseTime,"verseTime on: ");
+		cordova.plugins.notification.local.schedule({
 			id: 3,
+			firstAt: verseTime,
 			text: "Tap to read today's verse",
 			sound: "file://sounds/not.mp3",
-			every: "day",
-			firstAt: verseTime
-		};
+			every: "day"
+		});		
+	} else { // Notification was cancelled
+		cordova.plugins.notification.local.cancel(3, function () {	}, scope);
+	}
+ */
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	if (morningSet == "on") {
+		// console.log("morningSet on");
+		myApp.alert(morningTime,"morningTime on: ");
+		// cordova.plugins.notification.local.schedule({
+			// id: 1,
+			// firstAt: morningTime,
+			// text: "What is saying to you today?",
+			// sound: "file://sounds/not.mp3",
+			// every: "day"
+		// });
+		cordova.plugins.notification.local.update({
+			id: 1,
+			firstAt: morningTime
+		});
+		
 		
 	} else { // Notification was cancelled
-		// cordova.plugins.notification.local.cancel(3, function () {	}, scope);
+		cordova.plugins.notification.local.cancel(1, function () {	}, scope);
+	}
+	
+	if (eveningSet == "on") {
+		// console.log("eveningSet on");
+		myApp.alert(eveningTime,"eveningTime on: ");
+		// myApp.alert("eveningSet on: " + eveningTime);
+		// cordova.plugins.notification.local.schedule({
+			// id: 2,
+			// firstAt: eveningTime,
+			// text: "What do you want to thank God for today?",
+			// sound: "file://sounds/not.mp3",
+			// every: "day"
+		// });		
+		
+		
+		cordova.plugins.notification.local.update({
+			id: 2,
+			firstAt: eveningTime
+		});
+	} else { // Notification was cancelled
+		cordova.plugins.notification.local.cancel(2, function () {	}, scope);
+	}
+	
+	if (verseSet == "on") {
+		// console.log("verseSet on");
+		myApp.alert(verseTime,"verseTime on: ");
+		
+		// cordova.plugins.notification.local.schedule({
+			// id: 3,
+			// firstAt: verseTime,
+			// text: "Tap to read today's verse",
+			// sound: "file://sounds/not.mp3",
+			// every: "day"
+		// });	
+		cordova.plugins.notification.local.update({
+			id: 3,
+			firstAt: verseTime
+		});
+		
+	} else { // Notification was cancelled
+		cordova.plugins.notification.local.cancel(3, function () {	}, scope);
 	}
 
 	
-	console.log(morningSetting);
-	console.log(eveningSetting);
-	console.log(verseSetting);
-
-	
-
-	
-
-// работает
-cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verseSetting]);
-
 	
 	
 	// update
@@ -1292,10 +1374,7 @@ cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verse
 	// cordova.plugins.notification.local.cancel(1, function () {// Notification was cancelled	// }, scope);
 	// cordova.plugins.notification.local.cancel(4, function () {// Notification was cancelled	// }, scope);	
 	
-	}
-else {
-	myApp.alert('Please set reminders')
-}
+	
 };
 
 

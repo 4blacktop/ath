@@ -1,7 +1,6 @@
 // локальные уведомления - настроить
 // экспорт в пдф - настроить
 // searchbar
-// сортировка по дате
 
 // проверить сплэшскрин
 // заполнить страницы сеттингс
@@ -53,7 +52,8 @@ var myApp = new Framework7({
 // дата при открытии add-entry
 var addEntryDateInput = "";
 
-
+// загрузим будильники
+var storedData = myApp.formGetData('reminders-form');
 	
 // Initialize Firebase
 var config = {
@@ -166,7 +166,7 @@ for (var i = 0; i < localStorage.length; i++){
 		
 		// itemNow.dateLocale = monthNames[d.getMonth()] + " " + getDate(d) + ", " + getFullYear(d);
 		itemNow.dateLocale = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
-		// console.log("itemNow.dateLocale " + itemNow.dateLocale);
+		console.log("itemNow.dateLocale " + itemNow.dateLocale);
 		
 		// console.log(itemNow);
 		myApp.template7Data.entryList.push(itemNow);
@@ -1108,7 +1108,7 @@ myApp.onPageInit('add-entry',function(page){
 		
 		
 		
-
+		myApp.showIndicator();
 		var formData = myApp.formToData('#add-entry-form');
 		console.log(formData.date);
 		console.log(formData);
@@ -1130,6 +1130,7 @@ myApp.onPageInit('add-entry',function(page){
             // ignoreCache: true
         });
 		myApp.showTab('#view-2');
+		myApp.hideIndicator();
 		myApp.alert('Entry saved');
 	});
 }); 
@@ -1182,15 +1183,8 @@ function onOffline() {
 
 
 function setReminders() {
-    // загрузим будильники
-	var storedData = myApp.formGetData('reminders-form');
-	// console.log(storedData);
-	
-	if(storedData) {
-	// setReminders();
-	// myApp.alert("reminders set");
-
-	// myApp.alert(JSON.stringify(storedData));
+    
+// myApp.alert(JSON.stringify(storedData));
 	console.log(JSON.stringify(storedData));
 	// console.log(storedData["morning-reminder-checkbox"][0]);
 																				/* 
@@ -1207,7 +1201,6 @@ function setReminders() {
 	var morningTime = new Date();
 	// morningTime.setUTCHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
 	morningTime.setHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
-	console.log(morningTime);
 	var morningTime = new Date(morningTime);
 	
 	var eveningTime = new Date();
@@ -1220,66 +1213,155 @@ function setReminders() {
 	verseTime.setHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
 	var verseTime = new Date(verseTime);
 
+	// var myToday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
 	
+	
+	
+	
+	// var morningTime = Date.parse(storedData["morning-reminder-time"]);
+	// var eveningTime = storedData["evening-reminder-time"];
+	// var verseTime = storedData["verse-reminder-time"];
+	
+	// console.log(morningTime);
+	// console.log(eveningTime);
+	// console.log(verseTime);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/* 
 	if (morningSet == "on") {
 		// console.log("morningSet on");
-		// myApp.alert(morningTime,"morningTime on: ");
-		var morningSetting = {
+		myApp.alert(morningTime,"morningTime on: ");
+		cordova.plugins.notification.local.schedule({
 			id: 1,
+			firstAt: morningTime,
 			text: "What is saying to you today?",
 			sound: "file://sounds/not.mp3",
-			every: "day",
-			firstAt: morningTime
-		};
-		
-		
+			every: "day"
+		});
 	} else { // Notification was cancelled
-		// cordova.plugins.notification.local.cancel(1, function () {	}, scope);
+		cordova.plugins.notification.local.cancel(1, function () {	}, scope);
 	}
 	
 	if (eveningSet == "on") {
 		// console.log("eveningSet on");
-		// myApp.alert(eveningTime,"eveningTime on: ");
-		var eveningSetting =  {
+		myApp.alert(eveningTime,"eveningTime on: ");
+		// myApp.alert("eveningSet on: " + eveningTime);
+		cordova.plugins.notification.local.schedule({
 			id: 2,
+			firstAt: eveningTime,
 			text: "What do you want to thank God for today?",
 			sound: "file://sounds/not.mp3",
-			every: "day",
-			firstAt: eveningTime
-		};
-
+			every: "day"
+		});		
 	} else { // Notification was cancelled
-		// cordova.plugins.notification.local.cancel(2, function () {	}, scope);
+		cordova.plugins.notification.local.cancel(2, function () {	}, scope);
 	}
 	
 	if (verseSet == "on") {
 		// console.log("verseSet on");
-		// myApp.alert(verseTime,"verseTime on: ");
-		// myApp.alert(verseTime,"verseTime on: ");
-		var verseSetting =   {
+		myApp.alert(verseTime,"verseTime on: ");
+		cordova.plugins.notification.local.schedule({
 			id: 3,
+			firstAt: verseTime,
 			text: "Tap to read today's verse",
 			sound: "file://sounds/not.mp3",
-			every: "day",
-			firstAt: verseTime
-		};
+			every: "day"
+		});		
+	} else { // Notification was cancelled
+		cordova.plugins.notification.local.cancel(3, function () {	}, scope);
+	}
+ */
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	if (morningSet == "on") {
+		// console.log("morningSet on");
+		myApp.alert(morningTime,"morningTime on: ");
+		// cordova.plugins.notification.local.schedule({
+			// id: 1,
+			// firstAt: morningTime,
+			// text: "What is saying to you today?",
+			// sound: "file://sounds/not.mp3",
+			// every: "day"
+		// });
+		cordova.plugins.notification.local.update({
+			id: 1,
+			firstAt: morningTime
+		});
+		
 		
 	} else { // Notification was cancelled
-		// cordova.plugins.notification.local.cancel(3, function () {	}, scope);
+		cordova.plugins.notification.local.cancel(1, function () {	}, scope);
+	}
+	
+	if (eveningSet == "on") {
+		// console.log("eveningSet on");
+		myApp.alert(eveningTime,"eveningTime on: ");
+		// myApp.alert("eveningSet on: " + eveningTime);
+		// cordova.plugins.notification.local.schedule({
+			// id: 2,
+			// firstAt: eveningTime,
+			// text: "What do you want to thank God for today?",
+			// sound: "file://sounds/not.mp3",
+			// every: "day"
+		// });		
+		
+		
+		cordova.plugins.notification.local.update({
+			id: 2,
+			firstAt: eveningTime
+		});
+	} else { // Notification was cancelled
+		cordova.plugins.notification.local.cancel(2, function () {	}, scope);
+	}
+	
+	if (verseSet == "on") {
+		// console.log("verseSet on");
+		myApp.alert(verseTime,"verseTime on: ");
+		
+		// cordova.plugins.notification.local.schedule({
+			// id: 3,
+			// firstAt: verseTime,
+			// text: "Tap to read today's verse",
+			// sound: "file://sounds/not.mp3",
+			// every: "day"
+		// });	
+		cordova.plugins.notification.local.update({
+			id: 3,
+			firstAt: verseTime
+		});
+		
+	} else { // Notification was cancelled
+		cordova.plugins.notification.local.cancel(3, function () {	}, scope);
 	}
 
 	
-	console.log(morningSetting);
-	console.log(eveningSetting);
-	console.log(verseSetting);
-
-	
-
-	
-
-// работает
-cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verseSetting]);
-
 	
 	
 	// update
@@ -1292,10 +1374,7 @@ cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verse
 	// cordova.plugins.notification.local.cancel(1, function () {// Notification was cancelled	// }, scope);
 	// cordova.plugins.notification.local.cancel(4, function () {// Notification was cancelled	// }, scope);	
 	
-	}
-else {
-	myApp.alert('Please set reminders')
-}
+	
 };
 
 
@@ -1325,12 +1404,12 @@ else {
 
 // закачивает в удаленную БД список текстов дней
 function uploadList() {
-			myApp.showIndicator();
+	
 	var user = firebase.auth().currentUser;
 	var uploadList = JSON.stringify(myApp.template7Data.entryList);
 	
-	// console.log(user);
-	// console.log(uploadList);
+	console.log(user);
+	console.log(uploadList);
 	// console.log(myApp.template7Data.entryList);
 	
 	
@@ -1341,7 +1420,6 @@ function uploadList() {
 		list : uploadList
 	  });
 	
-	myApp.hideIndicator();
 	
 // function writeUserData(userId, name, email, imageUrl) {
 // }
@@ -1362,14 +1440,14 @@ function buildHTML() {
 		
 		// itemNow.dateLocale = monthNames[d.getMonth()] + " " + getDate(d) + ", " + getFullYear(d);
 		itemNow.dateLocale = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
-		// console.log("itemNow.dateLocale " + itemNow.dateLocale);
+		console.log("itemNow.dateLocale " + itemNow.dateLocale);
 				
 				
 				myApp.template7Data.entryList.push(itemNow);
 				if (itemNow.img) {
 					myApp.template7Data.photoEntryList.push(itemNow);
 				}
-				// console.log(itemNow);
+				console.log(itemNow);
 				var eventDate = itemNow.date.split("-");
 				// console.log('eventDate' + eventDate);
 				var f = new Date(eventDate);
@@ -1380,42 +1458,81 @@ function buildHTML() {
 		
 		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
 		document.getElementById('timeline-list').innerHTML = timelineHTML;
-		// console.log('timelineHTML: ' + timelineHTML);
 		
 		var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
 		document.getElementById('photo-list').innerHTML = photoHTML;
-		// console.log('photoHTML: ' + photoHTML);
 }
 
 // скачивает из удаленной БД список текстов дней
 function downloadList() {
 	
 	myApp.showIndicator();
-	// var listEntryFromFirebase = myApp.template7Data.entryList;
+// var listEntryFromFirebase = myApp.template7Data.entryList;
 
 
 	var userId = firebase.auth().currentUser.uid;
-	// console.log(userId);
+	console.log(userId);
 	
+	// return firebase.database().ref('/users/list/' + userId).once('value').then(function(snapshot) {
+	// return firebase.database().ref('/users/list/' + userId).once('value').then(function(snapshot) {
 	return firebase.database().ref('/users/list/').once('value').then(function(snapshot) {
+	// console.log(snapshot.val());
 	var userList = snapshot.val();
+	// console.log(snapshot.val().userId);
+	// console.log(userList);
+	// console.log(userList."udB7z6BsolVSNd8yEagNmy27oeL2");
+	// console.log(userList.userId);
+	// console.log(userList["udB7z6BsolVSNd8yEagNmy27oeL2"]);
+	// console.log(JSON.stringify(myApp.template7Data.entryList));
 	
-	// console.log(userList[userId]);
+	console.log(userList[userId]);
 	
 	var userListJson = JSON.parse(userList[userId].list);
+	// console.log(JSON.stringify(userList[userId].list));
+	// console.log(JSON.parse(userList[userId].list));
 	
-	// console.log(userListJson);
-	// console.log(userListJson.length);
+	console.log(userListJson);
+	console.log(userListJson.length);
 	
 	
 	// работает
 	for (var i = 0; i < userListJson.length; i++){
+		// var itemNow = listEntryFromFirebase[i];
+		// console.log(itemNow.date);
+		// console.log(userListJson[i].date);
+		// console.log(userListJson[i]);
+		// localStorage.setItem(userListJson[i].date, JSON.stringify(listEntryFromFirebase[i]));
 		localStorage.setItem(userListJson[i].date, JSON.stringify(userListJson[i]));
 		}	
 	
-	buildHTML();
-	myApp.hideIndicator();
 	
+		myApp.template7Data.entryList = [];
+		myApp.template7Data.photoEntryList = [];
+		
+		// поиск дней с событиями
+		var calendarEvents = [];
+		for (var i = 0; i < localStorage.length; i++){
+			var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
+			if (itemNow.date) {
+				// console.log(itemNow);
+				myApp.template7Data.entryList.push(itemNow);
+				if (itemNow.img) {
+					myApp.template7Data.photoEntryList.push(itemNow);
+				}
+				var eventDate = itemNow.date.split("-");
+				// console.log('eventDate' + eventDate);
+				var f = new Date(eventDate);
+				// console.log('f' + f);
+				calendarEvents.push(f);
+			}
+		}
+		
+		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
+		document.getElementById('timeline-list').innerHTML = timelineHTML;
+		
+		var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
+		document.getElementById('photo-list').innerHTML = photoHTML;
+	myApp.hideIndicator();
 	});
 }
 
