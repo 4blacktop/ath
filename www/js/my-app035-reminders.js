@@ -94,7 +94,23 @@ cordova.plugins.notification.local.schedule([{
  */
  
  
-
+// запланируем ремайндеры (потом их надо апдейтить)
+cordova.plugins.notification.local.schedule([{
+	id: 1,
+    text: "What is saying to you today?",
+    sound: "file://sounds/not.mp3",
+    every: "day"
+},{
+	id: 2,
+    text: "What do you want to thank God for today?",
+    sound: "file://sounds/not.mp3",
+    every: "day"
+},{
+	id: 3,
+    text: "Tap to read today's verse",
+    sound: "file://sounds/not.mp3",
+    every: "day"
+}]); 
 
 /* 
 // если записаны будильники, установим их
@@ -1177,10 +1193,10 @@ function setReminders() {
 	console.log(JSON.stringify(storedData));
 	// console.log(storedData["morning-reminder-checkbox"][0]);
 																				
-	// отключаем все уведомления1
-	cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {
-		// Notifications were cancelled
-	}, scope);
+																					// отключаем все уведомления1
+																					cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {
+																						// Notifications were cancelled
+																					}, scope);
 																					     
 	// переменные - включен ли ремайндер
 	var morningSet = storedData["morning-reminder-checkbox"][0];
@@ -1217,7 +1233,7 @@ function setReminders() {
 		
 		
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(1, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(1, function () {	}, scope);
 	}
 	
 	if (eveningSet == "on") {
@@ -1232,7 +1248,7 @@ function setReminders() {
 		};
 
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(2, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(2, function () {	}, scope);
 	}
 	
 	if (verseSet == "on") {
@@ -1248,15 +1264,19 @@ function setReminders() {
 		};
 		
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(3, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(3, function () {	}, scope);
 	}
 
 	
-	myApp.alert(morningSetting);
-	myApp.alert(eveningSetting);
-	myApp.alert(verseSetting);
+	console.log(morningSetting);
+	console.log(eveningSetting);
+	console.log(verseSetting);
 
+	
 
+	
+
+// работает
 cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verseSetting]);
 
 	
