@@ -1252,16 +1252,21 @@ function setReminders() {
 
 cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verseSetting]);
 	
-	myApp.alert(morningSetting);
-	myApp.alert(eveningSetting);
-	myApp.alert(verseSetting);
+	document.getElementById('morning').innerHTML = JSON.stringify(morningSetting);
+	document.getElementById('evening').innerHTML = JSON.stringify(eveningSetting);
+	document.getElementById('verse').innerHTML = JSON.stringify(verseSetting);
+	// myApp.alert(morningSetting);
+	// myApp.alert(eveningSetting);
+	// myApp.alert(verseSetting);
 
 cordova.plugins.notification.local.getIds(function(ids) {
-    myApp.alert(ids);
+    // myApp.alert(ids);
+	document.getElementById('getids').innerHTML = JSON.stringify(ids);
 }, cordova.plugins);
 
 cordova.plugins.notification.local.getAll(function (notifications) {
-    myApp.alert(notifications);
+    // myApp.alert(notifications);
+	document.getElementById('getall').innerHTML = JSON.stringify(notifications);
 
 });
 
@@ -1286,7 +1291,7 @@ else {
 
 // закачивает в удаленную БД список текстов дней
 function uploadList() {
-			myApp.showIndicator();
+	myApp.showIndicator();
 	var user = firebase.auth().currentUser;
 	var uploadList = JSON.stringify(myApp.template7Data.entryList);
 	
