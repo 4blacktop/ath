@@ -1179,7 +1179,7 @@ function setReminders() {
 																				
 	// отключаем все уведомления 1 // Notifications were cancelled
 	// cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {}, scope);
-	cordova.plugins.notification.local.cancelAll(function() {   myApp.alert("cordova.plugins.notification.local.cancelAll");}, this);
+	// cordova.plugins.notification.local.cancelAll(function() {   myApp.alert("cordova.plugins.notification.local.cancelAll");}, this);
 																					     
 	// переменные - включен ли ремайндер
 	var morningSet = storedData["morning-reminder-checkbox"][0];
@@ -1216,7 +1216,7 @@ function setReminders() {
 		
 		
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(1, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(1, function () {	}, scope);
 	}
 	
 	if (eveningSet == "on") {
@@ -1231,7 +1231,7 @@ function setReminders() {
 		};
 
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(2, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(2, function () {	}, scope);
 	}
 	
 	if (verseSet == "on") {
@@ -1247,10 +1247,9 @@ function setReminders() {
 		};
 		
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(3, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(3, function () {	}, scope);
 	}
 
-cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verseSetting]);
 	
 	document.getElementById('morning').innerHTML = JSON.stringify(morningSetting);
 	document.getElementById('evening').innerHTML = JSON.stringify(eveningSetting);
@@ -1258,7 +1257,9 @@ cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verse
 	// myApp.alert(morningSetting);
 	// myApp.alert(eveningSetting);
 	// myApp.alert(verseSetting);
-
+	
+	 
+cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verseSetting]);
 cordova.plugins.notification.local.getIds(function(ids) {
     // myApp.alert(ids);
 	document.getElementById('getids').innerHTML = JSON.stringify(ids);
@@ -1269,7 +1270,9 @@ cordova.plugins.notification.local.getAll(function (notifications) {
 	document.getElementById('getall').innerHTML = JSON.stringify(notifications);
 
 });
+/* 
 
+ */
 	
 	
 	// update
