@@ -1177,10 +1177,9 @@ function setReminders() {
 	console.log(JSON.stringify(storedData));
 	// console.log(storedData["morning-reminder-checkbox"][0]);
 																				
-	// отключаем все уведомления1
-	cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {
-		// Notifications were cancelled
-	}, scope);
+	// отключаем все уведомления 1 // Notifications were cancelled
+	// cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {}, scope);
+	cordova.plugins.notification.local.cancelAll(function() {   myApp.alert("cordova.plugins.notification.local.cancelAll");}, this);
 																					     
 	// переменные - включен ли ремайндер
 	var morningSet = storedData["morning-reminder-checkbox"][0];
@@ -1251,13 +1250,15 @@ function setReminders() {
 		cordova.plugins.notification.local.cancel(3, function () {	}, scope);
 	}
 
+cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verseSetting]);
 	
 	myApp.alert(morningSetting);
 	myApp.alert(eveningSetting);
 	myApp.alert(verseSetting);
 
-
-cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verseSetting]);
+cordova.plugins.notification.local.getIds(function(ids) {
+    myApp.alert(ids);
+}, cordova.plugins);
 
 	
 	
