@@ -1260,6 +1260,11 @@ cordova.plugins.notification.local.getIds(function(ids) {
     myApp.alert(ids);
 }, cordova.plugins);
 
+cordova.plugins.notification.local.getAll(function (notifications) {
+    myApp.alert(notifications);
+
+});
+
 	
 	
 	// update
