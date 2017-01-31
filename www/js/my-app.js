@@ -1082,7 +1082,7 @@ myApp.onPageInit('settingsexport',function(page){
 	doc.text(20, 50, 'YES, Inside of PhoneGap!');
 	 
 	var pdfOutput = doc.output();
-	myApp.alert( pdfOutput );
+	// myApp.alert( pdfOutput );
 	 
 	//NEXT SAVE IT TO THE DEVICE'S LOCAL FILE SYSTEM
 	myApp.alert("file system...");
@@ -1117,7 +1117,7 @@ myApp.onPageInit('settingsexport',function(page){
 
 	
 	});	
-	
+
 }); 
 
 
