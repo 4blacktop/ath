@@ -1035,32 +1035,6 @@ myApp.onPageInit('settingsexport',function(page){
 	document.getElementById('export-list').innerHTML = exportHTML;
 	
 	
-/* 	
-	var doc = new jsPDF();          
-	var elementHandler = {
-	  '#ignorePDF': function (element, renderer) {
-		return true;
-	  }
-	};
-	var source = window.document.getElementsByTagName("body")[0];
-	doc.fromHTML(
-		source,
-		15,
-		15,
-		{
-		  'width': 180,'elementHandlers': elementHandler
-		});
-
-	doc.output("dataurlnewwindow");
-	 */
-	 
-	var printDoc = new jsPDF();
-    // printDoc.fromHTML($$('#export-list').get(0), 10, 10, {'width': 180});
-    printDoc.fromHTML(exportHTML, 10, 10, {'width': 180});
-    // printDoc.autoPrint();
-    printDoc.output("dataurlnewwindow"); // this opens a new popup,  after this the PDF opens the print window view but there are browser inconsistencies with how this is handled
-
-	
 	});	
 	
 }); 

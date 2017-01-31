@@ -988,7 +988,6 @@ myApp.onPageInit('settingsexport',function(page){
 		input: '#calendar-range',
 		dateFormat: 'M dd yyyy',
 		rangePicker: true,
-		events: calendarEvents,
 		onChange: function (values) {
 			var exportEnable = document.getElementById("exportBtn") ;
 			if(values.value[1]) {
@@ -996,71 +995,53 @@ myApp.onPageInit('settingsexport',function(page){
 			} else {
 				exportEnable.classList.add("disabled");
 			}
+			// console.log(values.value[1]);
+			
+			// date = new Date(values.value[0]);
+			// addEntryDateInput = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+			// entryData = JSON.parse(localStorage.getItem(addEntryDateInput));
+			// console.log(entryData);
+			// if(entryData) {
+				// myApp.formFromData("#add-entry-form", entryData);
+			// }
 	   }
 	}); 
 	
 	const exportBtn = document.getElementById('exportBtn');
+	// add login event
 	exportBtn.addEventListener('click', function (e) {
-		var range = document.getElementById('calendar-range');
-		console.log(range.value.split(" - "));
-		s = Date.parse(range.value.split(" - ")[0]);
-		e = Date.parse(range.value.split(" - ")[1]);
-
-		// формируем массив, события в котором лежат в указанном промежутке
+		myApp.alert('export started!');
+		
+		
+		
 		var arrayExport	= [];
 		for (var i = 0; i < localStorage.length; i++){
 			var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
 			if (itemNow.date) {
-				c = Date.parse(itemNow.date);
-				if((c <= e && c >= s)) {
-					arrayExport.push(itemNow);
-					console.log(itemNow);
-					// return true;
-				} else {
-					// return false;
-				}
+				console.log(itemNow);
+				arrayExport.push(itemNow);
+				
+				// console.log(itemNow);
+				// var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+				// var d = new Date(arrayExport.date);
+				
+				// itemNow.dateLocale = monthNames[d.getMonth()] + " " + getDate(d) + ", " + getFullYear(d);
+				// arrayExport.dateLocale = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+				// console.log("arrayExport.dateLocale " + arrayExport.dateLocale);
+				
+				
+				// if (arrayExport.img) {
+					// myApp.template7Data.photoEntryList.push(itemNow);
+				// }
+				
+				// var eventDate = arrayExport.date.split("-");
+				// var f = new Date(eventDate);
+				// console.log('f' + f);
+				// calendarEvents.push(f);
 			}
 		};
 		
 	console.log(arrayExport);
-	
-	// сортировка массива дней по дате 
-	arrayExport.sort(function(a, b) {
-		a = new Date(a.date);
-		b = new Date(b.date);
-		return a>b ? -1 : a<b ? 1 : 0;
-	});
-	
-	var exportHTML = Template7.templates.timelineTemplate(arrayExport);
-	document.getElementById('export-list').innerHTML = exportHTML;
-	
-	
-/* 	
-	var doc = new jsPDF();          
-	var elementHandler = {
-	  '#ignorePDF': function (element, renderer) {
-		return true;
-	  }
-	};
-	var source = window.document.getElementsByTagName("body")[0];
-	doc.fromHTML(
-		source,
-		15,
-		15,
-		{
-		  'width': 180,'elementHandlers': elementHandler
-		});
-
-	doc.output("dataurlnewwindow");
-	 */
-	 
-	var printDoc = new jsPDF();
-    // printDoc.fromHTML($$('#export-list').get(0), 10, 10, {'width': 180});
-    printDoc.fromHTML(exportHTML, 10, 10, {'width': 180});
-    // printDoc.autoPrint();
-    printDoc.output("dataurlnewwindow"); // this opens a new popup,  after this the PDF opens the print window view but there are browser inconsistencies with how this is handled
-
-	
 	});	
 	
 }); 
