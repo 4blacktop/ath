@@ -1,6 +1,7 @@
 // локальные уведомления - настроить
 // экспорт в пдф - настроить
 // searchbar
+// сортировка по дате
 
 // проверить сплэшскрин
 // заполнить страницы сеттингс
@@ -8,7 +9,6 @@
 // ==============================
 // готово
 
-// сортировка по дате
 // сохранять локалсторейдж на сервере (при каких услоиях?) - собирать весь(?) локалсторейдж и делать его в JSON
 // выгружать на сервер:
 // все даты
@@ -1222,52 +1222,32 @@ function setReminders() {
 	var eveningSet = storedData["evening-reminder-checkbox"][0];
 	var verseSet = storedData["verse-reminder-checkbox"][0];
 	var timeNow = new Date();
-	console.log(storedData["morning-reminder-checkbox"]);
 	
-	// получим будильник утро
 	var morningTime = new Date();
 	// morningTime.setUTCHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
 	morningTime.setHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
 	var morningTime = new Date(morningTime);
 
-	// проверка чтобы не ставить таймер в прошлое
-	// console.log("mrn time: " + morningTime + "\nnow time: " + timeNow);
-	if (timeNow.getTime() > morningTime.getTime()) {
-		console.log("timeNow > morningTime");
-		morningTime.setDate(morningTime.getDate() + 1);
-	}
-	// console.log("mrn time: " + morningTime + "\nnow time: " + timeNow);
 
-	// получим будильник вечер
+
+
+	console.log("morning time: " + morningTime + "\nnow: " + timeNow);
+
+
+
+
+	
 	var eveningTime = new Date();
 	// eveningTime.setUTCHours(storedData["evening-reminder-time"].split(':')[0],storedData["evening-reminder-time"].split(':')[1],0,0);
 	eveningTime.setHours(storedData["evening-reminder-time"].split(':')[0],storedData["evening-reminder-time"].split(':')[1],0,0);
 	var eveningTime = new Date(eveningTime);
 	
-	// проверка чтобы не ставить таймер в прошлое
-	// console.log("evn time: " + eveningTime + "\nnow time: " + timeNow);
-	if (timeNow.getTime() > eveningTime.getTime()) {
-		// console.log("timeNow > eveningTime");
-		eveningTime.setDate(eveningTime.getDate() + 1);
-	}
-	// console.log("evn time: " + eveningTime + "\nnow time: " + timeNow);
-	
-	// получим будильник мысли
 	var verseTime = new Date();
 	// verseTime.setUTCHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
 	verseTime.setHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
 	var verseTime = new Date(verseTime);
-	
-	// проверка чтобы не ставить таймер в прошлое
-	// console.log("vrs time: " + verseTime + "\nnow time: " + timeNow);
-	if (timeNow.getTime() > verseTime.getTime()) {
-		// console.log("timeNow > verseTime");
-		verseTime.setDate(verseTime.getDate() + 1);
-	}
-	// console.log("vrs time: " + verseTime + "\nnow time: " + timeNow);
 
 	
-	// if (morningSet == "on") {
 	if (morningSet == "on") {
 		// console.log("morningSet on");
 		// myApp.alert(morningTime,"morningTime on: ");
@@ -1281,10 +1261,9 @@ function setReminders() {
 		
 		
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(1, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(1, function () {	}, scope);
 	}
 	
-	// if (eveningSet == "on") {
 	if (eveningSet == "on") {
 		// console.log("eveningSet on");
 		// myApp.alert(eveningTime,"eveningTime on: ");
@@ -1297,10 +1276,9 @@ function setReminders() {
 		};
 
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(2, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(2, function () {	}, scope);
 	}
 	
-	// if (verseSet == "on") {
 	if (verseSet == "on") {
 		// console.log("verseSet on");
 		// myApp.alert(verseTime,"verseTime on: ");
@@ -1314,7 +1292,7 @@ function setReminders() {
 		};
 		
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(3, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(3, function () {	}, scope);
 	}
 
 	
@@ -1326,8 +1304,7 @@ function setReminders() {
 	// myApp.alert(verseSetting);
 	
 	 
-
-//актуальный вариант, закоменчен для дебага на ноуте
+/* 
 cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verseSetting]);
 cordova.plugins.notification.local.getIds(function(ids) {
     // myApp.alert(ids);
@@ -1340,18 +1317,18 @@ cordova.plugins.notification.local.getAll(function (notifications) {
 
 });
 
-
+ */
 	
-// референсы ниже	
-// update
-// cordova.plugins.notification.local.update({
-	// id: 1,
-	// title: "Updated Notification"
-// });
-
-// cancel
-// cordova.plugins.notification.local.cancel(1, function () {// Notification was cancelled	// }, scope);
-// cordova.plugins.notification.local.cancel(4, function () {// Notification was cancelled	// }, scope);	
+	
+	// update
+	// cordova.plugins.notification.local.update({
+		// id: 1,
+		// title: "Updated Notification"
+	// });
+	
+	// cancel
+	// cordova.plugins.notification.local.cancel(1, function () {// Notification was cancelled	// }, scope);
+	// cordova.plugins.notification.local.cancel(4, function () {// Notification was cancelled	// }, scope);	
 	
 	}
 else {
@@ -1415,25 +1392,13 @@ function buildHTML() {
 			}
 		}
 		
-		// сортировка массива дней по дате 
-		myApp.template7Data.entryList.sort(function(a, b) {
-			a = new Date(a.date);
-			b = new Date(b.date);
-			return a>b ? -1 : a<b ? 1 : 0;
-		});
-		
-		// сортировка массива фото по дате 
-		myApp.template7Data.entryList.sort(function(a, b) {
-			a = new Date(a.date);
-			b = new Date(b.date);
-			return a>b ? -1 : a<b ? 1 : 0;
-		});
-		
-		// создадим HTML на основе шаблона
 		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
 		document.getElementById('timeline-list').innerHTML = timelineHTML;
+		// console.log('timelineHTML: ' + timelineHTML);
+		
 		var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
 		document.getElementById('photo-list').innerHTML = photoHTML;
+		// console.log('photoHTML: ' + photoHTML);
 }
 
 // скачивает из удаленной БД список текстов дней

@@ -1,6 +1,7 @@
 // локальные уведомления - настроить
 // экспорт в пдф - настроить
 // searchbar
+// сортировка по дате
 
 // проверить сплэшскрин
 // заполнить страницы сеттингс
@@ -8,7 +9,6 @@
 // ==============================
 // готово
 
-// сортировка по дате
 // сохранять локалсторейдж на сервере (при каких услоиях?) - собирать весь(?) локалсторейдж и делать его в JSON
 // выгружать на сервер:
 // все даты
@@ -687,11 +687,6 @@ $$('.ac-1').on('click', function () {
 myApp.onPageInit('settings-reminders',function(page){
 	console.log("page settings-reminders is active");
 	
-	var morningValue = document.getElementById('picker-morning').value.split(':');	
-	var eveningValue = document.getElementById('picker-evening').value.split(':');	
-	var verseValue = document.getElementById('picker-verse').value.split(':');	
-	// console.log("morningValue: " + morningValue);
-	
 	// picker morning  
 	var pickerMorning = myApp.picker({
 		input: '#picker-morning',
@@ -701,14 +696,6 @@ myApp.onPageInit('settings-reminders',function(page){
 			// return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
 			return values[0] + ':' + values[1];
 		},		
-		
-		onClose: function (picker) {
-			// console.log("pickerMorning onClose: function (picker)");
-			// console.log(picker);
-			setReminders();
-		},
-		
-		value : [morningValue[0],morningValue[1]],
 
 		cols: [
 			{
@@ -734,14 +721,6 @@ myApp.onPageInit('settings-reminders',function(page){
 			// return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
 			return values[0] + ':' + values[1];
 		},
-		
-		onClose: function (picker) {
-			// console.log("picker-evening onClose: function (picker)");
-			// console.log(picker);
-			setReminders();
-		},
-		
-		value : [eveningValue[0],eveningValue[1]],
 
 		cols: [
 			{
@@ -763,21 +742,10 @@ myApp.onPageInit('settings-reminders',function(page){
 		input: '#picker-verse',
 		rotateEffect: true,
 		
-		formatValue: function (p, values, displayValues) { 
+		formatValue: function (p, values, displayValues) {
 			// return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
 			return values[0] + ':' + values[1];
-		},	
-
-
-		onClose: function (picker) {
-			// console.log("picker verse onClose: function (picker)");
-			// console.log(picker);
-			setReminders();
-		},
-		
-		value : [verseValue[0],verseValue[1]],		
-
-	
+		},		
 
 		cols: [
 			{
@@ -795,14 +763,10 @@ myApp.onPageInit('settings-reminders',function(page){
 	});  
 	
 	
-																						/* 	
-																						// обновление при смене каждой цифры подтормаживает
-																							$$('input[type="text"]').on('change', function (e) { 
-																							  console.log('input text changed keyup keydown change'); 
-																							  setReminders();
-																							});	
-																							 */
-	
+	$$('input[type="text"]').on('change', function (e) { 
+	  console.log('input text changed keyup keydown change'); 
+	  setReminders();
+	});	
 	
 	$$('input[type="checkbox"]').on('change', function (e) { 
 	  console.log('checkbox changed keyup keydown change'); 
@@ -1213,61 +1177,41 @@ function setReminders() {
 	console.log(JSON.stringify(storedData));
 	// console.log(storedData["morning-reminder-checkbox"][0]);
 																				
-																							// отключаем все уведомления 1 // Notifications were cancelled
-																							// cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {}, scope);
-																							// cordova.plugins.notification.local.cancelAll(function() {   myApp.alert("cordova.plugins.notification.local.cancelAll");}, this);
+	// отключаем все уведомления 1 // Notifications were cancelled
+	// cordova.plugins.notification.local.cancel([1, 2, 3, 4], function () {}, scope);
+	// cordova.plugins.notification.local.cancelAll(function() {   myApp.alert("cordova.plugins.notification.local.cancelAll");}, this);
 																					     
 	// переменные - включен ли ремайндер
 	var morningSet = storedData["morning-reminder-checkbox"][0];
 	var eveningSet = storedData["evening-reminder-checkbox"][0];
 	var verseSet = storedData["verse-reminder-checkbox"][0];
 	var timeNow = new Date();
-	console.log(storedData["morning-reminder-checkbox"]);
 	
-	// получим будильник утро
 	var morningTime = new Date();
 	// morningTime.setUTCHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
 	morningTime.setHours(storedData["morning-reminder-time"].split(':')[0],storedData["morning-reminder-time"].split(':')[1],0,0);
 	var morningTime = new Date(morningTime);
 
-	// проверка чтобы не ставить таймер в прошлое
-	// console.log("mrn time: " + morningTime + "\nnow time: " + timeNow);
-	if (timeNow.getTime() > morningTime.getTime()) {
-		console.log("timeNow > morningTime");
-		morningTime.setDate(morningTime.getDate() + 1);
-	}
-	// console.log("mrn time: " + morningTime + "\nnow time: " + timeNow);
 
-	// получим будильник вечер
+
+
+	console.log("morning time: " + morningTime + "now: " + timeNow);
+
+
+
+
+	
 	var eveningTime = new Date();
 	// eveningTime.setUTCHours(storedData["evening-reminder-time"].split(':')[0],storedData["evening-reminder-time"].split(':')[1],0,0);
 	eveningTime.setHours(storedData["evening-reminder-time"].split(':')[0],storedData["evening-reminder-time"].split(':')[1],0,0);
 	var eveningTime = new Date(eveningTime);
 	
-	// проверка чтобы не ставить таймер в прошлое
-	// console.log("evn time: " + eveningTime + "\nnow time: " + timeNow);
-	if (timeNow.getTime() > eveningTime.getTime()) {
-		// console.log("timeNow > eveningTime");
-		eveningTime.setDate(eveningTime.getDate() + 1);
-	}
-	// console.log("evn time: " + eveningTime + "\nnow time: " + timeNow);
-	
-	// получим будильник мысли
 	var verseTime = new Date();
 	// verseTime.setUTCHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
 	verseTime.setHours(storedData["verse-reminder-time"].split(':')[0],storedData["verse-reminder-time"].split(':')[1],0,0);
 	var verseTime = new Date(verseTime);
-	
-	// проверка чтобы не ставить таймер в прошлое
-	// console.log("vrs time: " + verseTime + "\nnow time: " + timeNow);
-	if (timeNow.getTime() > verseTime.getTime()) {
-		// console.log("timeNow > verseTime");
-		verseTime.setDate(verseTime.getDate() + 1);
-	}
-	// console.log("vrs time: " + verseTime + "\nnow time: " + timeNow);
 
 	
-	// if (morningSet == "on") {
 	if (morningSet == "on") {
 		// console.log("morningSet on");
 		// myApp.alert(morningTime,"morningTime on: ");
@@ -1281,10 +1225,9 @@ function setReminders() {
 		
 		
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(1, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(1, function () {	}, scope);
 	}
 	
-	// if (eveningSet == "on") {
 	if (eveningSet == "on") {
 		// console.log("eveningSet on");
 		// myApp.alert(eveningTime,"eveningTime on: ");
@@ -1297,10 +1240,9 @@ function setReminders() {
 		};
 
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(2, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(2, function () {	}, scope);
 	}
 	
-	// if (verseSet == "on") {
 	if (verseSet == "on") {
 		// console.log("verseSet on");
 		// myApp.alert(verseTime,"verseTime on: ");
@@ -1314,7 +1256,7 @@ function setReminders() {
 		};
 		
 	} else { // Notification was cancelled
-		cordova.plugins.notification.local.cancel(3, function () {	}, scope);
+		// cordova.plugins.notification.local.cancel(3, function () {	}, scope);
 	}
 
 	
@@ -1326,8 +1268,7 @@ function setReminders() {
 	// myApp.alert(verseSetting);
 	
 	 
-
-//актуальный вариант, закоменчен для дебага на ноуте
+/* 
 cordova.plugins.notification.local.schedule([morningSetting,eveningSetting,verseSetting]);
 cordova.plugins.notification.local.getIds(function(ids) {
     // myApp.alert(ids);
@@ -1340,18 +1281,18 @@ cordova.plugins.notification.local.getAll(function (notifications) {
 
 });
 
-
+ */
 	
-// референсы ниже	
-// update
-// cordova.plugins.notification.local.update({
-	// id: 1,
-	// title: "Updated Notification"
-// });
-
-// cancel
-// cordova.plugins.notification.local.cancel(1, function () {// Notification was cancelled	// }, scope);
-// cordova.plugins.notification.local.cancel(4, function () {// Notification was cancelled	// }, scope);	
+	
+	// update
+	// cordova.plugins.notification.local.update({
+		// id: 1,
+		// title: "Updated Notification"
+	// });
+	
+	// cancel
+	// cordova.plugins.notification.local.cancel(1, function () {// Notification was cancelled	// }, scope);
+	// cordova.plugins.notification.local.cancel(4, function () {// Notification was cancelled	// }, scope);	
 	
 	}
 else {
@@ -1415,25 +1356,13 @@ function buildHTML() {
 			}
 		}
 		
-		// сортировка массива дней по дате 
-		myApp.template7Data.entryList.sort(function(a, b) {
-			a = new Date(a.date);
-			b = new Date(b.date);
-			return a>b ? -1 : a<b ? 1 : 0;
-		});
-		
-		// сортировка массива фото по дате 
-		myApp.template7Data.entryList.sort(function(a, b) {
-			a = new Date(a.date);
-			b = new Date(b.date);
-			return a>b ? -1 : a<b ? 1 : 0;
-		});
-		
-		// создадим HTML на основе шаблона
 		var timelineHTML = Template7.templates.timelineTemplate(myApp.template7Data.entryList);
 		document.getElementById('timeline-list').innerHTML = timelineHTML;
+		// console.log('timelineHTML: ' + timelineHTML);
+		
 		var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
 		document.getElementById('photo-list').innerHTML = photoHTML;
+		// console.log('photoHTML: ' + photoHTML);
 }
 
 // скачивает из удаленной БД список текстов дней
