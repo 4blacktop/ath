@@ -1142,6 +1142,17 @@ myApp.onPageInit('settingsexport',function(page){
 }); 
 
 
+// слайдер
+myApp.onPageInit('howitworks',function(page){
+	
+	  // Init slider and store its instance in mySwiper variable
+  var mySwiper = myApp.swiper('.swiper-container', {
+    pagination:'.swiper-pagination'
+  });
+	
+	// console.log(page);
+}); 
+
 // форма добавления/редактирования записи
 myApp.onPageInit('add-entry',function(page){
 	// console.log(page.query.date);
