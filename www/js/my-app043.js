@@ -1059,11 +1059,11 @@ myApp.onPageInit('settingsexport',function(page){
 	 
 	 
 	// работает локально, в приле проблемы
-	var doc = new jsPDF();
+	var printDoc = new jsPDF();
     // printDoc.fromHTML($$('#export-list').get(0), 10, 10, {'width': 180});
-    doc.fromHTML(exportHTML, 10, 10, {'width': 180});
+    printDoc.fromHTML(exportHTML, 10, 10, {'width': 180});
     // printDoc.autoPrint();
-    // doc.output("dataurlnewwindow"); // this opens a new popup,  after this the PDF opens the print window view but there are browser inconsistencies with how this is handled
+    printDoc.output("dataurlnewwindow"); // this opens a new popup,  after this the PDF opens the print window view but there are browser inconsistencies with how this is handled
 
 	
 	
@@ -1071,15 +1071,15 @@ myApp.onPageInit('settingsexport',function(page){
 	
 
 	//FIRST GENERATE THE PDF DOCUMENT
-	// myApp.alert("generating pdf...");
-	// var doc = new jsPDF();
+	myApp.alert("generating pdf...");
+	var doc = new jsPDF();
 	 
-	// doc.text(20, 20, 'HELLO!');
+	doc.text(20, 20, 'HELLO!');
 	 
-	// doc.setFont("courier");
-	// doc.setFontType("normal");
-	// doc.text(20, 30, 'This is a PDF document generated using JSPDF.');
-	// doc.text(20, 50, 'YES, Inside of PhoneGap!');
+	doc.setFont("courier");
+	doc.setFontType("normal");
+	doc.text(20, 30, 'This is a PDF document generated using JSPDF.');
+	doc.text(20, 50, 'YES, Inside of PhoneGap!');
 	 
 	var pdfOutput = doc.output();
 	// myApp.alert( pdfOutput );
