@@ -119,12 +119,12 @@ firebase.auth().onAuthStateChanged( function(firebaseUser) {
 		// document.getElementById( 'btnLogout' ).style.display = 'block';
 		// document.getElementById( 'btnSignUp' ).style.display = 'none';
 		myApp.closeModal();
-		myApp.showIndicator();
+		// myApp.showIndicator();
 		downloadList();
-		myApp.hideIndicator();
+		// myApp.hideIndicator();
 	} else {
-		myApp.alert('Logged out');
-		console.log('not logged in');
+		// myApp.alert('Logged out');
+		// console.log('not logged in');
 		// document.getElementById( 'btnLogout' ).style.display = 'none';
 		// document.getElementById( 'btnSignUp' ).style.display = 'block';
 		myApp.loginScreen();
@@ -608,7 +608,7 @@ btnLogin.addEventListener('click', function (e) {
 	const promise = auth.signInWithEmailAndPassword(email, pass);
 	promise.catch(function (f) {
 	myApp.alert(f.message);
-	console.log(f.message);
+	// console.log(f.message);
 	
 	downloadList();
 	
@@ -618,7 +618,7 @@ btnLogin.addEventListener('click', function (e) {
 		
 // add signup event
 btnSignUp.addEventListener('click', function (e) {
-	myApp.alert('signup');
+	// myApp.alert('signup');
 	// get email and pass
 	const email = txtEmail.value;
 	const pass = txtPassword.value;
@@ -626,7 +626,8 @@ btnSignUp.addEventListener('click', function (e) {
 	//sign up
 	const promise = auth.createUserWithEmailAndPassword(email, pass);
 	promise.catch(function (f) {
-	console.log(f.message);
+	// console.log(f.message);
+	myApp.alert(f.message);
 	});
 });
 
@@ -852,14 +853,21 @@ var calendarInline = myApp.calendar({
 
 	onDayClick: function (p, dayContainer, year, month, day) {
 		// console.log(p, dayContainer, year, month, day);
-		month = month+1;
+		// month = month+1;
+		month = parseInt(month, 10)+1;
 		var tmpDate = year+"-"+month+"-"+day;
+		// console.log(tmpDate);
 		addEntryDateInput = new Date(tmpDate).toISOString().split('T')[0];
 		view4.router.load({url:"add-entry.html"});
     }
 
 });     
 
+// журнал
+// myApp.onPageInit('journal',function(page){
+	// myApp.alert('journal');
+// });		
+	
 	
 // информация об аккаунте
 // function changeAccount() { };
@@ -876,7 +884,7 @@ myApp.onPageInit('settingsabout',function(page){
 	
 	
 	changeAccountButton.onclick = function() {
-		myApp.showIndicator();
+		// myApp.showIndicator();
 		
 		var imageAccount = document.getElementById('img_url').value;
 		// console.log("imageAccount: " + imageAccount);
@@ -902,7 +910,7 @@ myApp.onPageInit('settingsabout',function(page){
 		});
 
 		
-		myApp.hideIndicator();
+		// myApp.hideIndicator();
 	};
 	
 
@@ -1085,20 +1093,20 @@ myApp.onPageInit('settingsexport',function(page){
 	// myApp.alert( pdfOutput );
 	 
 	//NEXT SAVE IT TO THE DEVICE'S LOCAL FILE SYSTEM
-	myApp.alert("file system...");
+	// myApp.alert("file system...");
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
 	 
-	   myApp.alert(fileSystem.name);
-	   myApp.alert(fileSystem.root.name);
-	   myApp.alert(fileSystem.root.fullPath);
+	   // myApp.alert(fileSystem.name);
+	   // myApp.alert(fileSystem.root.name);
+	   // myApp.alert(fileSystem.root.fullPath);
 	 
 	   fileSystem.root.getFile("test.pdf", {create: true}, function(entry) {
 		  var fileEntry = entry;
-		  myApp.alert(entry);
+		  // myApp.alert(entry);
 	 
 		  entry.createWriter(function(writer) {
 			 writer.onwrite = function(evt) {
-			 myApp.alert("write success");
+			 // myApp.alert("write success");
 		  };
 	 
 		  console.log("writing to file");
@@ -1236,8 +1244,8 @@ myApp.onPageInit('add-entry',function(page){
 		
 
 		var formData = myApp.formToData('#add-entry-form');
-		console.log(formData.date);
-		console.log(formData);
+		// console.log(formData.date);
+		// console.log(formData);
 		localStorage.setItem(formData.date, JSON.stringify(formData));
 		
 		buildHTML();
@@ -1255,6 +1263,7 @@ myApp.onPageInit('add-entry',function(page){
             // force: true,
             // ignoreCache: true
         });
+		// window.location.reload();
 		myApp.showTab('#view-2');
 		myApp.alert('Entry saved');
 	});
@@ -1280,7 +1289,7 @@ navigator.camera.getPicture(onSuccess, onFail, {
 
 function onSuccess(imageURI) {
 	
-    myApp.alert('onSuccess imageURI: ' + imageURI);
+    // myApp.alert('onSuccess imageURI: ' + imageURI);
     // var image = document.getElementById('camera_image');
     var image = document.getElementById('myImage');
     image.src = imageURI;
@@ -1424,9 +1433,11 @@ function setReminders() {
 	}
 
 	
-	document.getElementById('morning').innerHTML = JSON.stringify(morningSetting);
-	document.getElementById('evening').innerHTML = JSON.stringify(eveningSetting);
-	document.getElementById('verse').innerHTML = JSON.stringify(verseSetting);
+	// document.getElementById('morning').innerHTML = JSON.stringify(morningSetting);
+	// document.getElementById('evening').innerHTML = JSON.stringify(eveningSetting);
+	// document.getElementById('verse').innerHTML = JSON.stringify(verseSetting);
+	
+	
 	// myApp.alert(morningSetting);
 	// myApp.alert(eveningSetting);
 	// myApp.alert(verseSetting);
@@ -1461,14 +1472,14 @@ cordova.plugins.notification.local.getAll(function (notifications) {
 	
 	}
 else {
-	myApp.alert('Please set reminders')
+	// myApp.alert('Please set reminders')
 }
 };
 
 
 // закачивает в удаленную БД список текстов дней
 function uploadList() {
-	myApp.showIndicator();
+	// myApp.showIndicator();
 	var user = firebase.auth().currentUser;
 	var uploadList = JSON.stringify(myApp.template7Data.entryList);
 	
@@ -1484,7 +1495,7 @@ function uploadList() {
 		list : uploadList
 	  });
 	
-	myApp.hideIndicator();
+	// myApp.hideIndicator();
 	
 // function writeUserData(userId, name, email, imageUrl) {
 // }
@@ -1495,7 +1506,8 @@ function buildHTML() {
 		myApp.template7Data.photoEntryList = [];
 		
 		// поиск дней с событиями
-		var calendarEvents = [];
+		// console.log(calendarEvents);
+		calendarEvents = [];
 		for (var i = 0; i < localStorage.length; i++){
 			var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
 			if (itemNow.date) {
@@ -1521,6 +1533,20 @@ function buildHTML() {
 			}
 		}
 		
+				console.log(calendarEvents);
+				calendarInline.events = calendarEvents;
+				console.log(calendarInline.events);
+				// calendarInline.initCalendarEvents();
+				// calendarDefault.initCalendarEvents();
+				// calendarRange.initCalendarEvents();
+
+
+				// console.log("calendarEvents");
+				// console.log(calendarEvents);
+				
+
+				
+		
 		// сортировка массива дней по дате 
 		myApp.template7Data.entryList.sort(function(a, b) {
 			a = new Date(a.date);
@@ -1540,12 +1566,14 @@ function buildHTML() {
 		document.getElementById('timeline-list').innerHTML = timelineHTML;
 		var photoHTML = Template7.templates.photoTemplate(myApp.template7Data.photoEntryList);
 		document.getElementById('photo-list').innerHTML = photoHTML;
+		
+		
 }
 
 // скачивает из удаленной БД список текстов дней
 function downloadList() {
 	
-	myApp.showIndicator();
+	// myApp.showIndicator();
 	// var listEntryFromFirebase = myApp.template7Data.entryList;
 
 
@@ -1569,7 +1597,7 @@ function downloadList() {
 		}	
 	
 	buildHTML();
-	myApp.hideIndicator();
+	// myApp.hideIndicator();
 	
 	});
 }
