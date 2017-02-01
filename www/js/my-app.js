@@ -1102,15 +1102,16 @@ myApp.onPageInit('settingsexport',function(page){
 		  };
 	 
 		  console.log("writing to file");
-			 // writer.write( pdfOutput );
-			 
-			 var data = pdfOutput;
-var buffer = new ArrayBuffer(data.length);
-var array = new Uint8Array(buffer);
-for (var i = 0; i < data.length; i++) {
-  array[i] = data.charCodeAt(i);
-}
-writer.write(buffer);
+
+
+		  // writer.write( pdfOutput );
+			var data = pdfOutput;
+			var buffer = new ArrayBuffer(data.length);
+			var array = new Uint8Array(buffer);
+			for (var i = 0; i < data.length; i++) {
+			array[i] = data.charCodeAt(i);
+			}
+			writer.write(buffer);
 			 
 			 
 			 
