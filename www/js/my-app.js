@@ -1012,10 +1012,10 @@ myApp.onPageInit('settingsexport',function(page){
 	testBtn.addEventListener('click', function (e) {
 		myApp.alert("Before");
 		
-		cordova.plugins.email.open({
-		subject: 'Report',
-		body: 'Report is attached'
-		});
+cordova.plugins.email.open({
+    subject:     'Cordova Icon',
+    attachments: 'base64:icon.png//iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/...'
+});
 		
 		myApp.alert("after");
 	});
@@ -1634,9 +1634,9 @@ function buildHTML() {
 			}
 		}
 		
-				console.log(calendarEvents);
+				// console.log(calendarEvents);
 				calendarInline.events = calendarEvents;
-				console.log(calendarInline.events);
+				// console.log(calendarInline.events);
 				// calendarInline.initCalendarEvents();
 				// calendarDefault.initCalendarEvents();
 				// calendarRange.initCalendarEvents();
