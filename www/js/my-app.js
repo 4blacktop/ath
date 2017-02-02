@@ -1012,11 +1012,7 @@ myApp.onPageInit('settingsexport',function(page){
 	testBtn.addEventListener('click', function (e) {
 		myApp.alert("Before");
 		
-		cordova.plugins.email.open({
-			subject:     'Cordova Icon',
-			attachments: 'base64:icon.png//iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/...'
-		});
-		
+
 		window.plugins.socialsharing.shareViaEmail(
   'Message', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client 
   'Subject',
