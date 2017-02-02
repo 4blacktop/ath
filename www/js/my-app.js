@@ -1146,8 +1146,19 @@ myApp.onPageInit('settingsexport',function(page){
 	// window.plugins.socialsharing.share(null, 'Android filename', 'data:image/png;base64,R0lGODlhDAAMALMBAP8AAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAAEALAAAAAAMAAwAQAQZMMhJK7iY4p3nlZ8XgmNlnibXdVqolmhcRQA7', null)
 	// window.plugins.socialsharing.share('Awakening to God Today', null, compatibleAttachment, null);
 	
-	// window.plugins.socialsharing.share('Awakening to God Today', null, dataUrl, null);
-	window.plugins.socialsharing.shareViaEmail('Awakening to God Today', 'PDF Export', dataUrl, null);
+	// window.plugins.socialsharing.share('Awakening to God Today', null, dataUrl, null); // ok
+	// window.plugins.socialsharing.shareViaEmail('Awakening to God Today', 'PDF Export', dataUrl, null); //bad
+	
+	window.plugins.socialsharing.shareViaEmail(
+	  'Awakening to God Today', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client 
+	  'PDF Export',
+	  null, // TO: must be null or an array 
+	  null, // CC: must be null or an array 
+	  null, // BCC: must be null or an array 
+	  dataUrl, // FILES: can be null, a string, or an array 
+	  onSuccess, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below. 
+	  onError // called when sh*t hits the fan 
+	);
 	
 	
 	});	 /* exportBtn.addEventListener */
