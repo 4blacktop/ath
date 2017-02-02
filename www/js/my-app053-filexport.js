@@ -1010,49 +1010,7 @@ myApp.onPageInit('settingsexport',function(page){
 	
 	const testBtn = document.getElementById('testBtn');
 	testBtn.addEventListener('click', function (e) {
-		
-		
-		
-		
-		
-	var doc = new jsPDF('p', 'pt', 'letter');
-	doc.addHTML(window.document.body, function () {       
-	  var filename = 'report.pdf';
-	  var dataUrl = doc.output('dataurlstring');
-
-	  // This part is only required because the dataurl formats from the 2 plugins don't match up (see Note at the bottom of my post)
-	  var base64parts = dataUrl.split(',');
-	  base64parts[0] = "base64:" + window.escape(filename) + "//";
-	  var compatibleAttachment = base64parts.join("");
-
-	  window.plugin.email.open({
-		  subject: 'Report',
-		  body: 'Report is attached',
-		  attachments: [compatibleAttachment]
-	  });
-	});		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/* myApp.alert("Before");
+		myApp.alert("Before");
 		
 		// window.plugins.socialsharing.share('Awakening to God Today', null, null, null);
 		
@@ -1067,15 +1025,16 @@ myApp.onPageInit('settingsexport',function(page){
 		  onError // called when sh*t hits the fan 
 		); 
 		
+		
 		function onSuccess() {
 			myApp.alert('onSuccess: ');
 		}
+
 		function onError() {
 			myApp.alert('Failed: ');
 		}
-		myApp.alert("after");
-		 */
 		
+		myApp.alert("after");
 	});
 	
 	const exportBtn = document.getElementById('exportBtn');
@@ -1125,7 +1084,7 @@ myApp.onPageInit('settingsexport',function(page){
     doc.fromHTML(exportHTML, 10, 10, {'width': 180});
 
 	var pdfOutput = doc.output();
-/* 	 
+	 
 	//NEXT SAVE IT TO THE DEVICE'S LOCAL FILE SYSTEM
 	// myApp.alert("file system...");
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
@@ -1170,7 +1129,7 @@ myApp.onPageInit('settingsexport',function(page){
 	 myApp.alert( evt.target.error.code );
 	});
 	
-	 */
+	
 	
 	});	 /* exportBtn.addEventListener */
 }); 
