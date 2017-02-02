@@ -1095,7 +1095,7 @@ myApp.onPageInit('settingsexport',function(page){
 	 
 	   fileSystem.root.getFile("export.pdf", {create: true}, function(entry) {
 		  var fileEntry = entry;
-		  // myApp.alert(entry);
+		  myApp.alert(entry);
 	 
 		  entry.createWriter(function(writer) {
 			 writer.onwrite = function(evt) {
