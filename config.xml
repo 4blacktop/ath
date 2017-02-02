@@ -111,4 +111,7 @@
 <!-- local notifications plugin installed -->
 <plugin name="de.appplant.cordova.plugin.local-notification" source="npm" />
 
+<!-- email-composer plugin installed -->
+<plugin name="cordova-plugin-email-composer" version="0.8.3" source="npm" />
+
 </widget>

@@ -1074,43 +1074,11 @@ myApp.onPageInit('settingsexport',function(page){
     // printDoc.autoPrint();
     // doc.output("dataurlnewwindow"); // this opens a new popup,  after this the PDF opens the print window view but there are browser inconsistencies with how this is handled
 
-	// var pdfOutput = doc.output();
 	
 	
 	
 	
-	
-  var filename = 'report.pdf';
-  var dataUrl = doc.output('dataurlstring');
 
-  // This part is only required because the dataurl formats from the 2 plugins don't match up (see Note at the bottom of my post)
-  var base64parts = dataUrl.split(',');
-  base64parts[0] = "base64:" + window.escape(filename) + "//";
-  var compatibleAttachment = base64parts.join("");
-
-  window.plugin.email.open({
-      subject: 'Report',
-      body: 'Report is attached',
-      attachments: [compatibleAttachment]
-  });
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/* 
 	//FIRST GENERATE THE PDF DOCUMENT
 	// myApp.alert("generating pdf...");
 	// var doc = new jsPDF();
@@ -1168,7 +1136,7 @@ myApp.onPageInit('settingsexport',function(page){
 	 myApp.alert( evt.target.error.code );
 	});
 
- */
+
 	
 /* 	
 	window.plugins.socialsharing.shareViaEmail(
@@ -1183,8 +1151,6 @@ myApp.onPageInit('settingsexport',function(page){
 );
 	
 	 */
-	 
-/* 	 
 	window.plugins.socialsharing.shareViaEmail(
   'Message', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client 
   'Subject',
@@ -1195,11 +1161,11 @@ myApp.onPageInit('settingsexport',function(page){
   onSuccess, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below. 
   onError // called when sh*t hits the fan 
 );
-	 */
 	
 	
 	
-	});	 /* exportBtn.addEventListener */
+	
+	});	
 }); 
 
 
