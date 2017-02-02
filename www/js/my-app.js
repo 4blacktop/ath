@@ -1008,13 +1008,15 @@ myApp.onPageInit('settingsexport',function(page){
 	   }
 	}); 
 	
-		const testBtn = document.getElementById('testBtn');
+	const testBtn = document.getElementById('testBtn');
 	testBtn.addEventListener('click', function (e) {
 		myApp.alert("Before");
-			    window.plugin.email.open({
-      subject: 'Report',
-      body: 'Report is attached'
-  });
+		
+		cordova.plugins.email.open({
+		subject: 'Report',
+		body: 'Report is attached'
+		});
+		
 		myApp.alert("after");
 	});
 	
