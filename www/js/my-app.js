@@ -1026,9 +1026,9 @@ myApp.onPageInit('settingsexport',function(page){
 				c = Date.parse(itemNow.date);
 				
 				if((c <= e && c >= s)) {
-					console.log("s: " + s + " now: " + itemNow.date + " e: " + e);
+					// console.log("s: " + s + " now: " + itemNow.date + " e: " + e);
 					arrayExport.push(itemNow);
-					console.log(itemNow);
+					// console.log(itemNow);
 					// return true;
 				} else {
 					// return false;
@@ -1069,7 +1069,10 @@ myApp.onPageInit('settingsexport',function(page){
 	 */
 	 
 	 
-	 
+	 cordova.plugins.email.isAvailable(
+    function (isAvailable) {
+        myApp.alert('test');
+    });
 	 
 	 
 	// работает локально, в приле проблемы
@@ -1082,21 +1085,24 @@ myApp.onPageInit('settingsexport',function(page){
 	// var pdfOutput = doc.output();
 	
 	
-	
+	    window.plugin.email.open({
+      subject: 'Report',
+      body: 'Report is attached'
+  });
 	
 	
   var filename = 'export.pdf';
   var dataUrl = doc.output('dataurlstring');
-  // console.log(dataUrl);
+  console.log(dataUrl);
   
-  // "window.plugins.socialsharing.share(null, 'Android filename', 'data:image/png;base64,R0lGODlhDAAMALMBAP8AAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAAEALAAAAAAMAAwAQAQZMMhJK7iY4p3nlZ8XgmNlnibXdVqolmhcRQA7', null)"
-  
-  
-    window.plugin.email.open({
+/*     window.plugin.email.open({
       subject: 'Report',
       body: 'Report is attached',
       attachments: [dataUrl]
-  });
+  }); */
+  // "window.plugins.socialsharing.share(null, 'Android filename', 'data:image/png;base64,R0lGODlhDAAMALMBAP8AAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAAEALAAAAAAMAAwAQAQZMMhJK7iY4p3nlZ8XgmNlnibXdVqolmhcRQA7', null)"
+  
+  
   
   /* 
   window.plugins.socialsharing.shareViaEmail(
