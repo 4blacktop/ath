@@ -1141,14 +1141,63 @@ myApp.onPageInit('settingsexport',function(page){
 	base64parts[0] = "base64:" + window.escape(filename) + "//";
 	var compatibleAttachment = base64parts.join("");
 	
-	console.log(dataUrl);
-	console.log(compatibleAttachment);
+	// var doc = new jsPDF('p', 'pt', 'letter');
+	// doc.addHTML(window.document.body, function () {       
+
+		// window.plugin.email.open({
+		// subject: 'Report',
+		// body: 'Report is attached',
+		// attachments: [compatibleAttachment]
+		// });
 	
-	window.plugins.socialsharing.share(null, 'Android filename', 'data:image/png;base64,R0lGODlhDAAMALMBAP8AAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAAEALAAAAAAMAAwAQAQZMMhJK7iY4p3nlZ8XgmNlnibXdVqolmhcRQA7', null)
 	
-	window.plugins.socialsharing.share('Awakening to God Today', null, dataUrl, null);
-	window.plugins.socialsharing.share('Awakening to God Today', null, compatibleAttachment, null);
+	});
 	
+/* 	 
+	//NEXT SAVE IT TO THE DEVICE'S LOCAL FILE SYSTEM
+	// myApp.alert("file system...");
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+	 
+	   // myApp.alert(fileSystem.name);
+	   myApp.alert(fileSystem.root.name);
+	   myApp.alert(fileSystem.root.fullPath);
+	 
+	   fileSystem.root.getFile("export.pdf", {create: true}, function(entry) {
+		  var fileEntry = entry;
+		  myApp.alert(entry);
+	 
+		  entry.createWriter(function(writer) {
+			 writer.onwrite = function(evt) {
+			 myApp.alert("write success");
+			 myApp.alert(evt);
+		  };
+	 
+		  console.log("writing to file");
+
+
+		  // writer.write( pdfOutput );
+			var data = pdfOutput;
+			var buffer = new ArrayBuffer(data.length);
+			var array = new Uint8Array(buffer);
+			for (var i = 0; i < data.length; i++) {
+			array[i] = data.charCodeAt(i);
+			}
+			writer.write(buffer);
+			 
+			 
+			 
+		  }, function(error) {
+			 myApp.alert(error);
+		  });
+	 
+	   }, function(error){
+		  myApp.alert(error);
+	   });
+	},
+	function(event){
+	 myApp.alert( evt.target.error.code );
+	});
+	 */
 	
 	
 	});	 /* exportBtn.addEventListener */
