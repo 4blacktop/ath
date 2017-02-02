@@ -1028,12 +1028,11 @@ myApp.onPageInit('settingsexport',function(page){
 		
 		function onSuccess() {
 			myApp.alert('onSuccess: ');
-		};
+		}
 
 		function onError() {
 			myApp.alert('Failed: ');
-			}
-		};
+		}
 		
 		myApp.alert("after");
 	});
