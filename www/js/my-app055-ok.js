@@ -1141,13 +1141,14 @@ myApp.onPageInit('settingsexport',function(page){
 	base64parts[0] = "base64:" + window.escape(filename) + "//";
 	var compatibleAttachment = base64parts.join("");
 	
-	// console.log(dataUrl);
-	// console.log(compatibleAttachment);
-	// window.plugins.socialsharing.share(null, 'Android filename', 'data:image/png;base64,R0lGODlhDAAMALMBAP8AAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAAEALAAAAAAMAAwAQAQZMMhJK7iY4p3nlZ8XgmNlnibXdVqolmhcRQA7', null)
-	// window.plugins.socialsharing.share('Awakening to God Today', null, compatibleAttachment, null);
+	console.log(dataUrl);
+	console.log(compatibleAttachment);
 	
-	// window.plugins.socialsharing.share('Awakening to God Today', null, dataUrl, null);
-	window.plugins.socialsharing.shareViaEmail('Awakening to God Today', 'PDF Export', dataUrl, null);
+	window.plugins.socialsharing.share(null, 'Android filename', 'data:image/png;base64,R0lGODlhDAAMALMBAP8AAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAAEALAAAAAAMAAwAQAQZMMhJK7iY4p3nlZ8XgmNlnibXdVqolmhcRQA7', null)
+	
+	window.plugins.socialsharing.share('Awakening to God Today', null, dataUrl, null);
+	window.plugins.socialsharing.share('Awakening to God Today', null, compatibleAttachment, null);
+	
 	
 	
 	});	 /* exportBtn.addEventListener */
