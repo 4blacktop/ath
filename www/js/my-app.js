@@ -1072,6 +1072,10 @@ myApp.onPageInit('settingsexport',function(page){
 	 cordova.plugins.email.isAvailable(
     function (isAvailable) {
         myApp.alert('test');
+	    window.plugin.email.open({
+      subject: 'Report',
+      body: 'Report is attached'
+  });
     });
 	 
 	 
@@ -1085,10 +1089,6 @@ myApp.onPageInit('settingsexport',function(page){
 	// var pdfOutput = doc.output();
 	
 	
-	    window.plugin.email.open({
-      subject: 'Report',
-      body: 'Report is attached'
-  });
 	
 	
   var filename = 'export.pdf';
