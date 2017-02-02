@@ -1068,37 +1068,17 @@ myApp.onPageInit('settingsexport',function(page){
 	 
 	// работает локально, в приле проблемы
 	var doc = new jsPDF();
-    // printDoc.fromHTML($$('#export-list').get(0), 10, 10, {'width': 180});
     doc.fromHTML(exportHTML, 10, 10, {'width': 180});
-    // printDoc.autoPrint();
-    // doc.output("dataurlnewwindow"); // this opens a new popup,  after this the PDF opens the print window view but there are browser inconsistencies with how this is handled
 
-	
-	
-	
-	
-
-	//FIRST GENERATE THE PDF DOCUMENT
-	// myApp.alert("generating pdf...");
-	// var doc = new jsPDF();
-	 
-	// doc.text(20, 20, 'HELLO!');
-	 
-	// doc.setFont("courier");
-	// doc.setFontType("normal");
-	// doc.text(20, 30, 'This is a PDF document generated using JSPDF.');
-	// doc.text(20, 50, 'YES, Inside of PhoneGap!');
-	 
 	var pdfOutput = doc.output();
-	// myApp.alert( pdfOutput );
 	 
 	//NEXT SAVE IT TO THE DEVICE'S LOCAL FILE SYSTEM
 	// myApp.alert("file system...");
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
 	 
 	   // myApp.alert(fileSystem.name);
-	   // myApp.alert(fileSystem.root.name);
-	   // myApp.alert(fileSystem.root.fullPath);
+	   myApp.alert(fileSystem.root.name);
+	   myApp.alert(fileSystem.root.fullPath);
 	 
 	   fileSystem.root.getFile("export.pdf", {create: true}, function(entry) {
 		  var fileEntry = entry;
@@ -1106,7 +1086,8 @@ myApp.onPageInit('settingsexport',function(page){
 	 
 		  entry.createWriter(function(writer) {
 			 writer.onwrite = function(evt) {
-			 // myApp.alert("write success");
+			 myApp.alert("write success");
+			 myApp.alert(evt);
 		  };
 	 
 		  console.log("writing to file");

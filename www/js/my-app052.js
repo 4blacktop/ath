@@ -1,6 +1,5 @@
 // экспорт в пдф - настроить
 // searchbar
-// поменять календарь инлайн на обычный с попапом при открытии страницы(?) а как она откроется((
 
 // проверить сплэшскрин
 // заполнить страницы сеттингс
@@ -1008,44 +1007,12 @@ myApp.onPageInit('settingsexport',function(page){
 	   }
 	}); 
 	
-	const testBtn = document.getElementById('testBtn');
-	testBtn.addEventListener('click', function (e) {
-		myApp.alert("Before");
-		
-		// window.plugins.socialsharing.share('Awakening to God Today', null, null, null);
-		
-		window.plugins.socialsharing.shareViaEmail(
-		  'Message', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client 
-		  'Subject',
-		  null, // TO: must be null or an array 
-		  null, // CC: must be null or an array 
-		  null, // BCC: must be null or an array 
-		  ['https://www.google.nl/images/srpr/logo4w.png'], // FILES: can be null, a string, or an array 
-		  onSuccess, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below. 
-		  onError // called when sh*t hits the fan 
-		); 
-		
-		
-		function onSuccess() {
-			myApp.alert('onSuccess: ');
-		}
-
-		function onError() {
-			myApp.alert('Failed: ');
-		}
-		
-		myApp.alert("after");
-	});
-	
 	const exportBtn = document.getElementById('exportBtn');
 	exportBtn.addEventListener('click', function (e) {
 		var range = document.getElementById('calendar-range');
 		console.log(range.value.split(" - "));
-		// s = Date.parse(range.value.split(" - ")[0]);
-		s = new Date(Date.parse(range.value.split(" - ")[0]));
-		// e = Date.parse(range.value.split(" - ")[1]);
-		e = new Date(Date.parse(range.value.split(" - ")[1]));
-		e.setDate(e.getDate() + 1);
+		s = Date.parse(range.value.split(" - ")[0]);
+		e = Date.parse(range.value.split(" - ")[1]);
 
 		// формируем массив, события в котором лежат в указанном промежутке
 		var arrayExport	= [];
@@ -1053,11 +1020,9 @@ myApp.onPageInit('settingsexport',function(page){
 			var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
 			if (itemNow.date) {
 				c = Date.parse(itemNow.date);
-				
 				if((c <= e && c >= s)) {
-					// console.log("s: " + s + " now: " + itemNow.date + " e: " + e);
 					arrayExport.push(itemNow);
-					// console.log(itemNow);
+					console.log(itemNow);
 					// return true;
 				} else {
 					// return false;
@@ -1076,22 +1041,64 @@ myApp.onPageInit('settingsexport',function(page){
 	
 	var exportHTML = Template7.templates.timelineTemplate(arrayExport);
 	document.getElementById('export-list').innerHTML = exportHTML;
+	
+	
+/* 	
+	var doc = new jsPDF();          
+	var elementHandler = {
+	  '#ignorePDF': function (element, renderer) {
+		return true;
+	  }
+	};
+	var source = window.document.getElementsByTagName("body")[0];
+	doc.fromHTML(
+		source,
+		15,
+		15,
+		{
+		  'width': 180,'elementHandlers': elementHandler
+		});
 
+	doc.output("dataurlnewwindow");
+	 */
 	 
-	  
+	 
+	 
+	 
+	 
 	// работает локально, в приле проблемы
 	var doc = new jsPDF();
+    // printDoc.fromHTML($$('#export-list').get(0), 10, 10, {'width': 180});
     doc.fromHTML(exportHTML, 10, 10, {'width': 180});
+    // printDoc.autoPrint();
+    // doc.output("dataurlnewwindow"); // this opens a new popup,  after this the PDF opens the print window view but there are browser inconsistencies with how this is handled
 
+	
+	
+	
+	
+
+	//FIRST GENERATE THE PDF DOCUMENT
+	// myApp.alert("generating pdf...");
+	// var doc = new jsPDF();
+	 
+	// doc.text(20, 20, 'HELLO!');
+	 
+	// doc.setFont("courier");
+	// doc.setFontType("normal");
+	// doc.text(20, 30, 'This is a PDF document generated using JSPDF.');
+	// doc.text(20, 50, 'YES, Inside of PhoneGap!');
+	 
 	var pdfOutput = doc.output();
+	// myApp.alert( pdfOutput );
 	 
 	//NEXT SAVE IT TO THE DEVICE'S LOCAL FILE SYSTEM
 	// myApp.alert("file system...");
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
 	 
 	   // myApp.alert(fileSystem.name);
-	   myApp.alert(fileSystem.root.name);
-	   myApp.alert(fileSystem.root.fullPath);
+	   // myApp.alert(fileSystem.root.name);
+	   // myApp.alert(fileSystem.root.fullPath);
 	 
 	   fileSystem.root.getFile("export.pdf", {create: true}, function(entry) {
 		  var fileEntry = entry;
@@ -1099,8 +1106,7 @@ myApp.onPageInit('settingsexport',function(page){
 	 
 		  entry.createWriter(function(writer) {
 			 writer.onwrite = function(evt) {
-			 myApp.alert("write success");
-			 myApp.alert(evt);
+			 // myApp.alert("write success");
 		  };
 	 
 		  console.log("writing to file");
@@ -1128,10 +1134,37 @@ myApp.onPageInit('settingsexport',function(page){
 	function(event){
 	 myApp.alert( evt.target.error.code );
 	});
+
+
+	
+/* 	
+	window.plugins.socialsharing.shareViaEmail(
+  'Message', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client 
+  'Subject',
+  ['to@person1.com', 'to@person2.com'], // TO: must be null or an array 
+  ['cc@person1.com'], // CC: must be null or an array 
+  null, // BCC: must be null or an array 
+  ['https://www.google.nl/images/srpr/logo4w.png','www/localimage.png'], // FILES: can be null, a string, or an array 
+  onSuccess, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below. 
+  onError // called when sh*t hits the fan 
+);
+	
+	 */
+	window.plugins.socialsharing.shareViaEmail(
+  'Message', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client 
+  'Subject',
+  null, // TO: must be null or an array 
+  null, // CC: must be null or an array 
+  null, // BCC: must be null or an array 
+  ['https://www.google.nl/images/srpr/logo4w.png','www/localimage.png'], // FILES: can be null, a string, or an array 
+  onSuccess, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below. 
+  onError // called when sh*t hits the fan 
+);
 	
 	
 	
-	});	 /* exportBtn.addEventListener */
+	
+	});	
 }); 
 
 
@@ -1518,9 +1551,9 @@ function buildHTML() {
 			}
 		}
 		
-				// console.log(calendarEvents);
+				console.log(calendarEvents);
 				calendarInline.events = calendarEvents;
-				// console.log(calendarInline.events);
+				console.log(calendarInline.events);
 				// calendarInline.initCalendarEvents();
 				// calendarDefault.initCalendarEvents();
 				// calendarRange.initCalendarEvents();
@@ -1572,7 +1605,7 @@ function downloadList() {
 	
 	var userListJson = JSON.parse(userList[userId].list);
 	
-	console.log(userListJson);
+	// console.log(userListJson);
 	// console.log(userListJson.length);
 	
 	
