@@ -1011,11 +1011,18 @@ myApp.onPageInit('settingsexport',function(page){
 	const testBtn = document.getElementById('testBtn');
 	testBtn.addEventListener('click', function (e) {
 		
+		myApp.alert("testBtn");
+		cordova.plugins.email.open({
+			to:      'max@mustermann.de',
+			cc:      'erika@mustermann.de',
+			bcc:     ['john@doe.com', 'jane@doe.com'],
+			subject: 'Greetings',
+			body:    'How are you? Nice greetings from Leipzig'
+		});
+		myApp.alert("testBtn after");
+	});
 		
-		
-		
-		
-	var doc = new jsPDF('p', 'pt', 'letter');
+/* 	var doc = new jsPDF('p', 'pt', 'letter');
 	doc.addHTML(window.document.body, function () {       
 	  var filename = 'report.pdf';
 	  var dataUrl = doc.output('dataurlstring');
@@ -1032,7 +1039,7 @@ myApp.onPageInit('settingsexport',function(page){
 	  });
 	});		
 		
-		
+		 */
 		
 		
 		
@@ -1076,7 +1083,7 @@ myApp.onPageInit('settingsexport',function(page){
 		myApp.alert("after");
 		 */
 		
-	});
+
 	
 	const exportBtn = document.getElementById('exportBtn');
 	exportBtn.addEventListener('click', function (e) {
