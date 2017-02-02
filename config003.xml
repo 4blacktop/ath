@@ -22,16 +22,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 <preference name="SplashScreen" value="www/res/android/screen/xhdpi.9.png" />
 <preference name="SplashScreenDelay" value="4000" />
 
