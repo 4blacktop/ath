@@ -1008,6 +1008,16 @@ myApp.onPageInit('settingsexport',function(page){
 	   }
 	}); 
 	
+		const testBtn = document.getElementById('testBtn');
+	testBtn.addEventListener('click', function (e) {
+		myApp.alert("Before");
+			    window.plugin.email.open({
+      subject: 'Report',
+      body: 'Report is attached'
+  });
+		myApp.alert("after");
+	});
+	
 	const exportBtn = document.getElementById('exportBtn');
 	exportBtn.addEventListener('click', function (e) {
 		var range = document.getElementById('calendar-range');
@@ -1071,7 +1081,6 @@ myApp.onPageInit('settingsexport',function(page){
 	 
 	 cordova.plugins.email.isAvailable(
     function (isAvailable) {
-        myApp.alert('test');
 	    window.plugin.email.open({
       subject: 'Report',
       body: 'Report is attached'
@@ -1093,7 +1102,8 @@ myApp.onPageInit('settingsexport',function(page){
 	
   var filename = 'export.pdf';
   var dataUrl = doc.output('dataurlstring');
-  console.log(dataUrl);
+  // console.log(dataUrl);
+        myApp.alert('dataUrl');
   
 /*     window.plugin.email.open({
       subject: 'Report',
