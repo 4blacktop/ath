@@ -1076,7 +1076,35 @@ myApp.onPageInit('settingsexport',function(page){
 	
 	var exportHTML = Template7.templates.timelineTemplate(arrayExport);
 	document.getElementById('export-list').innerHTML = exportHTML;
+	
+	
+/* 	
+	var doc = new jsPDF();          
+	var elementHandler = {
+	  '#ignorePDF': function (element, renderer) {
+		return true;
+	  }
+	};
+	var source = window.document.getElementsByTagName("body")[0];
+	doc.fromHTML(
+		source,
+		15,
+		15,
+		{
+		  'width': 180,'elementHandlers': elementHandler
+		});
 
+	doc.output("dataurlnewwindow");
+	 */
+	 
+	 
+	 cordova.plugins.email.isAvailable(
+    function (isAvailable) {
+	    window.plugin.email.open({
+      subject: 'Report',
+      body: 'Report is attached'
+  });
+    });
 	 
 	 
 	// работает локально, в приле проблемы
@@ -1095,20 +1123,6 @@ myApp.onPageInit('settingsexport',function(page){
   var dataUrl = doc.output('dataurlstring');
   // console.log(dataUrl);
         myApp.alert('dataUrl');
-		
-		
-		window.plugins.socialsharing.shareViaEmail(
-		  'Message', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client 
-		  'Subject',
-		  null, // TO: must be null or an array 
-		  null, // CC: must be null or an array 
-		  null, // BCC: must be null or an array 
-		  dataUrl, // FILES: can be null, a string, or an array 
-		  onSuccess, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below. 
-		  onError // called when sh*t hits the fan 
-		); 		
-		
-		
   
 /*     window.plugin.email.open({
       subject: 'Report',
@@ -1117,7 +1131,7 @@ myApp.onPageInit('settingsexport',function(page){
   }); */
   // "window.plugins.socialsharing.share(null, 'Android filename', 'data:image/png;base64,R0lGODlhDAAMALMBAP8AAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAAEALAAAAAAMAAwAQAQZMMhJK7iY4p3nlZ8XgmNlnibXdVqolmhcRQA7', null)"
   
-  /* 
+  
 window.plugins.socialsharing.shareViaEmail(
   'Message', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client 
   'Subject',
@@ -1129,7 +1143,7 @@ window.plugins.socialsharing.shareViaEmail(
   onError // called when sh*t hits the fan 
 ); 
   
-   */
+  
   
   
   
