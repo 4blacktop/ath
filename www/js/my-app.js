@@ -1012,8 +1012,11 @@ myApp.onPageInit('settingsexport',function(page){
 	exportBtn.addEventListener('click', function (e) {
 		var range = document.getElementById('calendar-range');
 		console.log(range.value.split(" - "));
-		s = Date.parse(range.value.split(" - ")[0]);
-		e = Date.parse(range.value.split(" - ")[1]);
+		// s = Date.parse(range.value.split(" - ")[0]);
+		s = new Date(Date.parse(range.value.split(" - ")[0]));
+		// e = Date.parse(range.value.split(" - ")[1]);
+		e = new Date(Date.parse(range.value.split(" - ")[1]));
+		e.setDate(e.getDate() + 1);
 
 		// формируем массив, события в котором лежат в указанном промежутке
 		var arrayExport	= [];
@@ -1021,7 +1024,9 @@ myApp.onPageInit('settingsexport',function(page){
 			var itemNow = JSON.parse(localStorage.getItem(localStorage.key(i)));
 			if (itemNow.date) {
 				c = Date.parse(itemNow.date);
+				
 				if((c <= e && c >= s)) {
+					console.log("s: " + s + " now: " + itemNow.date + " e: " + e);
 					arrayExport.push(itemNow);
 					console.log(itemNow);
 					// return true;
@@ -1080,19 +1085,21 @@ myApp.onPageInit('settingsexport',function(page){
 	
 	
 	
-  var filename = 'report.pdf';
+  var filename = 'export.pdf';
   var dataUrl = doc.output('dataurlstring');
+  // console.log(dataUrl);
 
   // This part is only required because the dataurl formats from the 2 plugins don't match up (see Note at the bottom of my post)
   var base64parts = dataUrl.split(',');
   base64parts[0] = "base64:" + window.escape(filename) + "//";
   var compatibleAttachment = base64parts.join("");
+  myApp.alert(compatibleAttachment);
 
-  window.plugin.email.open({
-      subject: 'Report',
-      body: 'Report is attached',
-      attachments: [compatibleAttachment]
-  });
+  // window.plugin.email.open({
+      // subject: 'Report',
+      // body: 'Report is attached',
+      // attachments: [compatibleAttachment]
+  // });
 	
 	
 	
