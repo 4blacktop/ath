@@ -1140,8 +1140,8 @@ myApp.onPageInit('settingsexport',function(page){
 	var base64parts = dataUrl.split(',');
 	base64parts[0] = "base64:" + window.escape(filename) + "//";
 	var compatibleAttachment = base64parts.join("");
-	myApp.alert("dataUrl: " + dataUrl);
-	myApp.alert("compatibleAttachment: " + compatibleAttachment);
+	myApp.alert("dataUrl: " + dataUrl); // data:application/pdf;base64,JVBERi0xLj
+	myApp.alert("compatibleAttachment: " + compatibleAttachment); // base64:report.pdf//JVBERi0xLjMKMyAw
 	
 	// console.log(dataUrl);
 	// console.log(compatibleAttachment);
@@ -1150,7 +1150,20 @@ myApp.onPageInit('settingsexport',function(page){
 	
 	// window.plugins.socialsharing.share('Awakening to God Today', null, dataUrl, null); // ok
 	// window.plugins.socialsharing.shareViaEmail('Awakening to God Today', 'PDF Export', dataUrl, null); //bad
+
+	// сделано для iOS ======================================================================================================================
+	window.plugins.socialsharing.shareViaEmail(
+	  'Awakening to God Today', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client 
+	  'PDF Export',
+	  null, // TO: must be null or an array 
+	  null, // CC: must be null or an array 
+	  null, // BCC: must be null or an array 
+	  compatibleAttachment, // FILES: can be null, a string, or an array 
+	  onSuccess, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below. 
+	  onError // called when sh*t hits the fan 
+	);	
 	
+	/* 	// так работает на Андроид
 	window.plugins.socialsharing.shareViaEmail(
 	  'Awakening to God Today', // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client 
 	  'PDF Export',
@@ -1161,7 +1174,10 @@ myApp.onPageInit('settingsexport',function(page){
 	  onSuccess, // called when sharing worked, but also when the user cancelled sharing via email. On iOS, the callbacks' boolean result parameter is true when sharing worked, false if cancelled. On Android, this parameter is always true so it can't be used). See section "Notes about the successCallback" below. 
 	  onError // called when sh*t hits the fan 
 	);
-	
+	 */
+	 
+	 
+	 
 	var onSuccess = function(result) {
 	  // console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true 
 	  // console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true 
